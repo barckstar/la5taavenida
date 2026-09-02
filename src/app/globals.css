@@ -1,26 +1,78 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Paleta 5ta Avenida Grill — reparto 70/30/10.
+  Derivada del logo real del cliente. Ver docs/specs/2026-09-01-sitio-5ta-avenida-design.md §3.
+
+  REGLAS DE CONTRASTE (medidas, no estimadas):
+    acento      sobre base      = 4.88:1  -> texto normal permitido
+    acento      sobre base-alt  = 4.33:1  -> SOLO texto grande; usar acento-alt (5.62:1)
+    acento-alt  sobre base      = 6.33:1  -> seguro en todo tamano
+    texto       sobre base      = 18.50:1 -> texto de cuerpo
+    superficie-alt como texto   = 2.49:1  -> NUNCA como texto, solo superficie
+*/
+
+@theme {
+  /* ---- 70% dominante: fondos ---- */
+  --color-base: #220b08;
+  --color-base-alt: #361316;
+
+  /* ---- 30% secundario: superficies, tarjetas, separadores ---- */
+  --color-superficie: #5b260d;
+  --color-superficie-alt: #963316;
+
+  /* ---- 10% acento: CTAs, precios, badges, estado activo ---- */
+  --color-acento: #e35120;
+  --color-acento-alt: #e8771f;
+  --color-acento-claro: #f0a05d;
+
+  /* ---- texto ---- */
+  --color-texto: #fffdfc;
+  --color-texto-suave: #d9c9c2;
+
+  --font-display: var(--fuente-display), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--fuente-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--color-base);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-base);
+  color: var(--color-texto);
+  font-family: var(--font-sans);
+  /* Evita el desborde horizontal en movil, requisito del spec */
+  overflow-x: hidden;
+}
+
+/* Brasas del hero — CSS puro, sin JavaScript. Solo transform y opacity. */
+@keyframes brasa-subir {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate3d(var(--deriva, 12px), -120px, 0) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* El spec lo exige: prefers-reduced-motion detiene todo. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
