@@ -277,3 +277,35 @@ html {
   -webkit-text-stroke: 2px #050505;
   text-shadow: 0 1px 4px rgb(5 5 5 / 0.7);
 }
+
+/*
+  EL MEDIO DE UN REEL, en sus dos maquetas.
+
+  En movil ocupa la pantalla completa y el riel de acciones flota encima, que
+  es como se ve un Short o un TikTok. Antes el riel iba AL LADO: le robaba 72px
+  de ancho, la tarjeta bajaba a 294x523 en una pantalla de 844 y quedaban 165px
+  de negro muerto arriba.
+
+  Desde `lg` vuelve a ser tarjeta 9:16 con el riel a la par, que ahi si hay
+  espacio de sobra a los costados y pegar los botones sobre la foto no aporta.
+
+  Va en CSS y no en un `style` en linea porque un estilo en linea no distingue
+  puntos de quiebre: el `min()` de escritorio se aplicaba tambien en movil.
+*/
+.reel-medio {
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .reel-medio {
+    /*
+      `min()` decide quien manda: el alto disponible o el ancho de la pantalla.
+      Se resta el riel de acciones para que nunca lo empuje fuera.
+    */
+    width: min(100% - 4.5rem, calc((100dvh - 3rem) * 9 / 16));
+    height: auto;
+    max-height: 100%;
+    aspect-ratio: 9 / 16;
+  }
+}

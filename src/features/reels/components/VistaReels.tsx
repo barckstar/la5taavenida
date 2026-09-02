@@ -48,7 +48,15 @@ export function VistaReels() {
       />
 
       <div
-        className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain pt-24 [scrollbar-width:none] lg:pl-28 lg:pt-0 [&::-webkit-scrollbar]:hidden"
+        /*
+          SIN `pt-24` AQUI. El relleno iba en el contenedor de scroll mientras
+          cada reel medía 100dvh: el primero arrancaba 96px abajo y se salía por
+          el fondo esos mismos 96px, así que el `snap` nunca cuadraba y quedaba
+          una franja negra entre los filtros y la tarjeta. El espacio del carril
+          ahora lo pone cada reel por dentro (`ESPACIO_CARRIL`), y así todos
+          siguen midiendo exactamente una pantalla.
+        */
+        className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain [scrollbar-width:none] lg:pl-28 [&::-webkit-scrollbar]:hidden"
         style={{
           maskImage:
             "linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%)",

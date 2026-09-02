@@ -65,23 +65,13 @@ export function ReelPlato({ plato }: { plato: Plato }) {
   return (
     <section
       ref={seccion}
-      className="relative flex h-[100dvh] w-full snap-start snap-always items-center justify-center px-3 py-4 sm:px-6"
+      className="relative flex h-[100dvh] w-full snap-start snap-always items-center justify-center lg:px-6 lg:py-4"
       aria-label={plato.nombre}
     >
-      <div className="flex h-full max-h-[calc(100dvh-2rem)] w-full items-end justify-center gap-3 sm:gap-4">
+      <div className="flex h-full w-full items-end justify-center lg:gap-4">
         {/* El medio, en proporcion vertical de reel */}
-        <div
-          className="relative aspect-9/16 max-h-full overflow-hidden rounded-2xl bg-superficie"
-          /*
-            `min()` decide quien manda: el alto disponible o el ancho de la
-            pantalla. Con solo `h-full` el 9:16 calculaba un ancho mayor que el
-            viewport en pantallas angostas y el reel se salia por la izquierda.
-            Se resta el riel de acciones para que nunca lo empuje fuera.
-          */
-          style={{
-            width: "min(100% - 4.5rem, calc((100dvh - 3rem) * 9 / 16))",
-          }}
-        >
+        {/* Las dos maquetas del medio viven en `.reel-medio`, en globals.css. */}
+        <div className="reel-medio relative overflow-hidden bg-superficie lg:rounded-2xl">
           <div className="relative size-full">
             {plato.media.tipo === "video" ? (
               <video
@@ -100,7 +90,7 @@ export function ReelPlato({ plato }: { plato: Plato }) {
                 src={plato.media.src}
                 alt={plato.media.alt}
                 fill
-                sizes="(min-width: 640px) 48vh, 92vw"
+                sizes="(min-width: 1024px) 48vh, 100vw"
                 className="object-cover"
               />
             )}
@@ -116,7 +106,7 @@ export function ReelPlato({ plato }: { plato: Plato }) {
               `pb-24` deja libre la franja inferior donde flota el boton de
               "Ver pedido": antes se montaba encima del precio y la descripcion.
             */}
-            <div className="absolute inset-x-0 bottom-0 p-4 pb-24 sm:p-5 sm:pb-24">
+            <div className="absolute inset-x-0 bottom-0 p-4 pb-24 pr-16 sm:p-5 sm:pb-24 lg:pr-5">
               <p className="precio-contorneado font-display text-3xl font-bold text-acento sm:text-4xl">
                 {formatoColones(plato.precio)}
               </p>
@@ -135,30 +125,34 @@ export function ReelPlato({ plato }: { plato: Plato }) {
           </div>
         </div>
 
-        {/* Riel de acciones al costado, fuera del medio */}
-        <div className="flex shrink-0 flex-col items-center gap-5 pb-4">
+        {/*
+          RIEL DE ACCIONES, al estilo de TikTok: iconos de trazo sueltos sobre
+          el video, con su rotulo debajo. Nada de discos de fondo —cada uno era
+          un circulo relleno y seis circulos apilados tapaban la comida, que es
+          lo unico que la pagina tiene que vender—. La legibilidad la da la
+          sombra del icono, no una caja.
+
+          En movil flota sobre el medio, pegado a la derecha y por encima del
+          boton de "Ver pedido". Desde `lg` sale del medio y respira aparte.
+        */}
+        <div className="absolute bottom-28 right-4 z-10 flex shrink-0 flex-col items-center gap-6 lg:static lg:pb-4">
           {plato.disponible ? (
             cantidad === 0 ? (
-              <AccionRiel
-                etiqueta="Agregar"
-                onClick={() => agregar(plato)}
-                destacada
-              >
-                {/* Un "+" se entiende mas rapido que un carrito: la accion es
-                    sumar al pedido, no ir al carrito. */}
-                <span aria-hidden="true" className="text-3xl leading-none">
-                  +
-                </span>
+              <AccionRiel etiqueta="Agregar" onClick={() => agregar(plato)} activa>
+                <IconoMas className="size-9" />
               </AccionRiel>
             ) : (
-              <div className="flex flex-col items-center gap-1.5">
+              /* Con unidades en el pedido, el "+" conserva su sitio y la
+                 cantidad ocupa el lugar del rotulo, igual que un contador de
+                 me gusta. El "−" cuelga debajo, mas discreto. */
+              <div className="flex flex-col items-center gap-1 drop-shadow-[0_2px_6px_rgba(5,5,5,0.9)]">
                 <button
                   type="button"
                   onClick={() => cambiarCantidad(plato.id, cantidad + 1)}
                   aria-label={`Agregar otra unidad de ${plato.nombre}`}
-                  className="grid size-12 place-items-center rounded-full bg-acento text-xl font-bold text-base transition-transform active:scale-90"
+                  className="text-acento transition-transform active:scale-90"
                 >
-                  +
+                  <IconoMas className="size-9" />
                 </button>
                 <span className="font-display text-sm font-bold text-texto">
                   {cantidad}
@@ -167,9 +161,9 @@ export function ReelPlato({ plato }: { plato: Plato }) {
                   type="button"
                   onClick={() => cambiarCantidad(plato.id, cantidad - 1)}
                   aria-label={`Quitar una unidad de ${plato.nombre}`}
-                  className="grid size-9 place-items-center rounded-full border border-borde text-lg text-texto-suave transition-colors hover:text-acento"
+                  className="mt-1 text-texto-suave transition-colors hover:text-acento"
                 >
-                  −
+                  <IconoMenos className="size-6" />
                 </button>
               </div>
             )
@@ -180,22 +174,20 @@ export function ReelPlato({ plato }: { plato: Plato }) {
             onClick={() => alternarFavorito(plato.id)}
             activa={esFavorito}
           >
-            <IconoCorazon lleno={esFavorito} className="size-5" />
+            <IconoCorazon lleno={esFavorito} className="size-8" />
           </AccionRiel>
 
           <AccionRiel etiqueta="Pedido" onClick={abrir}>
-            <IconoCarrito className="size-5" />
+            <IconoCarrito className="size-8" />
           </AccionRiel>
 
           <BotonCompartir
             titulo={`${plato.nombre} — 5ta Avenida Grill`}
             texto={plato.descripcion}
-            className="flex flex-col items-center gap-1"
+            className="grid place-items-center text-texto drop-shadow-[0_2px_6px_rgba(5,5,5,0.9)]"
           >
-            <span className="grid size-11 place-items-center rounded-full bg-superficie text-texto transition-colors hover:text-acento">
-              <IconoCompartir className="size-5" />
-            </span>
-            <span className="text-[11px] text-texto-suave">Compartir</span>
+            <IconoCompartir className="size-8" />
+            <span className="sr-only">Compartir</span>
           </BotonCompartir>
         </div>
       </div>
@@ -229,34 +221,64 @@ function IconoCorazon({
 function AccionRiel({
   etiqueta,
   onClick,
-  destacada,
   activa,
   children,
 }: {
   etiqueta: string;
   onClick: () => void;
-  destacada?: boolean;
   activa?: boolean;
   children: React.ReactNode;
 }) {
   return (
+    /*
+      El rotulo va en `aria-label` y no debajo del icono. Visualmente sobra
+      —un corazon y un carrito no necesitan pie de foto— pero el boton sigue
+      necesitando nombre accesible: sin el, un lector de pantalla anuncia
+      "boton" y nada mas.
+    */
     <button
       type="button"
       onClick={onClick}
-      className="flex flex-col items-center gap-1"
+      aria-label={etiqueta}
+      className={`grid place-items-center drop-shadow-[0_2px_6px_rgba(5,5,5,0.9)] transition-transform active:scale-90 ${
+        activa ? "text-acento" : "text-texto"
+      }`}
     >
-      <span
-        className={`grid place-items-center rounded-full transition-transform active:scale-90 ${
-          destacada
-            ? "size-14 bg-acento text-base"
-            : activa
-              ? "size-11 bg-superficie text-acento"
-              : "size-11 bg-superficie text-texto hover:text-acento"
-        }`}
-      >
-        {children}
-      </span>
-      <span className="text-[11px] text-texto-suave">{etiqueta}</span>
+      {children}
     </button>
+  );
+}
+
+/** Un "+" de trazo, para que combine con los demas iconos del riel. */
+function IconoMas({ className = "size-8" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
+/** El "−" del contador, con el mismo trazo que el "+". */
+function IconoMenos({ className = "size-6" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M5 12h14" />
+    </svg>
   );
 }
