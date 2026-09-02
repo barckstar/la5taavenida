@@ -71,6 +71,23 @@ body {
   }
 }
 
+/*
+  Luz de brasa: la intensidad sube y baja en un ciclo lento, como carbon
+  respirando. Solo transform y opacity, asi que corre en GPU.
+  El ciclo es largo y desfasado a proposito — si late rapido parece un error.
+*/
+@keyframes respiro-brasa {
+  0%,
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 0.42;
+  }
+  50% {
+    transform: scale(1.09) translateZ(0);
+    opacity: 0.68;
+  }
+}
+
 /* El spec lo exige: prefers-reduced-motion detiene todo. */
 @media (prefers-reduced-motion: reduce) {
   html {
