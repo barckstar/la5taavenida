@@ -50,7 +50,7 @@ export function ReelPlato({ plato }: { plato: Plato }) {
   return (
     <section
       ref={seccion}
-      className="relative h-[100dvh] w-full snap-start snap-always overflow-hidden bg-base"
+      className="relative h-full w-full snap-start snap-always overflow-hidden bg-base"
       aria-label={plato.nombre}
     >
       {plato.media.tipo === "video" ? (
@@ -70,7 +70,7 @@ export function ReelPlato({ plato }: { plato: Plato }) {
           src={plato.media.src}
           alt={plato.media.alt}
           fill
-          sizes="100vw"
+          sizes="(min-width: 768px) 24rem, 100vw"
           className="object-cover"
         />
       )}
@@ -81,7 +81,7 @@ export function ReelPlato({ plato }: { plato: Plato }) {
         className="absolute inset-0 bg-gradient-to-t from-base via-base/75 to-base/10"
       />
 
-      <div className="absolute inset-x-0 bottom-0 p-6 pb-24 sm:p-10 sm:pb-28">
+      <div className="absolute inset-x-0 bottom-0 p-6 pb-24 sm:p-8 sm:pb-24">
         <div className="mx-auto max-w-lg">
           <div className="flex items-start justify-between gap-4">
             <h2 className="font-display text-3xl font-bold uppercase italic leading-tight text-texto sm:text-4xl">

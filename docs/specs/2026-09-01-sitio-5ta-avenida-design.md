@@ -140,7 +140,16 @@ Tabs de categoría fijas arriba, grid de tarjetas con foto, nombre, precio y bot
 
 ### Comportamiento en escritorio
 
-El toggle de dos vistas es **exclusivo de móvil**, tal como se pidió. En escritorio el menú muestra siempre la vista Lista, en grid de varias columnas, y el toggle no se renderiza. La vista Reels a pantalla completa no tiene sentido en un monitor horizontal y arrastraría el peso de los videos sin beneficio. El punto de corte es el breakpoint `md` de Tailwind.
+> **Revisado el 2026-09-02.** La versión anterior de esta sección decía que el
+> alternador era exclusivo de móvil. El cliente lo corrigió y tenía razón: la
+> vista de reels es su diferenciador en el nicho, y esconderla justo en la
+> pantalla grande es esconder lo que distingue al sitio.
+
+Las dos vistas están disponibles en **todos los tamaños**. Lo que cambia es la
+forma, no la disponibilidad: en escritorio los reels no van a pantalla completa
+—un video vertical estirado en un monitor horizontal se ve mal— sino en una
+columna centrada con proporción de teléfono, que es como lo resuelven TikTok e
+Instagram en web.
 
 ### Control de peso (requisito duro: fluido pero que no pese)
 

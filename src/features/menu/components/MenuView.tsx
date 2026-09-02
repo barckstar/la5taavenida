@@ -17,9 +17,11 @@ type Vista = "lista" | "reels";
 /**
  * Orquesta las dos vistas del menu.
  *
- * El alternador es EXCLUSIVO DE MOVIL. En escritorio siempre se muestra la
- * cuadricula: un reel a pantalla completa en un monitor horizontal no aporta
- * nada y arrastraria el peso de los videos sin beneficio.
+ * Las dos vistas estan disponibles en TODOS los tamanos.
+ *
+ * En escritorio los reels NO van a pantalla completa — un video vertical
+ * estirado en un monitor horizontal se ve mal. Van en una columna centrada con
+ * proporcion de telefono, que es como lo resuelven TikTok e Instagram web.
  */
 export function MenuView() {
   const [categoria, setCategoria] = useState<CategoriaId | "todas">("todas");
@@ -50,10 +52,9 @@ export function MenuView() {
         categorias={categoriasConPlatos}
       />
 
-      {/* Vista Reels: solo movil y solo si esta elegida */}
       {vista === "reels" && (
-        <div className="md:hidden">
-          <div className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain">
+        <div className="flex justify-center bg-base md:py-6">
+          <div className="h-[calc(100dvh-4rem)] w-full snap-y snap-mandatory overflow-y-auto overscroll-contain md:h-[calc(100dvh-8rem)] md:max-w-sm md:rounded-3xl md:border md:border-borde md:shadow-2xl">
             {platos.map((p) => (
               <ReelPlato key={p.id} plato={p} />
             ))}
@@ -61,8 +62,7 @@ export function MenuView() {
         </div>
       )}
 
-      {/* Cuadricula: siempre en escritorio; en movil solo si esta elegida */}
-      <div className={vista === "reels" ? "hidden md:block" : ""}>
+      {vista === "lista" && (
         <Contenedor>
           <div className="grid grid-cols-2 gap-x-4 gap-y-7 py-6 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {platos.map((p) => (
@@ -70,7 +70,7 @@ export function MenuView() {
             ))}
           </div>
         </Contenedor>
-      </div>
+      )}
 
       <DetallePlato plato={detalle} onCerrar={() => setDetalle(null)} />
     </>

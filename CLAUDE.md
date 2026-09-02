@@ -41,6 +41,9 @@ Presupuesto de esfuerzo acotado: impacto visual alto, alcance controlado.
   hero, promocion semanal, nosotros, destacados, ubicacion, contacto. Se recorre con
   scroll suave entre anclas: se siente como una SPA, sin recargas.
 - **`/menu`** — la unica ruta aparte, porque es la que monta el menu virtual y el carrito.
+  Dos vistas disponibles en TODOS los tamanos: cuadricula y reels. En escritorio
+  los reels van en columna centrada, no a pantalla completa.
+  **La vista de reels es el diferenciador del proyecto y esta PENDIENTE de pulir.**
 
 No se crean rutas para "nosotros", "contacto" ni "ubicacion". Son anclas de `/`.
 El carrito y el checkout son drawers, nunca paginas.

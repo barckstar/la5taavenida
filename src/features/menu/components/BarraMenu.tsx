@@ -73,10 +73,13 @@ export function BarraMenu({
       }`}
     >
       <Contenedor className="flex items-center gap-3 py-3">
-        {/* Alternador vista: solo movil, la vista Reels no existe en escritorio */}
-        <div className="md:hidden">
-          <SwitchVista vista={vista} onCambiar={onCambiarVista} />
-        </div>
+        {/*
+          El alternador va en TODOS los tamanos. Antes era exclusivo de movil
+          por decision mia; el cliente lo corrigio y tiene razon: la vista de
+          reels es su diferenciador en el nicho, y esconderla justo en la
+          pantalla grande es esconder lo que distingue al sitio.
+        */}
+        <SwitchVista vista={vista} onCambiar={onCambiarVista} />
 
         <div className="relative min-w-0 flex-1">
           <div
