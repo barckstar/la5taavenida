@@ -1,7 +1,11 @@
 import Image from "next/image";
 import { Seccion } from "@/shared/components/ui/Seccion";
 import { porQue } from "../data/landing";
-import { RevelarCascada, ItemCascada } from "@/shared/components/ui/Revelar";
+import {
+  Revelar,
+  RevelarCascada,
+  ItemCascada,
+} from "@/shared/components/ui/Revelar";
 
 export function PorQue() {
   return (
@@ -12,28 +16,41 @@ export function PorQue() {
           {porQue.razones.map((r) => (
             <ItemCascada key={r.titulo}>
               <div className="border-l-4 border-acento bg-superficie px-6 py-5 transition-transform duration-300 hover:translate-x-1">
-              <h3 className="font-display text-lg font-semibold uppercase italic tracking-wide text-texto">
-                {r.titulo}
-              </h3>
-              <p className="mt-2 leading-relaxed text-texto-suave">{r.texto}</p>
+                <h3 className="font-display text-lg font-semibold uppercase italic tracking-wide text-texto">
+                  {r.titulo}
+                </h3>
+                <p className="mt-2 leading-relaxed text-texto-suave">
+                  {r.texto}
+                </p>
               </div>
             </ItemCascada>
           ))}
         </RevelarCascada>
 
-        <div className="relative mx-auto flex aspect-square w-full max-w-sm items-center justify-center">
-          <div
-            aria-hidden="true"
-            className="absolute inset-[6%] rounded-full bg-acento/85"
-          />
-          <Image
-            src="/platos/hamburguesa-5ta.webp"
-            alt="Hamburguesa a la parrilla de 5ta Avenida Grill, San Ramón"
-            width={1672}
-            height={941}
-            className="relative w-[115%] max-w-none drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)]"
-          />
-        </div>
+        {/*
+          FOTO REAL DEL LOCAL: la parrilla con el rotulo de madera de la marca.
+          Sostiene literalmente lo que dice la columna de al lado —"fuego real,
+          sin atajos"— cosa que una foto de producto no puede hacer.
+
+          PENDIENTE: falta el archivo. Colocar la foto en
+          public/local/parrilla.webp; el componente ya la espera.
+        */}
+        <Revelar direccion="derecha" className="relative mx-auto w-full max-w-md">
+          <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-borde bg-superficie">
+            <Image
+              src="/local/parrilla.webp"
+              alt="La parrilla y el rótulo de 5ta Avenida Grill en su local de San Ramón"
+              fill
+              sizes="(min-width: 1024px) 28rem, 90vw"
+              className="object-cover"
+            />
+            {/* Velo inferior para asentar la foto en el fondo negro. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-base/70 via-transparent to-transparent"
+            />
+          </div>
+        </Revelar>
       </div>
     </Seccion>
   );
