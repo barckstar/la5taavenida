@@ -30,7 +30,9 @@ export const negocio = {
   provincia: "Alajuela",
   pais: "CR",
 
-  facebook: "https://www.facebook.com/5taavenidagrill/",
+  /** Redes del negocio, confirmadas por el cliente (2026-09-01). */
+  facebook: "https://www.facebook.com/5taavenidagrill",
+  instagram: "https://www.instagram.com/5ta_avenida_sanramon",
 
   /**
    * Coordenadas CONFIRMADAS del local, tomadas de la ficha de Google que
@@ -46,7 +48,26 @@ export const negocio = {
     cid: "15405326590712899056",
     /** ID del Knowledge Graph, por si hace falta la Places API. */
     kgId: "/g/11p5blxm46",
+
+    /**
+     * PENDIENTE. Calificacion y cantidad de resenas de su ficha de Google.
+     *
+     * Se dejan en null a proposito: NO se inventan. Poner un numero falso de
+     * clientes o de estrellas en el sitio de un negocio real es un dato
+     * verificable que cualquiera puede desmentir abriendo Maps, y expone al
+     * cliente. En cuanto el usuario pase los reales, se llenan aca y la
+     * prueba social del hero cambia sola.
+     */
+    calificacion: null as number | null,
+    cantidadResenas: null as number | null,
   },
+
+  /**
+   * Seguidores en Facebook. Dato REAL, extraido de los meta tags de su pagina
+   * el 2026-09-01. Es la prueba social que se muestra mientras no tengamos la
+   * de Google.
+   */
+  seguidoresFacebook: 4352,
 
   /** Rango de precios para el JSON-LD. DEMO: ajustar con el menu real. */
   rangoPrecios: "₡₡",

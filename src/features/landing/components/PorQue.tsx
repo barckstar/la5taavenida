@@ -27,10 +27,10 @@ export function PorQue() {
             className="absolute inset-[6%] rounded-full bg-acento/85"
           />
           <Image
-            src="/platos/hamburguesa-5ta.png"
+            src="/platos/hamburguesa-5ta.webp"
             alt="Hamburguesa a la parrilla de 5ta Avenida Grill, San Ramón"
-            width={488}
-            height={337}
+            width={1672}
+            height={941}
             className="relative w-[115%] max-w-none drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)]"
           />
         </div>

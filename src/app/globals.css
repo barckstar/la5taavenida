@@ -186,3 +186,27 @@ body {
   33%      { transform: translate3d(-3px, -5px, 0) scale(1.015); }
   66%      { transform: translate3d(3px, -2px, 0) scale(1.008); }
 }
+
+/* ---- Barra lateral de redes ---- */
+.barra-social {
+  animation: barra-social-entra 0.8s ease-out 1s both;
+}
+@keyframes barra-social-entra {
+  from {
+    opacity: 0;
+    transform: translateX(90px) translateY(-50%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(-50%);
+  }
+}
+.icono-social {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.icono-social:hover {
+  transform: scale(1.2) translateX(-5px);
+}
+.icono-social:active {
+  transform: scale(0.9);
+}

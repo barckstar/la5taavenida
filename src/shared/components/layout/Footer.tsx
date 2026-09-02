@@ -66,6 +66,14 @@ export function Footer() {
           </p>
           <div className="flex gap-5">
             <a
+              href={negocio.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-acento-alt"
+            >
+              Instagram
+            </a>
+            <a
               href={negocio.facebook}
               target="_blank"
               rel="noopener noreferrer"

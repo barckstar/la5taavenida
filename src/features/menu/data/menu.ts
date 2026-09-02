@@ -38,7 +38,7 @@ export const menu: Plato[] = [
     media: {
       // Unica foto REAL que tenemos, recortada de la portada de Facebook.
       tipo: "imagen",
-      src: "/platos/hamburguesa-5ta.png",
+      src: "/platos/hamburguesa-5ta.webp",
       alt: "Hamburguesa La 5ta Avenida con camarones en 5ta Avenida Grill, San Ramón",
     },
     destacado: true,

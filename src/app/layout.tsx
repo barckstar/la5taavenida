@@ -3,6 +3,7 @@ import { Oswald, Inter } from "next/font/google";
 import { negocio } from "@/shared/config/negocio";
 import { Navbar } from "@/shared/components/layout/Navbar";
 import { Footer } from "@/shared/components/layout/Footer";
+import { BarraSocial } from "@/shared/components/layout/BarraSocial";
 import "./globals.css";
 
 const display = Oswald({
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Navbar />
+        <BarraSocial />
         {children}
         <Footer />
       </body>

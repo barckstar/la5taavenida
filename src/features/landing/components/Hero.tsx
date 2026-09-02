@@ -5,6 +5,7 @@ import { negocio } from "@/shared/config/negocio";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
 import { CurvaInferior } from "@/shared/components/ui/CurvaInferior";
 import { Brasas } from "./Brasas";
+import { PruebaSocial } from "./PruebaSocial";
 
 /*
   Orden en el eje Z, de atras hacia adelante:
@@ -44,10 +45,10 @@ export function Hero() {
         }}
       >
         <Image
-          src="/platos/hamburguesa-5ta.png"
+          src="/platos/hamburguesa-5ta.webp"
           alt=""
-          width={488}
-          height={337}
+          width={1672}
+          height={941}
           priority
           className="h-auto w-[185%] max-w-none object-contain sm:w-full"
         />
@@ -90,6 +91,10 @@ export function Hero() {
             <BotonEnlace href="/menu" variante="contorno" tamano="lg">
               Ver el menú
             </BotonEnlace>
+          </div>
+
+          <div className="mt-8">
+            <PruebaSocial />
           </div>
         </div>
       </Contenedor>
