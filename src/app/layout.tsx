@@ -6,6 +6,7 @@ import { Footer } from "@/shared/components/layout/Footer";
 import { BarraSocial } from "@/shared/components/layout/BarraSocial";
 import { CarritoProvider } from "@/features/carrito/lib/carritoStore";
 import { CarritoUI } from "@/shared/components/layout/CarritoUI";
+import { menu } from "@/features/menu/data/menu";
 import "./globals.css";
 
 const display = Oswald({
@@ -47,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <CarritoProvider>
+        <CarritoProvider idsDelMenu={menu.map((p) => p.id)}>
           <Navbar />
           <BarraSocial />
           {children}

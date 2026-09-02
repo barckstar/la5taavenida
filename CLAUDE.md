@@ -89,8 +89,10 @@ superficies del 30%, el texto va blanco, no naranja.
 
 - [x] Dirección, teléfono y **horarios reales** confirmados
 - [x] Coordenadas exactas y CID de Google del negocio
-- [ ] Menú: PRECIOS reales (los actuales son inventados) y FOTOS de los platos
-- [x] Nombres reales de 4 platos: La 5ta Avenida, La Surtida, Papas Gajo, Nachos
+- [x] **MENÚ REAL COMPLETO**: 35 platos con nombres y precios del cliente
+- [x] Métodos de pago reales: Sinpe Móvil, efectivo y tarjeta
+- [ ] FOTOS de los platos (34 de 35 usan el marcador de marca)
+- [ ] Confirmar 2 transcripciones dudosas: "Choripán" y "Empanada Arreglada"
 - [ ] Place ID en formato ChIJ, para el enlace de reseña de un clic
 - [x] Calificación real de Google: 4,6 con 59 reseñas
 - [x] 6 reseñas reales en español, transcritas literales

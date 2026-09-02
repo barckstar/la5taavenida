@@ -1,10 +1,9 @@
 import type { Categoria } from "../types";
 
+/** Las cuatro secciones tal como las divide el menu impreso del local. */
 export const categorias: Categoria[] = [
   { id: "hamburguesas", nombre: "Hamburguesas" },
-  { id: "costillas", nombre: "Costillas" },
-  { id: "alitas", nombre: "Alitas" },
-  { id: "bocas", nombre: "Bocas" },
-  { id: "bebidas", nombre: "Bebidas" },
-  { id: "postres", nombre: "Postres" },
+  { id: "grill", nombre: "Menú Grill" },
+  { id: "infantil", nombre: "Menú Infantil" },
+  { id: "adicionales", nombre: "Adicionales" },
 ];

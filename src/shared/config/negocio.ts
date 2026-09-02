@@ -64,12 +64,21 @@ export const negocio = {
   rangoPrecios: "₡₡",
   /** Rango real segun Google: consumo por persona. */
   rangoPreciosTexto: "₡5.000 – ₡10.000 por persona",
+  /** Del menu impreso: del adicional mas barato al plato mas caro. */
+  rangoMenu: { min: 800, max: 13000 },
   /** Categoria con la que Google los clasifica. */
   categoriaGoogle: "Restaurante de comida rápida",
   /** Plus Code de Google, sirve como direccion exacta. */
   plusCode: "3GQQ+W6 San Ramón, Provincia de Alajuela",
   /** Modalidades confirmadas en su ficha de Google. */
   servicios: ["Consumo en el lugar", "Para llevar", "Entrega a domicilio"],
+
+  /**
+   * Metodos de pago que anuncia el propio menu impreso del local (2026-09-02).
+   * Se muestran en el checkout como informacion: el cobro lo hace el
+   * restaurante por WhatsApp, el sitio no procesa pagos.
+   */
+  metodosPago: ["Sinpe Móvil", "Efectivo", "Tarjeta"],
 
   /**
    * Horarios REALES, tomados de la ficha de Google del negocio (2026-09-01).

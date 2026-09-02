@@ -11,7 +11,7 @@ function linea(id: string, cantidad: number, precio = 8500): LineaCarrito {
       descripcion: "",
       ingredientes: [],
       precio,
-      categoria: "bocas",
+      categoria: "grill",
       media: { tipo: "imagen", src: "/x.jpg", alt: "x" },
       disponible: true,
     },

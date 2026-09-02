@@ -2,205 +2,533 @@ import type { Plato } from "../types";
 
 /**
  * ============================================================================
- * DEMO — CONTENIDO PROVISIONAL
+ * MENU REAL DE 5TA AVENIDA GRILL
  * ============================================================================
- * PLATOS CONFIRMADOS (nombre real, precio todavia DEMO):
- *   - "la-quinta": la hamburguesa de la foto de portada de su Facebook.
- *   - "la-surtida": la nombran Jonatan Quesada y Leandro Lizano en sus resenas.
- *   - "papas-gajo" y "nachos-parrilla": los nombra Melvin Otarola.
+ * Transcrito del menu impreso que compartio el cliente el 2026-09-02
+ * ("NUEVO MENÚ"). Los NOMBRES y los PRECIOS son los suyos, no inventados.
  *
- * El resto son platos de grill costarricense verosimiles, puestos para que la
- * muestra se vea completa. Los PRECIOS son todos inventados: la ficha de Google
- * solo dice ₡5.000-10.000 por persona.
+ * Lo que SI se escribio aqui son las DESCRIPCIONES: el menu impreso solo lista
+ * nombre y precio. Se mantienen cortas y sin afirmar ingredientes que no
+ * constan, justamente para no inventar la composicion de los platos. Conviene
+ * que el cliente las revise y las amplie.
  *
- * NADA de esto es el menu real. Reemplazar en cuanto el cliente entregue sus
- * platos, precios y fotos. Los componentes no se tocan: solo este archivo.
+ * `ingredientes` queda vacio salvo donde el propio nombre lo dice.
  *
- * Los textos `alt` siguen el patron "Que + Donde" que exige el SEO local.
- * Mientras no haya fotos reales, `media.src` apunta al marcador de la marca.
+ * DUDAS DE TRANSCRIPCION (confirmar con el cliente):
+ *   - "Choripán": en la imagen se lee "Choripáti", que no es palabra.
+ *   - "Empanada Arreglada": en la imagen se lee "Empada Arreglada".
+ *
+ * FOTOS: solo existe la de la hamburguesa de portada. El resto usa el marcador
+ * de marca. Sustituir `FOTO_PENDIENTE` conforme lleguen.
  * ============================================================================
  */
 
 const FOTO_PENDIENTE = "/platos/placeholder.svg";
+const FOTO_BURGER = "/platos/hamburguesa-5ta.webp";
 
 export const menu: Plato[] = [
+  // ---------------------------------------------------------------- burgers
   {
-    id: "la-quinta",
-    nombre: "La 5ta Avenida",
+    id: "mar-y-tierra",
+    nombre: "Mar y Tierra Burger",
     descripcion:
-      "La hamburguesa de la casa: carne a la parrilla, cerdo mechado en salsa BBQ y camarones al ajillo, todo en pan artesanal.",
-    ingredientes: [
-      "Carne de res a la parrilla",
-      "Cerdo mechado en BBQ",
-      "Camarones al ajillo",
-      "Tomate, lechuga y pepinillo",
-      "Pan artesanal con ajonjolí",
-    ],
-    precio: 9500,
+      "Carne a la parrilla y camarones sobre pan artesanal. La de la foto.",
+    ingredientes: [],
+    precio: 4200,
     categoria: "hamburguesas",
     media: {
-      // Unica foto REAL que tenemos, recortada de la portada de Facebook.
+      // Unica foto real: coincide con la portada de su Facebook.
       tipo: "imagen",
-      src: "/platos/hamburguesa-5ta.webp",
-      alt: "Hamburguesa La 5ta Avenida con camarones en 5ta Avenida Grill, San Ramón",
+      src: FOTO_BURGER,
+      alt: "Mar y Tierra Burger con camarones en 5ta Avenida Grill, San Ramón",
     },
     destacado: true,
     disponible: true,
   },
   {
-    id: "smash-doble",
-    nombre: "Smash Doble",
-    descripcion:
-      "Dos tortas de res prensadas en plancha caliente, doble queso y cebolla caramelizada.",
-    ingredientes: ["Doble carne de res", "Doble queso amarillo", "Cebolla caramelizada", "Salsa de la casa"],
-    precio: 7800,
+    id: "angus",
+    nombre: "Angus",
+    descripcion: "Carne Angus en pan artesanal.",
+    ingredientes: [],
+    precio: 5500,
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
       src: FOTO_PENDIENTE,
-      alt: "Hamburguesa Smash Doble a la plancha en 5ta Avenida Grill, San Ramón",
-    },
-    disponible: true,
-  },
-  {
-    id: "costilla-bbq",
-    nombre: "Costillas BBQ",
-    descripcion:
-      "Costilla de cerdo cocinada lenta hasta soltarse del hueso, glaseada en BBQ ahumado.",
-    ingredientes: ["Costilla de cerdo", "Salsa BBQ ahumada", "Papas rústicas", "Ensalada de repollo"],
-    precio: 11500,
-    categoria: "costillas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Costillas de cerdo en salsa BBQ a la parrilla en 5ta Avenida Grill, San Ramón",
+      alt: "Hamburguesa Angus en pan artesanal en 5ta Avenida Grill, San Ramón",
     },
     destacado: true,
     disponible: true,
   },
   {
-    id: "alitas-buffalo",
-    nombre: "Alitas Buffalo",
-    descripcion: "Ocho alitas crujientes bañadas en salsa buffalo, con aderezo ranch.",
-    ingredientes: ["8 alitas de pollo", "Salsa buffalo", "Aderezo ranch", "Bastones de apio"],
-    precio: 6900,
-    categoria: "alitas",
+    id: "pulled-pork",
+    nombre: "Pulled Pork",
+    descripcion: "Cerdo mechado en pan artesanal.",
+    ingredientes: [],
+    precio: 4200,
+    categoria: "hamburguesas",
     media: {
       tipo: "imagen",
       src: FOTO_PENDIENTE,
-      alt: "Alitas de pollo en salsa buffalo en 5ta Avenida Grill, San Ramón",
-    },
-    destacado: true,
-    disponible: true,
-  },
-  {
-    // PLATO REAL: dos resenas de Google la mencionan por nombre.
-    // "Pedimos una surtida para 8 personas, lo recomiendo" — Jonatan Quesada
-    // "Delicioso, la surtida es muy buena" — Leandro Lizano
-    // El precio y la composicion siguen siendo DEMO.
-    id: "la-surtida",
-    nombre: "La Surtida",
-    descripcion:
-      "La picada para compartir: carnes surtidas, papas gajo, chicharrón y salsas de la casa. Pensada para grupo.",
-    ingredientes: [
-      "Carnes surtidas a la parrilla",
-      "Papas gajo",
-      "Chicharrón",
-      "Salsas de la casa",
-    ],
-    precio: 24000,
-    categoria: "bocas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "La Surtida para compartir en 5ta Avenida Grill, San Ramón",
-    },
-    destacado: true,
-    disponible: true,
-  },
-  {
-    // PLATO REAL: "Me encanta las papas gajo y los nachos" — Melvin Otárola
-    id: "papas-gajo",
-    nombre: "Papas Gajo",
-    descripcion: "Papas en gajo doradas, con salsa de la casa.",
-    ingredientes: ["Papas en gajo", "Especias de la casa", "Salsa para acompañar"],
-    precio: 3200,
-    categoria: "bocas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Papas gajo doradas en 5ta Avenida Grill, San Ramón",
+      alt: "Hamburguesa de cerdo mechado en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
   },
   {
-    id: "chicharron",
-    nombre: "Boca de Chicharrón",
-    descripcion: "Chicharrón de cerdo con yuca frita, chimichurri y limón.",
-    ingredientes: ["Chicharrón de cerdo", "Yuca frita", "Chimichurri", "Limón"],
-    precio: 5800,
-    categoria: "bocas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Boca de chicharrón con yuca frita en 5ta Avenida Grill, San Ramón",
-    },
-    disponible: true,
-  },
-  {
-    // PLATO REAL: "Me encanta las papas gajo y los nachos" — Melvin Otárola
-    id: "nachos-parrilla",
-    nombre: "Nachos de la Parrilla",
-    descripcion: "Tortillas crujientes con carne a la parrilla, queso fundido y pico de gallo.",
-    ingredientes: ["Tortillas de maíz", "Carne a la parrilla", "Queso fundido", "Pico de gallo", "Natilla"],
-    precio: 6500,
-    categoria: "bocas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Nachos con carne a la parrilla en 5ta Avenida Grill, San Ramón",
-    },
-    disponible: true,
-  },
-  {
-    id: "limonada-hierbabuena",
-    nombre: "Limonada con Hierbabuena",
-    descripcion: "Limonada natural batida al momento con hierbabuena fresca.",
-    ingredientes: ["Limón criollo", "Hierbabuena", "Hielo"],
-    precio: 2200,
-    categoria: "bebidas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Limonada natural con hierbabuena en 5ta Avenida Grill, San Ramón",
-    },
-    disponible: true,
-  },
-  {
-    id: "cerveza-nacional",
-    nombre: "Cerveza Nacional",
-    descripcion: "Botella bien fría.",
-    ingredientes: ["Cerveza nacional 350 ml"],
-    precio: 2000,
-    categoria: "bebidas",
-    media: {
-      tipo: "imagen",
-      src: FOTO_PENDIENTE,
-      alt: "Cerveza nacional fría en 5ta Avenida Grill, San Ramón",
-    },
-    disponible: true,
-  },
-  {
-    id: "brownie-helado",
-    nombre: "Brownie con Helado",
-    descripcion: "Brownie tibio de chocolate con una bocha de helado de vainilla.",
-    ingredientes: ["Brownie de chocolate", "Helado de vainilla", "Salsa de chocolate"],
+    id: "costilla-burger",
+    nombre: "Costilla Burger",
+    descripcion: "Costilla de cerdo en pan artesanal.",
+    ingredientes: [],
     precio: 3500,
-    categoria: "postres",
+    categoria: "hamburguesas",
     media: {
       tipo: "imagen",
       src: FOTO_PENDIENTE,
-      alt: "Brownie de chocolate con helado en 5ta Avenida Grill, San Ramón",
+      alt: "Hamburguesa de costilla en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "doble-torta",
+    nombre: "Doble Torta",
+    descripcion: "Doble carne en pan artesanal.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "hamburguesas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Hamburguesa doble torta en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "cheeseburger",
+    nombre: "Cheeseburger",
+    descripcion: "Con queso, en pan artesanal.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "hamburguesas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Cheeseburger en pan artesanal en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "de-pollo",
+    nombre: "D' Pollo",
+    descripcion: "De pollo, en pan artesanal.",
+    ingredientes: [],
+    precio: 2500,
+    categoria: "hamburguesas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Hamburguesa de pollo en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "tradicional",
+    nombre: "Tradicional",
+    descripcion: "La de siempre, en pan artesanal.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "hamburguesas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Hamburguesa tradicional en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "economica",
+    nombre: "Económica",
+    descripcion: "La opción más accesible del menú.",
+    ingredientes: [],
+    precio: 1000,
+    categoria: "hamburguesas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Hamburguesa económica en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+
+  // ------------------------------------------------------------------ grill
+  {
+    id: "surtida-grande",
+    nombre: "Surtida 5ta Avenida (Grande)",
+    descripcion:
+      "La picada de la casa para compartir. Dos reseñas de Google la recomiendan para grupo.",
+    ingredientes: [],
+    precio: 13000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Surtida 5ta Avenida grande para compartir en San Ramón",
+    },
+    destacado: true,
+    disponible: true,
+  },
+  {
+    id: "surtida-pequena",
+    nombre: "Surtida 5ta Avenida (Pequeña)",
+    descripcion: "La misma picada de la casa, en porción pequeña.",
+    ingredientes: [],
+    precio: 7500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Surtida 5ta Avenida pequeña en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "taco-birria",
+    nombre: "Taco de Birria (3 unidades)",
+    descripcion: "Tres tacos de birria.",
+    ingredientes: [],
+    precio: 4900,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Tacos de birria en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "costilla-cerdo",
+    nombre: "Costilla de cerdo",
+    descripcion: "Costilla de cerdo a la parrilla.",
+    ingredientes: [],
+    precio: 4200,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Costilla de cerdo a la parrilla en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "papas-mixtas",
+    nombre: "Papas Mixtas",
+    descripcion: "Papas mixtas de la casa.",
+    ingredientes: [],
+    precio: 4000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Papas mixtas en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "nachos-mixtos",
+    nombre: "Nachos Mixtos",
+    descripcion: "Nachos mixtos. Los mencionan en las reseñas de Google.",
+    ingredientes: [],
+    precio: 4000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Nachos mixtos en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "nachos",
+    nombre: "Nachos",
+    descripcion: "Nachos de la casa.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Nachos en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "nuggets",
+    nombre: "Nuggets",
+    descripcion: "Nuggets de pollo.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Nuggets de pollo en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "alitas",
+    nombre: "Alitas (6 unidades)",
+    descripcion: "Seis alitas de pollo.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Alitas de pollo en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "papas-especiales",
+    nombre: "Papas Especiales",
+    descripcion: "Papas especiales de la casa.",
+    ingredientes: [],
+    precio: 3500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Papas especiales en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "pinchos",
+    nombre: "Pinchos (2 unidades)",
+    descripcion: "Dos pinchos a la parrilla.",
+    ingredientes: [],
+    precio: 3000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Pinchos a la parrilla en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "canasta-chicharron",
+    nombre: "Canasta de chicharrón",
+    descripcion: "Canasta de chicharrón.",
+    ingredientes: [],
+    precio: 2800,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Canasta de chicharrón en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "cartucho",
+    nombre: "Cartucho",
+    descripcion: "Cartucho de la casa.",
+    ingredientes: [],
+    precio: 2500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Cartucho en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "salchipapas",
+    nombre: "Salchipapas",
+    descripcion: "Salchichas con papas.",
+    ingredientes: [],
+    precio: 2300,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Salchipapas en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "taco-tico",
+    nombre: "Taco Tico",
+    descripcion: "Taco tico de la casa.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Taco tico en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    // Transcripcion dudosa: la imagen dice "Empada Arreglada".
+    id: "empanada-arreglada",
+    nombre: "Empanada Arreglada",
+    descripcion: "Empanada arreglada.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Empanada arreglada en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    // Transcripcion dudosa: la imagen dice "Choripáti".
+    id: "choripan",
+    nombre: "Choripán",
+    descripcion: "Chorizo en pan.",
+    ingredientes: [],
+    precio: 1500,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Choripán en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "empanada",
+    nombre: "Empanada",
+    descripcion: "Empanada de la casa.",
+    ingredientes: [],
+    precio: 1000,
+    categoria: "grill",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Empanada en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+
+  // --------------------------------------------------------------- infantil
+  {
+    id: "mini-papas-mixtas",
+    nombre: "Mini papas mixtas",
+    descripcion: "Porción infantil de papas mixtas.",
+    ingredientes: [],
+    precio: 2500,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini papas mixtas para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "mini-nachos-mixtos",
+    nombre: "Mini Nachos Mixtos",
+    descripcion: "Porción infantil de nachos mixtos.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini nachos mixtos para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "mini-salchipapas",
+    nombre: "Mini Salchipapas",
+    descripcion: "Porción infantil de salchipapas.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini salchipapas para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "mini-nuggets",
+    nombre: "Mini nuggets con papas",
+    descripcion: "Porción infantil de nuggets con papas.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini nuggets con papas para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "mini-papas-especiales",
+    nombre: "Mini papas especiales",
+    descripcion: "Porción infantil de papas especiales.",
+    ingredientes: [],
+    precio: 2000,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini papas especiales para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "mini-nachos",
+    nombre: "Mini Nachos",
+    descripcion: "Porción infantil de nachos.",
+    ingredientes: [],
+    precio: 1500,
+    categoria: "infantil",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Mini nachos para niños en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+
+  // ------------------------------------------------------------ adicionales
+  {
+    id: "papas-gajos",
+    nombre: "Orden de papas en gajos",
+    descripcion: "Papas en gajo. Las mencionan en las reseñas de Google.",
+    ingredientes: [],
+    precio: 1500,
+    categoria: "adicionales",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Orden de papas en gajos en 5ta Avenida Grill, San Ramón",
+    },
+    disponible: true,
+  },
+  {
+    id: "papas-pequenas",
+    nombre: "Orden de papas pequeñas",
+    descripcion: "Porción pequeña de papas.",
+    ingredientes: [],
+    precio: 800,
+    categoria: "adicionales",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Orden de papas pequeñas en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
   },

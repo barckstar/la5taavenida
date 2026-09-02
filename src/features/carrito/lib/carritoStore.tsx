@@ -75,11 +75,23 @@ export function conteo(lineas: LineaCarrito[]): number {
 
 const VACIO: LineaCarrito[] = [];
 
-function parsear(crudo: string | null): LineaCarrito[] {
+/**
+ * Lee el carrito guardado y DESCARTA los platos que ya no existen en el menu.
+ *
+ * Sin esto, un carrito viejo en localStorage sobrevive a un cambio de carta y
+ * el cliente podria terminar enviando por WhatsApp un pedido de algo que el
+ * restaurante ya no vende. Paso de verdad al reemplazar el menu de muestra por
+ * el real.
+ */
+function parsear(crudo: string | null, idsValidos?: Set<string>): LineaCarrito[] {
   if (!crudo) return VACIO;
   try {
     const dato = JSON.parse(crudo);
-    return Array.isArray(dato) ? (dato as LineaCarrito[]) : VACIO;
+    if (!Array.isArray(dato)) return VACIO;
+    const lineas = dato as LineaCarrito[];
+    if (!idsValidos) return lineas;
+    const vigentes = lineas.filter((l) => idsValidos.has(l.plato?.id));
+    return vigentes.length === lineas.length ? lineas : vigentes;
   } catch {
     return VACIO;
   }
@@ -102,8 +114,22 @@ type ValorCarrito = {
 
 const CarritoContexto = createContext<ValorCarrito | null>(null);
 
-export function CarritoProvider({ children }: { children: ReactNode }) {
+export function CarritoProvider({
+  children,
+  idsDelMenu,
+}: {
+  children: ReactNode;
+  /**
+   * Ids de los platos vigentes. Se inyecta desde el layout para no acoplar la
+   * feature del carrito con la del menu: una feature nunca importa de otra.
+   */
+  idsDelMenu?: string[];
+}) {
   const [abierto, setAbierto] = useState(false);
+  const idsValidos = useMemo(
+    () => (idsDelMenu ? new Set(idsDelMenu) : undefined),
+    [idsDelMenu],
+  );
 
   /*
     localStorage es el almacen real y se lee con useSyncExternalStore. Asi no
@@ -118,14 +144,17 @@ export function CarritoProvider({ children }: { children: ReactNode }) {
     () => null, // snapshot del servidor: carrito vacio
   );
 
-  const lineas = useMemo(() => parsear(crudo), [crudo]);
+  const lineas = useMemo(() => parsear(crudo, idsValidos), [crudo, idsValidos]);
 
   const despachar = useCallback(
     (accion: AccionCarrito) => {
-      const siguiente = carritoReducer(parsear(leerCrudo(CLAVE)), accion);
+      const siguiente = carritoReducer(
+        parsear(leerCrudo(CLAVE), idsValidos),
+        accion,
+      );
       escribirCrudo(CLAVE, JSON.stringify(siguiente));
     },
-    [],
+    [idsValidos],
   );
 
   const valor = useMemo<ValorCarrito>(
