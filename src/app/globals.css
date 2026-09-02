@@ -103,6 +103,44 @@ body {
   }
 }
 
+/* ============================================================
+   NO BORRAR POR ARRASTRE: estas animaciones las usa
+   features/landing/components/LogoEnBrasas.tsx.
+   Ya se perdieron una vez al eliminar un bloque vecino.
+   ============================================================ */
+/* ============================================================
+   Fuego y calor. Todo con transform/opacity/filter — va en GPU.
+   Los pasos son IRREGULARES a proposito: una llama que late
+   simetrica se lee como maquina, no como fuego.
+   ============================================================ */
+
+/* Parpadeo de llama: brillo y escala nerviosos, sin ritmo obvio. */
+@keyframes llama-parpadeo {
+  0%   { opacity: .55; transform: scale(1)     translateZ(0); }
+  12%  { opacity: .82; transform: scale(1.035) translateZ(0); }
+  23%  { opacity: .61; transform: scale(1.01)  translateZ(0); }
+  38%  { opacity: .95; transform: scale(1.06)  translateZ(0); }
+  47%  { opacity: .70; transform: scale(1.02)  translateZ(0); }
+  61%  { opacity: .88; transform: scale(1.045) translateZ(0); }
+  73%  { opacity: .58; transform: scale(1.005) translateZ(0); }
+  86%  { opacity: .90; transform: scale(1.05)  translateZ(0); }
+  100% { opacity: .55; transform: scale(1)     translateZ(0); }
+}
+
+/* Onda de calor: el anillo crece hacia afuera y se apaga. */
+@keyframes onda-calor {
+  0%   { opacity: .55; transform: scale(.82) translateZ(0); }
+  70%  { opacity: .12; transform: scale(1.12) translateZ(0); }
+  100% { opacity: 0;   transform: scale(1.28) translateZ(0); }
+}
+
+/* Aire caliente: deformacion lenta, como el temblor sobre la parrilla. */
+@keyframes temblor-calor {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(-3px, -5px, 0) scale(1.015); }
+  66%      { transform: translate3d(3px, -2px, 0) scale(1.008); }
+}
+
 /* ---- Barra lateral de redes ---- */
 .barra-social {
   animation: barra-social-entra 0.8s ease-out 1s both;
