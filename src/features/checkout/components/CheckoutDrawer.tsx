@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
 import { formatoColones } from "@/shared/lib/formatoColones";
-import { negocio } from "@/shared/config/negocio";
 import { IconoWhatsApp } from "@/shared/components/ui/Iconos";
 import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
 import {
@@ -23,6 +22,7 @@ import {
   leerDirecciones,
   olvidarDireccion,
 } from "../lib/direccionesGuardadas";
+import { CLAVE_CLIENTE, guardarCliente, leerCliente } from "../lib/datosCliente";
 import { BotonUbicacion } from "./BotonUbicacion";
 
 type Errores = Partial<Record<keyof DatosPedido, string>>;
@@ -51,6 +51,18 @@ export function CheckoutDrawer({
     () => null,
   );
   const guardadas = typeof window === "undefined" ? [] : leerDirecciones();
+
+  /*
+    Nombre y telefono de la vez pasada, para no volver a teclearlos. Se leen
+    del mismo almacen externo por la misma razon que el carrito: hidratar con
+    `setState` dentro de un efecto esta prohibido por React 19.
+  */
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_CLIENTE, f), []),
+    () => leerCrudo(CLAVE_CLIENTE),
+    () => null,
+  );
+  const cliente = typeof window === "undefined" ? null : leerCliente();
 
   useEffect(() => {
     if (!abierto) return;
@@ -105,6 +117,12 @@ export function CheckoutDrawer({
       );
       return;
     }
+
+    // Se recuerdan siempre, no solo en express: en retiro tambien se piden.
+    guardarCliente({
+      nombre: validado.data.nombre,
+      telefono: validado.data.telefono,
+    });
 
     if (modalidad === "express" && direccion.trim()) {
       guardarDireccion({
@@ -190,8 +208,7 @@ export function CheckoutDrawer({
                 ))}
               </div>
               <p className="mt-2 text-xs text-texto-suave">
-                El restaurante cobra el pedido; el costo del express lo cobra
-                el mensajero al llegar. El sitio no procesa pagos.
+                Se paga al recibir. El express lo cobra el mensajero.
               </p>
             </fieldset>
 
@@ -200,6 +217,7 @@ export function CheckoutDrawer({
               etiqueta="Nombre"
               error={errores.nombre}
               autoComplete="name"
+              valorInicial={cliente?.nombre}
               required
             />
             <Campo
@@ -209,6 +227,7 @@ export function CheckoutDrawer({
               marcador="8888-8888"
               error={errores.telefono}
               autoComplete="tel"
+              valorInicial={cliente?.telefono}
               required
             />
 
@@ -309,10 +328,8 @@ export function CheckoutDrawer({
                 {formatoColones(total)}
               </span>
             </div>
-            <p className="mt-1 text-xs leading-relaxed text-texto-suave">
-              Al enviar se abre WhatsApp con el pedido ya escrito. El
-              restaurante confirma la orden y el tiempo de entrega por ese
-              mismo medio.
+            <p className="mt-1 text-xs text-texto-suave">
+              Se confirma por WhatsApp.
             </p>
 
             <button
@@ -320,7 +337,7 @@ export function CheckoutDrawer({
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-acento py-3.5 font-display font-semibold uppercase tracking-wide text-base transition-transform duration-200 hover:bg-acento-alt active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento-alt"
             >
               <IconoWhatsApp className="size-5" />
-              Enviar al {negocio.whatsappVisible}
+              Hacer pedido
             </button>
           </footer>
         </form>
@@ -362,6 +379,7 @@ function Campo({
   error,
   required,
   autoComplete,
+  valorInicial,
 }: {
   nombre: string;
   etiqueta: string;
@@ -370,6 +388,7 @@ function Campo({
   error?: string;
   required?: boolean;
   autoComplete?: string;
+  valorInicial?: string;
 }) {
   const idError = `${nombre}-error`;
   return (
@@ -380,6 +399,11 @@ function Campo({
       >
         {etiqueta}
       </label>
+      {/*
+        El valor guardado entra por `defaultValue` y no por `value`: el campo
+        sigue siendo no controlado, y como el drawer se desmonta al cerrarse,
+        al abrirlo de nuevo vuelve a tomar el dato recordado.
+      */}
       <input
         id={nombre}
         name={nombre}
@@ -387,6 +411,7 @@ function Campo({
         placeholder={marcador}
         required={required}
         autoComplete={autoComplete}
+        defaultValue={valorInicial}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? idError : undefined}
         className={`mt-2 w-full rounded-xl border bg-base px-4 py-3 text-texto placeholder:text-texto-suave/50 focus:outline-none ${
