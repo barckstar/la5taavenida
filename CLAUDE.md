@@ -3,7 +3,10 @@
 Sitio web de **5ta Avenida Grill** (página FB: "5ta Avenida San Ramón"),
 restaurante/grill en San Ramón, Alajuela, Costa Rica.
 
-Estado: **sondeo / definición**. No hay código todavía.
+Estado: **en desarrollo**. Ver `docs/plans/2026-09-01-sitio-5ta-avenida.md`.
+
+Dev server en el **puerto 3001** (`npm run dev`). Ojo: `D:\.claude\launch.json` manda
+cuando la sesion corre desde `D:\`; mascontractorsllc usa el 3000.
 
 ## Contexto del negocio
 
@@ -32,6 +35,16 @@ Presupuesto de esfuerzo acotado: impacto visual alto, alcance controlado.
 - `schema-dts` para tipar el JSON-LD
 - Deploy en **Vercel** + `@vercel/speed-insights`
 
+## Arquitectura de navegacion — SOLO 2 PAGINAS
+
+- **`/` (Inicio)** — lleva TODA la informacion del negocio como secciones ancladas:
+  hero, promocion semanal, nosotros, destacados, ubicacion, contacto. Se recorre con
+  scroll suave entre anclas: se siente como una SPA, sin recargas.
+- **`/menu`** — la unica ruta aparte, porque es la que monta el menu virtual y el carrito.
+
+No se crean rutas para "nosotros", "contacto" ni "ubicacion". Son anclas de `/`.
+El carrito y el checkout son drawers, nunca paginas.
+
 ## Arquitectura — Feature-Based
 
 ```
@@ -57,18 +70,26 @@ El contenido vive tipado en `features/<x>/data/`, nunca hardcodeado en el JSX.
 
 | Franja | Uso | Color |
 |---|---|---|
-| 70% dominante | Fondos de pagina y secciones | `#220B08` / `#361316` (casi negro / granate) |
-| 30% secundario | Tarjetas, superficies, separadores, texturas madera/ladrillo | `#5B260D` / `#963316` |
+| 70% dominante | Fondos de pagina y secciones | `#050505` / `#0F0D0D` — **negro real** |
+| 30% secundario | Tarjetas, superficies, separadores | `#1A0F0D` / `#2A1512` |
 | 10% acento | CTAs, precios, badges, estado activo, "Agregar al carrito" | `#E35120` / `#E8771F` |
 
-El naranja **nunca** se usa como fondo de seccion. Verificar contraste WCAG AA.
+El naranja **nunca** se usa como fondo de seccion.
+
+> La primera paleta salio del degradado de la FOTO DE PERFIL del logo y se veia cafe y
+> embarrada. Eso era el fondo de una foto, no la identidad. La marca real es **la llama
+> sobre negro**, y asi lo hace tambien la referencia del cliente (chickenfritocr.com usa
+> `#050505` / `#1A0A0A` con rojo y naranja solo de acento). No volver al cafe.
+
+Contraste medido sobre `#050505`: acento 5.30:1, acento-alt 6.88:1, blanco 20.1:1 — todo AA.
+El rojo brasa `#A01010` queda en 2.50:1: **decorativo, nunca texto**. Y sobre degradados o
+superficies del 30%, el texto va blanco, no naranja.
 
 ## Pendiente de decidir
 
-- [ ] Alcance: ¿vitrina, o con reservas reales / pedidos?
 - [ ] Dirección, teléfono, horarios y menú reales (bloqueado por el cliente)
 - [ ] Fotografía del local y platos
-- [ ] Dominio
+- [x] Dominio: vercel.app para la muestra
 - [ ] ¿Bilingüe ES/EN?
 - [ ] shadcn/ui, Biome, Vitest+Playwright, GitHub Actions — propuestos, sin confirmar
 

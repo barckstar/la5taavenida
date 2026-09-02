@@ -11,10 +11,10 @@ import { negocio } from "@/shared/config/negocio";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
 
 const enlaces = [
-  { href: "/", texto: "Inicio" },
   { href: "/menu", texto: "Menú" },
+  { href: "/#nosotros", texto: "Nosotros" },
+  { href: "/#resenas", texto: "Reseñas" },
   { href: "/#ubicacion", texto: "Ubicación" },
-  { href: "/#contacto", texto: "Contacto" },
 ] as const;
 
 export function Navbar() {
