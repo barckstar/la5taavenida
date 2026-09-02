@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
+import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
+import { CLAVE_FAVORITOS, leerFavoritos } from "../lib/favoritos";
 import { Brasas } from "@/shared/components/ui/Brasas";
 import { ReelPlato } from "./ReelPlato";
-import { FiltroCategorias } from "./FiltroCategorias";
+import { FiltroCategorias, type FiltroReel } from "./FiltroCategorias";
 import { menu } from "@/features/menu/data/menu";
-import type { CategoriaId } from "@/features/menu/types";
 
 /**
  * Recorrido de reels a pantalla completa.
@@ -18,13 +19,22 @@ import type { CategoriaId } from "@/features/menu/types";
  * pegada encima.
  */
 export function VistaReels() {
-  const [categoria, setCategoria] = useState<CategoriaId | "todas">("todas");
+  const [filtro, setFiltro] = useState<FiltroReel>("todas");
+
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_FAVORITOS, f), []),
+    () => leerCrudo(CLAVE_FAVORITOS),
+    () => null,
+  );
+  const favoritos = typeof window === "undefined" ? [] : leerFavoritos();
 
   const disponibles = menu.filter((p) => p.disponible);
   const platos =
-    categoria === "todas"
+    filtro === "todas"
       ? disponibles
-      : disponibles.filter((p) => p.categoria === categoria);
+      : filtro === "favoritos"
+        ? disponibles.filter((p) => favoritos.includes(p.id))
+        : disponibles.filter((p) => p.categoria === filtro);
 
   return (
     <div className="relative isolate bg-base">
@@ -32,8 +42,9 @@ export function VistaReels() {
 
       <FiltroCategorias
         platos={disponibles}
-        activa={categoria}
-        onCambiar={setCategoria}
+        activa={filtro}
+        onCambiar={setFiltro}
+        cantidadFavoritos={favoritos.length}
       />
 
       <div

@@ -117,13 +117,13 @@ export function ReelPlato({ plato }: { plato: Plato }) {
               "Ver pedido": antes se montaba encima del precio y la descripcion.
             */}
             <div className="absolute inset-x-0 bottom-0 p-4 pb-24 sm:p-5 sm:pb-24">
-              <p className="font-display text-2xl font-bold text-acento sm:text-3xl">
+              <p className="precio-contorneado font-display text-3xl font-bold text-acento sm:text-4xl">
                 {formatoColones(plato.precio)}
               </p>
-              <h2 className="mt-1 font-display text-xl font-bold uppercase italic leading-tight text-texto sm:text-2xl">
+              <h2 className="mt-1 font-display text-xl font-bold uppercase italic leading-tight text-texto drop-shadow-[0_2px_6px_rgba(5,5,5,0.85)] sm:text-2xl">
                 {plato.nombre}
               </h2>
-              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-texto-suave">
+              <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-texto-suave drop-shadow-[0_1px_4px_rgba(5,5,5,0.9)]">
                 {plato.descripcion}
               </p>
               {!plato.disponible && (

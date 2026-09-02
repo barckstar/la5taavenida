@@ -240,3 +240,27 @@ html {
   border-width: 1px;
   border-color: transparent;
 }
+
+/* ============================================================
+   Precio con contorno.
+   Sobre una foto de comida el naranja puede caer justo encima
+   de una zona clara y perderse. El contorno negro lo despega
+   del fondo sea cual sea la foto.
+
+   Se usa `paint-order: stroke fill` para que el trazo quede
+   POR DEBAJO del relleno: sin eso el contorno se come el
+   interior de las letras y el numero se ve mas delgado.
+   ============================================================ */
+.precio-contorneado {
+  paint-order: stroke fill;
+  -webkit-text-stroke: 3px #050505;
+  /* Sombra suave ademas del trazo: separa aun sobre fondos claros. */
+  text-shadow: 0 2px 6px rgb(5 5 5 / 0.75);
+}
+
+/* En tamanos chicos un trazo de 3px se traga la letra. */
+.precio-contorneado-sm {
+  paint-order: stroke fill;
+  -webkit-text-stroke: 2px #050505;
+  text-shadow: 0 1px 4px rgb(5 5 5 / 0.7);
+}

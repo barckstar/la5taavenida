@@ -4,6 +4,9 @@ import Image from "next/image";
 import { categorias } from "@/features/menu/data/categorias";
 import type { CategoriaId, Plato } from "@/features/menu/types";
 
+/** Los filtros del recorrido: las categorias reales mas los favoritos. */
+export type FiltroReel = CategoriaId | "todas" | "favoritos";
+
 /**
  * Filtro de categorías del recorrido de reels.
  *
@@ -18,10 +21,12 @@ export function FiltroCategorias({
   platos,
   activa,
   onCambiar,
+  cantidadFavoritos,
 }: {
   platos: Plato[];
-  activa: CategoriaId | "todas";
-  onCambiar: (c: CategoriaId | "todas") => void;
+  activa: FiltroReel;
+  onCambiar: (c: FiltroReel) => void;
+  cantidadFavoritos: number;
 }) {
   /** Primera foto disponible de cada categoría, para la miniatura. */
   const portada = (id: CategoriaId) =>
@@ -42,6 +47,17 @@ export function FiltroCategorias({
         onClick={() => onCambiar("todas")}
         etiqueta="Todo"
       />
+
+      {/* Favoritos solo aparece cuando hay alguno: un filtro que siempre
+          devuelve vacio es una promesa rota. */}
+      {cantidadFavoritos > 0 && (
+        <Circulo
+          activa={activa === "favoritos"}
+          onClick={() => onCambiar("favoritos")}
+          etiqueta={`Favoritos (${cantidadFavoritos})`}
+          icono="corazon"
+        />
+      )}
       {conPlatos.map((c) => (
         <Circulo
           key={c.id}
@@ -60,11 +76,13 @@ function Circulo({
   onClick,
   etiqueta,
   foto,
+  icono,
 }: {
   activa: boolean;
   onClick: () => void;
   etiqueta: string;
   foto?: string;
+  icono?: "corazon";
 }) {
   return (
     <button
@@ -88,10 +106,18 @@ function Circulo({
             height={64}
             className="size-full object-cover"
           />
+        ) : icono === "corazon" ? (
+          <span className="grid size-full place-items-center bg-superficie text-acento">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="size-6" aria-hidden="true">
+              <path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 1 0-7.4 7.4L12 21.5l8.8-8.5a5.2 5.2 0 0 0 0-7.4Z" />
+            </svg>
+          </span>
         ) : (
           // "Todo" no tiene foto propia: lleva la llama de la marca.
-          <span className="grid size-full place-items-center bg-superficie font-display text-lg font-bold text-acento">
-            ★
+          <span className="grid size-full place-items-center bg-superficie">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="size-6 text-acento" aria-hidden="true">
+              <path d="M12 2c1.5 3.1.3 4.8-.7 6.1-1.2 1.6-2 2.9-2 4.8 0 3.1 2.6 5.6 5.7 5.6s5.6-2.5 5.6-5.6c0-2.3-1.2-3.7-2.6-5.6.4 1.3.2 2.4-.6 3 .5-2.6-1.3-5.9-5.4-8.3z" />
+            </svg>
           </span>
         )}
       </span>
