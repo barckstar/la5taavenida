@@ -12,6 +12,7 @@ export function Destacados() {
       id="destacados"
       antetitulo="Lo más pedido"
       titulo="Los que no fallan"
+      className="bg-base-alt"
     >
       <RevelarCascada className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {platosDestacados.map((plato) => (

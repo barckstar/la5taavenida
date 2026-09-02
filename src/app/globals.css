@@ -46,14 +46,27 @@
 html {
   scroll-behavior: smooth;
   background: var(--color-base);
+  /*
+    `clip` y NO `hidden`, en html Y en body.
+
+    Las animaciones de entrada desplazan elementos hasta 32px fuera del borde
+    izquierdo. Mientras estan afuera el documento gana ancho y aparece un scroll
+    horizontal: se median 402px de scrollWidth en un viewport de 390.
+    Tenerlo solo en `body` no alcanzaba, porque html se ensancha igual.
+
+    La diferencia con `hidden` importa: `hidden` convierte al elemento en
+    contenedor de scroll y eso ROMPE `position: sticky` en sus descendientes —
+    y la barra de filtros del menu es sticky. `clip` recorta sin crear
+    contenedor de scroll.
+  */
+  overflow-x: clip;
 }
 
 body {
   background: var(--color-base);
   color: var(--color-texto);
   font-family: var(--font-sans);
-  /* Evita el desborde horizontal en movil, requisito del spec */
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Brasas del hero — CSS puro, sin JavaScript. Solo transform y opacity. */

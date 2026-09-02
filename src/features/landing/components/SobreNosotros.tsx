@@ -6,7 +6,7 @@ import { Revelar, RevelarCascada, ItemCascada } from "@/shared/components/ui/Rev
 
 export function SobreNosotros() {
   return (
-    <section id="nosotros" className="scroll-mt-20 bg-base-alt py-20 sm:py-28">
+    <section id="nosotros" className="scroll-mt-20 py-20 sm:py-28">
       <Contenedor>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <LogoEnBrasas />

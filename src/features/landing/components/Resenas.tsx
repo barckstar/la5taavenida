@@ -106,6 +106,7 @@ export function Resenas() {
       id="resenas"
       antetitulo="Reseñas verificadas"
       titulo="Lo que dice la gente de San Ramón"
+      className="bg-base-alt"
     >
       <Revelar direccion="escala">
         <ResumenCalificacion />
