@@ -86,3 +86,7 @@ research/assets/instagram/
 # Bitacora y config local de la herramienta: no se versiona.
 # La bitacora es material de trabajo interno, no del producto.
 .claude/
+
+# Hojas de contacto que se arman para revisar un recorte a ojo. Son un paso
+# intermedio de verificacion, no material del sitio ni del sondeo.
+research/assets/pruebas/

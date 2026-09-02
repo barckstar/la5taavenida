@@ -6,6 +6,7 @@ import { BarraMenu } from "./BarraMenu";
 import { TarjetaPlato } from "./TarjetaPlato";
 import { DetallePlato } from "./DetallePlato";
 import { menu } from "../data/menu";
+import { ofertasVigentes, ofertaComoPlato } from "@/features/ofertas/data/ofertas";
 import { categorias } from "../data/categorias";
 import type { CategoriaId, Plato } from "../types";
 
@@ -20,11 +21,19 @@ export function MenuView() {
   const [categoria, setCategoria] = useState<CategoriaId | "todas">("todas");
   const [detalle, setDetalle] = useState<Plato | null>(null);
 
+  /*
+    Las ofertas entran al menu como una categoria mas, convertidas a la forma
+    de plato. Asi el filtro, la tarjeta y el carrito las tratan igual que
+    cualquier otro producto, sin logica aparte.
+  */
+  const catalogo = [...ofertasVigentes().map(ofertaComoPlato), ...menu];
   const platos =
-    categoria === "todas" ? menu : menu.filter((p) => p.categoria === categoria);
+    categoria === "todas"
+      ? catalogo
+      : catalogo.filter((p) => p.categoria === categoria);
 
   const categoriasConPlatos = categorias.filter((c) =>
-    menu.some((p) => p.categoria === c.id),
+    catalogo.some((p) => p.categoria === c.id),
   );
 
   return (

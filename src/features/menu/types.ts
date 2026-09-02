@@ -1,4 +1,5 @@
-export type CategoriaId = "grill" | "hamburguesas" | "adicionales" | "infantil";
+export type CategoriaId = "grill" | "ofertas"
+  | "hamburguesas" | "adicionales" | "infantil";
 
 /**
  * Union discriminada a proposito. La vista Reels funciona HOY con imagenes y
@@ -25,4 +26,10 @@ export type Plato = {
 export type Categoria = {
   id: CategoriaId;
   nombre: string;
+  /**
+   * Etiqueta para el carril de circulos de los reels, donde cada rotulo
+   * dispone de unos 64px. "Menu Grill" se cortaba a "Menu Gri..."; el prefijo
+   * "Menu" no distingue nada porque lo comparten dos categorias.
+   */
+  corto?: string;
 };

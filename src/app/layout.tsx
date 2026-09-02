@@ -7,6 +7,7 @@ import { BarraSocial } from "@/shared/components/layout/BarraSocial";
 import { CarritoProvider } from "@/features/carrito/lib/carritoStore";
 import { CarritoUI } from "@/shared/components/layout/CarritoUI";
 import { menu } from "@/features/menu/data/menu";
+import { ofertasVigentes, ofertaComoPlato } from "@/features/ofertas/data/ofertas";
 import { EtiquetaJsonLd, jsonLdRestaurante } from "@/shared/lib/jsonLd";
 import "./globals.css";
 
@@ -104,7 +105,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         {/* Structured data del negocio. Todos los datos son reales. */}
         <EtiquetaJsonLd datos={jsonLdRestaurante()} />
-        <CarritoProvider idsDelMenu={menu.map((p) => p.id)}>
+        <CarritoProvider
+          idsDelMenu={[
+            ...menu.map((p) => p.id),
+            // Las ofertas tambien son lineas validas del carrito.
+            ...ofertasVigentes().map((o) => ofertaComoPlato(o).id),
+          ]}
+        >
           <Navbar />
           <BarraSocial />
           {children}
