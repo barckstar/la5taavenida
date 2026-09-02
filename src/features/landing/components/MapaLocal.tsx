@@ -1,96 +1,33 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import { negocio } from "@/shared/config/negocio";
 
 /**
- * Mapa del local con un pin propio que lleva el logo adentro.
+ * Mapa del local: embed oficial de Google Maps.
  *
- * Se usa Leaflet y no el iframe de Google Maps por una razon concreta: el
- * embed de Google NO admite marcadores personalizados, asi que con el era
- * imposible meter el logo en el pin. Leaflet ademas es gratis y no pide
- * llave de API.
+ * Se intento Leaflet para poder meter el logo dentro del pin — el embed de
+ * Google no admite marcadores personalizados. No prospero: las teselas oscuras
+ * de CartoDB pasaron a exigir llave de API y salian marcadas con
+ * "API KEY REQUIRED" sobre todo el mapa.
  *
- * Las teselas son las oscuras de CartoDB: el mapa estandar de OSM es blanco
- * y quedaria como un bloque brillante en medio de un sitio negro.
+ * Este embed viene del enlace real que compartio el cliente, asi que cae
+ * exactamente sobre su ficha y muestra el marcador propio de Google con el
+ * nombre del negocio.
+ *
+ * Si mas adelante se quiere el pin con el logo, las opciones son: teselas de
+ * pago (Mapbox, Stadia, Maptiler) o la Google Maps JavaScript API, y las dos
+ * piden llave y facturacion.
  */
+const EMBED =
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6606.286142091869!2d-84.47478940987175!3d10.089150731844265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa04547e1c6e995%3A0xd5cab6e9d05265f0!2s5ta%20Avenida%20Grill!5e0!3m2!1ses!2scr!4v1788326312746!5m2!1ses!2scr";
+
 export function MapaLocal() {
-  const contenedor = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const nodo = contenedor.current;
-    if (!nodo) return;
-
-    let mapa: import("leaflet").Map | undefined;
-    let cancelado = false;
-
-    // Import dinamico: Leaflet toca `window` y no puede correr en el servidor.
-    (async () => {
-      const L = (await import("leaflet")).default;
-      await import("leaflet/dist/leaflet.css");
-      if (cancelado || !nodo) return;
-
-      const { lat, lng } = negocio.coordenadas;
-
-      mapa = L.map(nodo, {
-        center: [lat, lng],
-        zoom: 16,
-        scrollWheelZoom: false, // no secuestrar el scroll de la pagina
-        attributionControl: true,
-      });
-
-      L.tileLayer(
-        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-        {
-          maxZoom: 19,
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        },
-      ).addTo(mapa);
-
-      // Pin de marca: gota naranja con el logo circular adentro.
-      const pin = L.divIcon({
-        className: "pin-5ta",
-        iconSize: [64, 78],
-        iconAnchor: [32, 78], // la punta toca el punto exacto
-        popupAnchor: [0, -70],
-        html: `
-          <div class="pin-5ta__cuerpo">
-            <svg viewBox="0 0 64 78" class="pin-5ta__gota" aria-hidden="true">
-              <path d="M32 77C32 77 60 46.5 60 29A28 28 0 1 0 4 29C4 46.5 32 77 32 77Z"
-                    fill="#E35120" stroke="#050505" stroke-width="3"/>
-            </svg>
-            <img src="/marca/logo.jpg"
-                 alt=""
-                 class="pin-5ta__logo" />
-          </div>
-        `,
-      });
-
-      L.marker([lat, lng], {
-        icon: pin,
-        title: `${negocio.nombre} — ${negocio.direccion}`,
-        alt: `Ubicación de ${negocio.nombre} en ${negocio.ciudad}`,
-        keyboard: true,
-      })
-        .addTo(mapa)
-        .bindPopup(
-          `<strong>${negocio.nombre}</strong><br>${negocio.direccion}`,
-        );
-    })();
-
-    return () => {
-      cancelado = true;
-      mapa?.remove();
-    };
-  }, []);
-
   return (
-    <div
-      ref={contenedor}
-      role="application"
-      aria-label={`Mapa con la ubicación de ${negocio.nombre} en ${negocio.ciudad}, ${negocio.provincia}`}
-      className="h-80 w-full lg:h-full lg:min-h-[26rem]"
+    <iframe
+      title={`Mapa con la ubicación de ${negocio.nombre} en ${negocio.ciudad}, ${negocio.provincia}`}
+      src={EMBED}
+      loading="lazy"
+      allowFullScreen
+      referrerPolicy="strict-origin-when-cross-origin"
+      className="h-80 w-full border-0 lg:h-full lg:min-h-[26rem]"
     />
   );
 }

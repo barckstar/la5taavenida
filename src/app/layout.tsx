@@ -4,6 +4,8 @@ import { negocio } from "@/shared/config/negocio";
 import { Navbar } from "@/shared/components/layout/Navbar";
 import { Footer } from "@/shared/components/layout/Footer";
 import { BarraSocial } from "@/shared/components/layout/BarraSocial";
+import { CarritoProvider } from "@/features/carrito/lib/carritoStore";
+import { CarritoUI } from "@/shared/components/layout/CarritoUI";
 import "./globals.css";
 
 const display = Oswald({
@@ -45,10 +47,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Navbar />
-        <BarraSocial />
-        {children}
-        <Footer />
+        <CarritoProvider>
+          <Navbar />
+          <BarraSocial />
+          {children}
+          <Footer />
+          <CarritoUI />
+        </CarritoProvider>
       </body>
     </html>
   );
