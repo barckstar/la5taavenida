@@ -5,10 +5,11 @@ import { leerCrudo, escribirCrudo, suscribir } from "@/shared/lib/almacenLocal";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { BarraMenu } from "./BarraMenu";
 import { TarjetaPlato } from "./TarjetaPlato";
+import { DetallePlato } from "./DetallePlato";
 import { ReelPlato } from "./ReelPlato";
 import { menu } from "../data/menu";
 import { categorias } from "../data/categorias";
-import type { CategoriaId } from "../types";
+import type { CategoriaId, Plato } from "../types";
 
 const CLAVE_VISTA = "5ta-avenida-vista-menu";
 type Vista = "lista" | "reels";
@@ -22,6 +23,7 @@ type Vista = "lista" | "reels";
  */
 export function MenuView() {
   const [categoria, setCategoria] = useState<CategoriaId | "todas">("todas");
+  const [detalle, setDetalle] = useState<Plato | null>(null);
 
   // La preferencia se lee del almacen externo, no con setState en un efecto.
   const guardada = useSyncExternalStore(
@@ -62,13 +64,15 @@ export function MenuView() {
       {/* Cuadricula: siempre en escritorio; en movil solo si esta elegida */}
       <div className={vista === "reels" ? "hidden md:block" : ""}>
         <Contenedor>
-          <div className="grid gap-5 py-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-7 py-6 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {platos.map((p) => (
-              <TarjetaPlato key={p.id} plato={p} />
+              <TarjetaPlato key={p.id} plato={p} onAbrir={setDetalle} />
             ))}
           </div>
         </Contenedor>
       </div>
+
+      <DetallePlato plato={detalle} onCerrar={() => setDetalle(null)} />
     </>
   );
 }

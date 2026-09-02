@@ -1,45 +1,92 @@
+"use client";
+
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
-import { BotonAgregar } from "./BotonAgregar";
+import { useCarrito } from "@/features/carrito/lib/carritoStore";
 import type { Plato } from "../types";
 
-export function TarjetaPlato({ plato }: { plato: Plato }) {
+/**
+ * Tarjeta de plato al estilo de las apps de delivery: foto con esquinas
+ * redondeadas, boton "+" sobrepuesto en la esquina de la foto, y nombre,
+ * precio y descripcion debajo.
+ *
+ * El patron es deliberado: el usuario ya sabe usarlo por Uber Eats, asi que no
+ * hay que ensenarle nada. Tocar la tarjeta abre el detalle; el "+" agrega
+ * directo sin abrirlo, para el que ya sabe lo que quiere.
+ */
+export function TarjetaPlato({
+  plato,
+  onAbrir,
+}: {
+  plato: Plato;
+  onAbrir: (plato: Plato) => void;
+}) {
+  const { agregar, cantidadDe } = useCarrito();
+  const cantidad = cantidadDe(plato.id);
+
   return (
-    <article
-      className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-borde bg-superficie transition-colors duration-300 hover:border-acento/45 ${
-        plato.disponible ? "" : "opacity-60"
-      }`}
-    >
-      <div className="relative aspect-4/3 overflow-hidden bg-base-alt">
-        <Image
-          src={plato.media.src}
-          alt={plato.media.alt}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-        {!plato.disponible && (
-          <span className="absolute left-3 top-3 rounded-full bg-base/85 px-3 py-1 font-display text-xs font-semibold uppercase tracking-wider text-texto-suave">
+    <article className={plato.disponible ? "" : "opacity-55"}>
+      <div className="relative">
+        <button
+          type="button"
+          onClick={() => onAbrir(plato)}
+          aria-label={`Ver ${plato.nombre}`}
+          className="block w-full overflow-hidden rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
+        >
+          <span className="relative block aspect-4/3 bg-superficie">
+            <Image
+              src={plato.media.src}
+              alt={plato.media.alt}
+              fill
+              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 50vw"
+              className="object-cover transition-transform duration-500 hover:scale-105"
+            />
+          </span>
+        </button>
+
+        {!plato.disponible ? (
+          <span className="absolute left-2 top-2 rounded-full bg-base/85 px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-wider text-texto-suave">
             Agotado
           </span>
+        ) : cantidad > 0 ? (
+          // Ya en el carrito: el contador reemplaza al "+", como en Uber Eats.
+          <button
+            type="button"
+            onClick={() => onAbrir(plato)}
+            aria-label={`${plato.nombre}: ${cantidad} en el pedido. Tocá para ajustar`}
+            className="absolute bottom-2 right-2 grid size-9 place-items-center rounded-full bg-acento font-display text-sm font-bold text-base shadow-lg transition-transform duration-200 active:scale-90"
+          >
+            {cantidad}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => agregar(plato)}
+            aria-label={`Agregar ${plato.nombre} al pedido`}
+            className="absolute bottom-2 right-2 grid size-9 place-items-center rounded-full bg-base/90 text-xl leading-none text-texto shadow-lg backdrop-blur-sm transition-all duration-200 hover:bg-acento hover:text-base active:scale-90"
+          >
+            <span aria-hidden="true" className="-mt-0.5">
+              +
+            </span>
+          </button>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="font-display text-xl font-semibold uppercase italic tracking-wide text-texto">
+      <button
+        type="button"
+        onClick={() => onAbrir(plato)}
+        className="mt-2.5 block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
+      >
+        <h3 className="font-display text-base font-semibold uppercase italic leading-tight tracking-wide text-texto">
           {plato.nombre}
         </h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-texto-suave">
+        <p className="mt-1 font-display text-lg font-bold text-acento">
+          {formatoColones(plato.precio)}
+        </p>
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-texto-suave">
           {plato.descripcion}
         </p>
-
-        <div className="mt-5 flex items-center justify-between gap-3">
-          <p className="font-display text-2xl font-bold text-acento">
-            {formatoColones(plato.precio)}
-          </p>
-          <BotonAgregar plato={plato} />
-        </div>
-      </div>
+      </button>
     </article>
   );
 }

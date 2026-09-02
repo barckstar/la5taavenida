@@ -1,6 +1,7 @@
 "use client";
 
 import { IconoVideo, IconoCuadros } from "@/shared/components/ui/Iconos";
+import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import type { Categoria, CategoriaId } from "../types";
 
@@ -11,9 +12,12 @@ type Vista = "lista" | "reels";
  *
  * Va a ANCHO COMPLETO, fuera del Contenedor, con fondo opaco y borde inferior.
  * Antes vivia dentro del Contenedor y su fondo solo cubria el ancho de la
- * columna: las tarjetas se veian pasar por los costados y asomaban por arriba
- * y por abajo de la barra. El `backdrop-blur` solo no alcanza — hace falta que
- * el fondo llegue de borde a borde.
+ * columna: las tarjetas se veian pasar por los costados. El `backdrop-blur`
+ * solo no alcanza — hace falta que el fondo llegue de borde a borde.
+ *
+ * SIGUE AL NAVBAR: cuando el navbar se esconde al bajar, esta barra sube a
+ * ocupar su lugar (top-0). Si se quedara fija en top-16 quedaria una franja
+ * de 64px por la que se verian pasar las tarjetas.
  */
 export function BarraMenu({
   vista,
@@ -28,8 +32,14 @@ export function BarraMenu({
   onCambiarCategoria: (c: CategoriaId | "todas") => void;
   categorias: Categoria[];
 }) {
+  const navbarOculto = useNavbarOculto();
+
   return (
-    <div className="sticky top-16 z-30 border-b border-borde bg-base/95 backdrop-blur-md">
+    <div
+      className={`sticky z-30 border-b border-borde bg-base/95 backdrop-blur-md transition-[top] duration-300 ${
+        navbarOculto ? "top-0" : "top-16"
+      }`}
+    >
       <Contenedor className="flex items-center gap-3 py-3">
         {/* Alternador vista: solo movil, la vista Reels no existe en escritorio */}
         <div className="md:hidden">

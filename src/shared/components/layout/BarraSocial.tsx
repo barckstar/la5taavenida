@@ -13,8 +13,10 @@ import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
  * reposo, tamano completo al pasar el cursor por encima de la barra, con
  * `origin-right` para que no se despegue del borde al escalar.
  *
- * En pantallas sin cursor (movil) se muestra siempre al 100%: alli no hay
- * hover que la revele, y una barra a medio opacar para siempre se ve rota.
+ * OCULTA EN MOVIL. A 375px de ancho un riel fijo a la derecha siempre termina
+ * tapando el contenido — se comia el final del subtitulo del hero y parte de
+ * las tarjetas. En movil las redes siguen accesibles desde el menu hamburguesa
+ * y el pie de pagina, asi que no se pierde nada.
  */
 const redes = [
   {
@@ -33,8 +35,8 @@ const redes = [
 
 export function BarraSocial() {
   return (
-    <div className="barra-social group/barra fixed right-0 top-1/2 z-40 -translate-y-1/2">
-      <ul className="flex origin-right scale-90 flex-col gap-5 rounded-l-2xl border-y border-l border-acento/20 bg-base/70 p-3 opacity-80 shadow-[0_0_24px_rgba(0,0,0,0.45)] backdrop-blur-md transition-all duration-300 group-hover/barra:scale-100 group-hover/barra:opacity-100 sm:gap-6 sm:p-4 max-md:scale-100 max-md:opacity-100">
+    <div className="barra-social group/barra fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 sm:block">
+      <ul className="flex origin-right scale-90 flex-col gap-5 rounded-l-2xl border-y border-l border-acento/20 bg-base/70 p-3 opacity-80 shadow-[0_0_24px_rgba(0,0,0,0.45)] backdrop-blur-md transition-all duration-300 group-hover/barra:scale-100 group-hover/barra:opacity-100 sm:gap-6 sm:p-4">
         {redes.map(({ nombre, href, Icono }) => (
           <li key={nombre}>
             <a
