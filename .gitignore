@@ -78,3 +78,7 @@ research/assets/*.jpeg
 # Temporales sueltos
 *.bak
 pagina_tmp.html
+
+# Material crudo de Instagram: son el insumo para las fotos de las promos.
+# Al sitio solo suben las versiones ya recortadas y en WebP de public/.
+research/assets/instagram/

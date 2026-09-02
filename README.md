@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 5ta Avenida Grill
 
-## Getting Started
+Sitio web de **5ta Avenida Grill**, restaurante y parrilla en San Ramón,
+Alajuela, Costa Rica.
 
-First, run the development server:
+Menú virtual con pedido en línea que se finaliza por WhatsApp. Sin backend, sin
+base de datos y sin pasarela de pago: el sitio es estático y el cobro lo hace el
+restaurante.
+
+## Arrancar
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | Servidor de desarrollo |
+| `npm run build` | Build de producción |
+| `npm start` | Sirve el build |
+| `npm test` | Pruebas (Vitest) |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | Tipos, sin emitir |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js 16 (App Router) · React 19 · TypeScript estricto · Tailwind CSS 4 ·
+Turbopack · Framer Motion · Zod · Vitest · Vercel.
 
-## Learn More
+## Estructura
 
-To learn more about Next.js, take a look at the following resources:
+Arquitectura **Feature-Based**. Regla dura: *una feature nunca importa de otra
+feature*; lo compartido sube a `shared/`. Cuando dos features necesitan hablarse,
+la composición ocurre en `app/layout.tsx`, que es el punto de composición.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/                  rutas: solo metadata y composición
+    page.tsx            inicio (todas las secciones ancladas)
+    menu/page.tsx       menú en cuadrícula
+    menu/reels/page.tsx recorrido tipo Shorts
+  features/
+    landing/  ofertas/  menu/  reels/  carrito/  checkout/
+  shared/
+    components/ui  components/layout  config  lib
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Dos páginas, dos vistas del menú
 
-## Deploy on Vercel
+- `/` lleva **toda** la información del negocio como secciones ancladas.
+- `/menu` es la cuadrícula; `/menu/reels` el recorrido a pantalla completa.
+  Son features separadas a propósito: cada ruta carga solo su JavaScript.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contenido
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Todo el contenido vive tipado en `features/*/data/`, **nunca incrustado en el
+JSX**. Cambiar el menú, las ofertas o las reseñas es editar un archivo de datos.
+
+| Archivo | Qué contiene |
+|---|---|
+| `shared/config/negocio.ts` | Dirección, horarios, WhatsApp, coordenadas, pagos |
+| `features/menu/data/menu.ts` | Los 35 platos con sus precios reales |
+| `features/ofertas/data/ofertas.ts` | Promociones vigentes |
+| `features/landing/data/resenas.ts` | Reseñas reales de Google |
+
+## Reglas del proyecto
+
+Están en `CLAUDE.md`, y conviene leerlo antes de tocar nada. Las que más se
+olvidan:
+
+- **Paleta 70/30/10** sobre negro real (`#050505`). El naranja nunca es fondo de
+  sección. Los contrastes están medidos y anotados en `globals.css`.
+- **Registro de usted** en todo el texto visible. El sitio le habla a los
+  clientes del restaurante, no a quien lo desarrolla.
+- **Lighthouse > 95** en las cuatro categorías, auditado sobre el build de
+  producción.
+- **Nada de datos inventados**: precios, reseñas, calificaciones y horarios son
+  reales o no se publican.
+
+## Estado
+
+| Categoría Lighthouse | Puntaje |
+|---|---|
+| Accesibilidad | 100 |
+| Prácticas recomendadas | 100 |
+| SEO | 100 |
+| Rendimiento | ~80 — **bajo el estándar** |
+
+El cuello del rendimiento está medido: el desglose del LCP da 4,4 s de *render
+delay* por hidratación de JavaScript, no peso de imágenes. Ver la sección
+correspondiente en `CLAUDE.md`.
+
+## Antes de desplegar
+
+1. **`NEXT_PUBLIC_SITIO_URL`** en Vercel con el dominio real. Sin eso el sitemap
+   y el JSON-LD apuntan a `la5taavenida.vercel.app`.
+2. Las fotos de los platos son **provisionales**, de Wikimedia Commons y todas
+   CC0 o dominio público (ver `public/platos/fotos/LICENCIAS.json`). Reemplazar
+   por fotos reales del local.
+3. Falta `public/local/parrilla.webp`, la foto del local para la sección
+   "¿Por qué 5ta Avenida?".
