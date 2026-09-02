@@ -32,20 +32,14 @@ export function PorQue() {
           Sostiene literalmente lo que dice la columna de al lado —"fuego real,
           sin atajos"— cosa que una foto de producto no puede hacer.
 
-          PENDIENTE: la foto del local todavia no esta en el repositorio, asi
-          que provisionalmente se usa la del plato. Un `src` a un archivo
-          inexistente compila sin error pero da 404 en produccion y deja la
-          seccion con un hueco — no se despliega asi.
-
-          Para cambiarla: guardar la foto y correr
-          `python scripts/optimizar-foto-local.py <archivo>`, luego apuntar el
-          src a "/local/parrilla.webp".
+          Recortada del arte de "¡Ya abrimos!" de su Instagram, quitando el
+          banner naranja y la franja de contacto.
         */}
         <Revelar direccion="derecha" className="relative mx-auto w-full max-w-md">
           <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-borde bg-superficie">
             <Image
-              src="/platos/fotos/mar-y-tierra.webp"
-              alt="Mar y Tierra Burger de 5ta Avenida Grill, San Ramón"
+              src="/local/parrilla.webp"
+              alt="La parrilla y el rótulo de 5ta Avenida Grill en su local de San Ramón"
               fill
               sizes="(min-width: 1024px) 28rem, 90vw"
               className="object-cover"
