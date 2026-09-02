@@ -1,6 +1,6 @@
 import { Seccion } from "@/shared/components/ui/Seccion";
 import { BotonEnlace } from "@/shared/components/ui/Boton";
-import { IconoWhatsApp } from "@/shared/components/ui/Iconos";
+import { IconoWhatsApp, IconoCarrito } from "@/shared/components/ui/Iconos";
 import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
 import { MapaLocal } from "./MapaLocal";
 
@@ -46,10 +46,20 @@ export function Ubicacion() {
             </ul>
           </div>
 
-          <BotonEnlace href={enlaceWhatsApp(`Hola ${negocio.nombre}, tengo una consulta.`)}>
-            <IconoWhatsApp className="size-4" />
-            Escribinos al {negocio.whatsappVisible}
-          </BotonEnlace>
+          <div className="flex flex-wrap gap-3">
+            <BotonEnlace href="/menu" tamano="lg">
+              <IconoCarrito className="size-4" />
+              Hacer pedido
+            </BotonEnlace>
+            <BotonEnlace
+              href={enlaceWhatsApp(`Hola ${negocio.nombre}, tengo una consulta.`)}
+              variante="contorno"
+              tamano="lg"
+            >
+              <IconoWhatsApp className="size-4" />
+              Escribinos al {negocio.whatsappVisible}
+            </BotonEnlace>
+          </div>
         </div>
 
         <div className="overflow-hidden rounded-2xl ring-1 ring-borde">

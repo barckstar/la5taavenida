@@ -117,6 +117,10 @@ superficies del 30%, el texto va blanco, no naranja.
 - [ ] ¿Places API para traerlas en vivo? Requiere llave y facturación en Google Cloud
 - [ ] Fotografía del local y platos
 - [x] Dominio: vercel.app para la muestra
+- [x] **SÍ venden bebidas**: batidos y cerveza Imperial Cero (confirmado en sus
+      promos de Instagram), aunque el menú impreso no las lista
+- [ ] Carta de BEBIDAS con precios — pendiente del cliente
+- [ ] Fechas de vigencia de las ofertas (sus artes dicen "tiempo limitado" sin fecha)
 - [ ] ¿Bilingüe ES/EN?
 - [ ] shadcn/ui, Biome, Vitest+Playwright, GitHub Actions — propuestos, sin confirmar
 

@@ -12,6 +12,7 @@ import { SwitchVista } from "./SwitchVista";
 
 const enlaces = [
   { href: "/menu", texto: "Menú" },
+  { href: "/#ofertas", texto: "Ofertas" },
   { href: "/#nosotros", texto: "Nosotros" },
   { href: "/#resenas", texto: "Reseñas" },
   { href: "/#ubicacion", texto: "Ubicación" },

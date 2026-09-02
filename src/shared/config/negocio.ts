@@ -33,6 +33,8 @@ export const negocio = {
   /** Redes del negocio, confirmadas por el cliente (2026-09-01). */
   facebook: "https://www.facebook.com/5taavenidagrill",
   instagram: "https://www.instagram.com/5ta_avenida_sanramon",
+  /** Como se firman en sus artes de Instagram. */
+  instagramHandle: "@5ta_avenida_sanramon",
 
   /**
    * Coordenadas CONFIRMADAS del local, tomadas de la ficha de Google que

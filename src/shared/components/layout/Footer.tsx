@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
+import { BotonEnlace } from "@/shared/components/ui/Boton";
+import { IconoCarrito } from "@/shared/components/ui/Iconos";
 import { BotonCompartir, IconoCompartir } from "@/shared/components/ui/BotonCompartir";
 
 export function Footer() {
@@ -10,16 +12,32 @@ export function Footer() {
       <Contenedor className="py-14">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <Image
-              src="/marca/logo.jpg"
-              alt={`Logo de ${negocio.nombre}`}
-              width={64}
-              height={64}
-              className="rounded-full"
-            />
+            <div className="flex items-center gap-3">
+              <Image
+                src="/marca/logo.jpg"
+                alt={`Logo de ${negocio.nombre}`}
+                width={56}
+                height={56}
+                className="rounded-full"
+              />
+              <p className="font-display text-lg font-bold uppercase italic leading-tight tracking-wide text-texto">
+                5ta Avenida
+                <span className="block text-acento">Grill</span>
+              </p>
+            </div>
             <p className="mt-4 max-w-xs text-sm text-texto-suave">
               {negocio.tagline}
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              <BotonEnlace href="/menu" tamano="md">
+                <IconoCarrito className="size-4" />
+                Hacer pedido
+              </BotonEnlace>
+              <BotonEnlace href="/menu" variante="contorno" tamano="md">
+                Ver el menú
+              </BotonEnlace>
+            </div>
           </div>
 
           <div>

@@ -1,4 +1,5 @@
 import { Hero } from "@/features/landing/components/Hero";
+import { Ofertas } from "@/features/ofertas/components/Ofertas";
 import { SobreNosotros } from "@/features/landing/components/SobreNosotros";
 import { Destacados } from "@/features/landing/components/Destacados";
 import { PorQue } from "@/features/landing/components/PorQue";
@@ -14,6 +15,8 @@ export default function Home() {
   return (
     <main className="flex-1">
       <Hero />
+      {/* Las ofertas van arriba: son el gancho comercial. */}
+      <Ofertas />
       <SobreNosotros />
       <Destacados />
       <PorQue />
