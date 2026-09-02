@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img" aria-label="Foto del platillo pendiente">
+  <defs>
+    <radialGradient id="brasa" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#E8771F"/>
+      <stop offset="45%" stop-color="#963316"/>
+      <stop offset="100%" stop-color="#220B08"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#brasa)"/>
+  <g opacity="0.22" fill="#220B08">
+    <path d="M400 168c30 62 6 96-14 122-24 31-40 58-40 96 0 62 51 112 114 112 62 0 112-50 112-112 0-46-24-74-52-112 8 26 4 48-12 60 10-52-26-118-108-166z"/>
+  </g>
+  <text x="400" y="606" font-family="system-ui, sans-serif" font-size="30" font-weight="600"
+        fill="#F0A05D" opacity="0.85" text-anchor="middle" letter-spacing="1">
+    5ta Avenida Grill
+  </text>
+  <text x="400" y="648" font-family="system-ui, sans-serif" font-size="21"
+        fill="#D9C9C2" opacity="0.6" text-anchor="middle">
+    Foto pendiente
+  </text>
+</svg>

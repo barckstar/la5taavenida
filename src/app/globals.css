@@ -10,16 +10,25 @@
     acento-alt  sobre base      = 6.33:1  -> seguro en todo tamano
     texto       sobre base      = 18.50:1 -> texto de cuerpo
     superficie-alt como texto   = 2.49:1  -> NUNCA como texto, solo superficie
+
+  OJO CON LOS DEGRADADOS: el hero pasa por #963316 y #5B260D. Sobre esos,
+  acento-alt cae a 2.55:1 y 4.10:1 — ilegible. Sobre cualquier superficie del
+  30% o cualquier degradado, el texto va BLANCO (7.44:1 y 11.98:1). El naranja
+  como texto solo sobre el fondo base plano.
 */
 
 @theme {
-  /* ---- 70% dominante: fondos ---- */
-  --color-base: #220b08;
-  --color-base-alt: #361316;
+  /* ---- 70% dominante: NEGRO. Nada de cafe. ---- */
+  --color-base: #050505;
+  --color-base-alt: #0f0d0d;
 
-  /* ---- 30% secundario: superficies, tarjetas, separadores ---- */
-  --color-superficie: #5b260d;
-  --color-superficie-alt: #963316;
+  /* ---- 30% secundario: superficies casi negras, apenas calidas ---- */
+  --color-superficie: #1a0f0d;
+  --color-superficie-alt: #2a1512;
+  --color-borde: #33201c;
+
+  /* ---- rojo profundo de la llama del logo, acento secundario ---- */
+  --color-brasa: #a01010;
 
   /* ---- 10% acento: CTAs, precios, badges, estado activo ---- */
   --color-acento: #e35120;

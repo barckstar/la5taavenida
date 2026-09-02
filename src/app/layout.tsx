@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Oswald, Inter } from "next/font/google";
 import { negocio } from "@/shared/config/negocio";
+import { Navbar } from "@/shared/components/layout/Navbar";
+import { Footer } from "@/shared/components/layout/Footer";
 import "./globals.css";
 
 const display = Oswald({
@@ -41,7 +43,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es-CR"
       className={`${display.variable} ${sans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
