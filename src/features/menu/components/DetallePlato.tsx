@@ -66,7 +66,15 @@ export function DetallePlato({
   }
 
   return (
-    <div className="fixed inset-0 z-[65]">
+    /*
+        `h-[100dvh]` ademas de `inset-0`: un elemento fijo se dimensiona contra
+        el viewport de MAQUETA, que en Android se queda corto cuando la barra
+        de direcciones se retrae. El drawer terminaba unos pixeles antes del
+        borde y por esa rendija asomaba lo que hubiera detras. `dvh` sigue el
+        viewport real. No se pudo reproducir en el navegador de escritorio: es
+        una correccion dirigida al comportamiento de Android.
+      */
+      <div className="fixed inset-0 h-[100dvh] z-[65]">
       <div
         className="absolute inset-0 bg-base/85 backdrop-blur-sm"
         onClick={onCerrar}
