@@ -7,8 +7,7 @@ import { usePathname } from "next/navigation";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { BotonEnlace } from "@/shared/components/ui/Boton";
 import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
-import { negocio } from "@/shared/config/negocio";
-import { IconoCarrito } from "@/shared/components/ui/Iconos";
+import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
 import { SwitchVista } from "./SwitchVista";
 
 const enlaces = [
@@ -49,11 +48,6 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Alternador de vista: solo aparece dentro del menu. */}
-          <div className="ml-auto mr-2 md:ml-0 md:mr-0">
-            <SwitchVista />
-          </div>
-
           <div className="hidden items-center gap-7 md:flex">
             {enlaces.map((e) => {
               const activo = e.href === ruta;
@@ -74,13 +68,20 @@ export function Navbar() {
                 </Link>
               );
             })}
-            <BotonEnlace href="/menu" tamano="md">
-              <IconoCarrito className="size-4" />
-              Ordenar
-            </BotonEnlace>
+            {/*
+              El alternador de vista solo se dibuja dentro del menu.
+
+              Aqui habia un boton "Ordenar" que se quito: dentro del menu no
+              hacia nada porque ya estabas ahi, y en el inicio duplicaba el
+              enlace "Menu" de al lado. Para ver el pedido esta el boton
+              flotante, que ademas solo aparece cuando hay algo.
+            */}
+            <SwitchVista />
           </div>
 
-          <button
+          <div className="flex items-center gap-2 md:hidden">
+            <SwitchVista />
+            <button
             type="button"
             onClick={() => setMenuAbierto((v) => !v)}
             aria-expanded={menuAbierto}
@@ -105,7 +106,8 @@ export function Navbar() {
                 }`}
               />
             </span>
-          </button>
+            </button>
+          </div>
         </div>
       </Contenedor>
 
@@ -127,13 +129,13 @@ export function Navbar() {
             </Link>
           ))}
           <BotonEnlace
-            href="/menu"
+            href={enlaceWhatsApp(`Hola ${negocio.nombre}, tengo una consulta.`)}
+            variante="contorno"
             tamano="lg"
             className="mt-2 w-full"
             onClick={() => setMenuAbierto(false)}
           >
-            <IconoCarrito />
-            Ordenar
+            Escribinos al {negocio.whatsappVisible}
           </BotonEnlace>
         </Contenedor>
       </div>

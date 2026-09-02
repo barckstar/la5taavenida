@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
 import { BotonCompartir, IconoCompartir } from "@/shared/components/ui/BotonCompartir";
+import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
+import { CLAVE_FAVORITOS, alternarFavorito, leerFavoritos } from "../lib/favoritos";
 import type { Plato } from "@/features/menu/types";
 
 /**
@@ -25,6 +27,16 @@ export function ReelPlato({ plato }: { plato: Plato }) {
   const [visible, setVisible] = useState(false);
   const { agregar, cambiarCantidad, cantidadDe, abrir } = useCarrito();
   const cantidad = cantidadDe(plato.id);
+
+  // Favoritos del dispositivo. Se leen del almacen externo, igual que el
+  // carrito, para no hidratar con setState dentro de un efecto.
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_FAVORITOS, f), []),
+    () => leerCrudo(CLAVE_FAVORITOS),
+    () => null,
+  );
+  const esFavorito =
+    typeof window !== "undefined" && leerFavoritos().includes(plato.id);
 
   useEffect(() => {
     const nodo = seccion.current;
@@ -56,10 +68,21 @@ export function ReelPlato({ plato }: { plato: Plato }) {
       className="relative flex h-[100dvh] w-full snap-start snap-always items-center justify-center px-3 py-4 sm:px-6"
       aria-label={plato.nombre}
     >
-      <div className="flex h-full max-h-[calc(100dvh-2rem)] items-end gap-3 sm:gap-4">
+      <div className="flex h-full max-h-[calc(100dvh-2rem)] w-full items-end justify-center gap-3 sm:gap-4">
         {/* El medio, en proporcion vertical de reel */}
-        <div className="relative h-full overflow-hidden rounded-2xl bg-superficie">
-          <div className="relative h-full aspect-9/16 max-w-full">
+        <div
+          className="relative aspect-9/16 max-h-full overflow-hidden rounded-2xl bg-superficie"
+          /*
+            `min()` decide quien manda: el alto disponible o el ancho de la
+            pantalla. Con solo `h-full` el 9:16 calculaba un ancho mayor que el
+            viewport en pantallas angostas y el reel se salia por la izquierda.
+            Se resta el riel de acciones para que nunca lo empuje fuera.
+          */
+          style={{
+            width: "min(100% - 4.5rem, calc((100dvh - 3rem) * 9 / 16))",
+          }}
+        >
+          <div className="relative size-full">
             {plato.media.tipo === "video" ? (
               <video
                 ref={video}
@@ -89,7 +112,11 @@ export function ReelPlato({ plato }: { plato: Plato }) {
             />
 
             {/* Informacion abajo a la izquierda, como en Shorts */}
-            <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+            {/*
+              `pb-24` deja libre la franja inferior donde flota el boton de
+              "Ver pedido": antes se montaba encima del precio y la descripcion.
+            */}
+            <div className="absolute inset-x-0 bottom-0 p-4 pb-24 sm:p-5 sm:pb-24">
               <p className="font-display text-2xl font-bold text-acento sm:text-3xl">
                 {formatoColones(plato.precio)}
               </p>
@@ -117,7 +144,11 @@ export function ReelPlato({ plato }: { plato: Plato }) {
                 onClick={() => agregar(plato)}
                 destacada
               >
-                <IconoCarrito className="size-6" />
+                {/* Un "+" se entiende mas rapido que un carrito: la accion es
+                    sumar al pedido, no ir al carrito. */}
+                <span aria-hidden="true" className="text-3xl leading-none">
+                  +
+                </span>
               </AccionRiel>
             ) : (
               <div className="flex flex-col items-center gap-1.5">
@@ -144,6 +175,14 @@ export function ReelPlato({ plato }: { plato: Plato }) {
             )
           ) : null}
 
+          <AccionRiel
+            etiqueta={esFavorito ? "Guardado" : "Guardar"}
+            onClick={() => alternarFavorito(plato.id)}
+            activa={esFavorito}
+          >
+            <IconoCorazon lleno={esFavorito} className="size-5" />
+          </AccionRiel>
+
           <AccionRiel etiqueta="Pedido" onClick={abrir}>
             <IconoCarrito className="size-5" />
           </AccionRiel>
@@ -164,15 +203,40 @@ export function ReelPlato({ plato }: { plato: Plato }) {
   );
 }
 
+function IconoCorazon({
+  lleno,
+  className = "size-5",
+}: {
+  lleno: boolean;
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill={lleno ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 1 0-7.4 7.4L12 21.5l8.8-8.5a5.2 5.2 0 0 0 0-7.4Z" />
+    </svg>
+  );
+}
+
 function AccionRiel({
   etiqueta,
   onClick,
   destacada,
+  activa,
   children,
 }: {
   etiqueta: string;
   onClick: () => void;
   destacada?: boolean;
+  activa?: boolean;
   children: React.ReactNode;
 }) {
   return (
@@ -185,7 +249,9 @@ function AccionRiel({
         className={`grid place-items-center rounded-full transition-transform active:scale-90 ${
           destacada
             ? "size-14 bg-acento text-base"
-            : "size-11 bg-superficie text-texto hover:text-acento"
+            : activa
+              ? "size-11 bg-superficie text-acento"
+              : "size-11 bg-superficie text-texto hover:text-acento"
         }`}
       >
         {children}

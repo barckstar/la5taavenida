@@ -47,8 +47,13 @@ export function Brasas({
   densidad?: number;
   className?: string;
 }) {
-  const cuantas = Math.max(1, Math.round(BRASAS.length * densidad));
-  const visibles = BRASAS.slice(0, cuantas);
+  /*
+    Se toma una de cada N y NO un tramo contiguo con slice: las posiciones del
+    arreglo siguen una secuencia, asi que cortar los primeros dejaba todas las
+    brasas amontonadas en un costado de la pantalla.
+  */
+  const paso = Math.max(1, Math.round(1 / Math.min(1, Math.max(0.05, densidad))));
+  const visibles = BRASAS.filter((_, i) => i % paso === 0);
 
   return (
     <div

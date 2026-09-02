@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Brasas } from "@/shared/components/ui/Brasas";
 import { ReelPlato } from "./ReelPlato";
+import { FiltroCategorias } from "./FiltroCategorias";
 import { menu } from "@/features/menu/data/menu";
+import type { CategoriaId } from "@/features/menu/types";
 
 /**
  * Recorrido de reels a pantalla completa.
@@ -15,14 +18,26 @@ import { menu } from "@/features/menu/data/menu";
  * pegada encima.
  */
 export function VistaReels() {
-  const platos = menu.filter((p) => p.disponible);
+  const [categoria, setCategoria] = useState<CategoriaId | "todas">("todas");
+
+  const disponibles = menu.filter((p) => p.disponible);
+  const platos =
+    categoria === "todas"
+      ? disponibles
+      : disponibles.filter((p) => p.categoria === categoria);
 
   return (
     <div className="relative isolate bg-base">
       <Brasas densidad={0.5} className="z-20" />
 
+      <FiltroCategorias
+        platos={disponibles}
+        activa={categoria}
+        onCambiar={setCategoria}
+      />
+
       <div
-        className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="h-[100dvh] snap-y snap-mandatory overflow-y-auto overscroll-contain pt-24 [scrollbar-width:none] lg:pl-28 lg:pt-0 [&::-webkit-scrollbar]:hidden"
         style={{
           maskImage:
             "linear-gradient(to bottom, transparent 0%, #000 4%, #000 96%, transparent 100%)",
