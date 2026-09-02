@@ -64,6 +64,16 @@ JSX**. Cambiar el menú, las ofertas o las reseñas es editar un archivo de dato
 | `features/ofertas/data/ofertas.ts` | Promociones vigentes |
 | `features/landing/data/resenas.ts` | Reseñas reales de Google |
 
+## Documentación
+
+| Documento | Para qué |
+|---|---|
+| [docs/ARQUITECTURA.md](docs/ARQUITECTURA.md) | **Empezá por aquí.** Cómo funciona el pedido, por qué cada decisión, estado real de rendimiento y pendientes |
+| [CLAUDE.md](CLAUDE.md) | Reglas operativas del proyecto |
+| [docs/specs/](docs/specs/) | Diseño original acordado con el cliente |
+| [docs/plans/](docs/plans/) | Plan de implementación |
+| [.claude/interaction-log.md](.claude/interaction-log.md) | Bitácora: qué se decidió, qué falló y por qué |
+
 ## Reglas del proyecto
 
 Están en `CLAUDE.md`, y conviene leerlo antes de tocar nada. Las que más se
