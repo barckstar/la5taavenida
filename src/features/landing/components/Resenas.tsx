@@ -111,7 +111,7 @@ export function Resenas() {
         <ResumenCalificacion />
       </Revelar>
 
-      <RevelarCascada className="mt-12 grid gap-5 md:grid-cols-3">
+      <RevelarCascada className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {resenas.map((r, i) => (
           <ItemCascada key={r.autor + i} className="h-full">
             <article className="group flex h-full flex-col rounded-2xl border border-borde bg-superficie p-6 transition-colors duration-300 hover:border-acento/45">

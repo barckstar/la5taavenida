@@ -89,10 +89,11 @@ superficies del 30%, el texto va blanco, no naranja.
 
 - [x] Dirección, teléfono y **horarios reales** confirmados
 - [x] Coordenadas exactas y CID de Google del negocio
-- [ ] Menú real: platos, precios y fotos (bloqueado por el cliente)
+- [ ] Menú: PRECIOS reales (los actuales son inventados) y FOTOS de los platos
+- [x] Nombres reales de 4 platos: La 5ta Avenida, La Surtida, Papas Gajo, Nachos
 - [ ] Place ID en formato ChIJ, para el enlace de reseña de un clic
 - [x] Calificación real de Google: 4,6 con 59 reseñas
-- [ ] TEXTOS de 2 reseñas más (solo tenemos 1, y truncada)
+- [x] 6 reseñas reales en español, transcritas literales
 - [ ] ¿Places API para traerlas en vivo? Requiere llave y facturación en Google Cloud
 - [ ] Fotografía del local y platos
 - [x] Dominio: vercel.app para la muestra

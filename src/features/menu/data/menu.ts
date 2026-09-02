@@ -4,11 +4,14 @@ import type { Plato } from "../types";
  * ============================================================================
  * DEMO — CONTENIDO PROVISIONAL
  * ============================================================================
- * El unico platillo confirmado del cliente es "la-quinta": aparece en la foto
- * de portada de su Facebook (hamburguesa con carne mechada y camarones sobre
- * tabla de tronco). El resto son platos de grill costarricense verosimiles,
- * con precios de mercado de San Ramon, puestos para que la muestra se vea
- * completa.
+ * PLATOS CONFIRMADOS (nombre real, precio todavia DEMO):
+ *   - "la-quinta": la hamburguesa de la foto de portada de su Facebook.
+ *   - "la-surtida": la nombran Jonatan Quesada y Leandro Lizano en sus resenas.
+ *   - "papas-gajo" y "nachos-parrilla": los nombra Melvin Otarola.
+ *
+ * El resto son platos de grill costarricense verosimiles, puestos para que la
+ * muestra se vea completa. Los PRECIOS son todos inventados: la ficha de Google
+ * solo dice ₡5.000-10.000 por persona.
  *
  * NADA de esto es el menu real. Reemplazar en cuanto el cliente entregue sus
  * platos, precios y fotos. Los componentes no se tocan: solo este archivo.
@@ -91,16 +94,42 @@ export const menu: Plato[] = [
     disponible: true,
   },
   {
-    id: "alitas-maracuya",
-    nombre: "Alitas Maracuyá",
-    descripcion: "Alitas glaseadas en reducción de maracuyá con un toque picante.",
-    ingredientes: ["8 alitas de pollo", "Reducción de maracuyá", "Chile dulce", "Ajonjolí"],
-    precio: 7200,
-    categoria: "alitas",
+    // PLATO REAL: dos resenas de Google la mencionan por nombre.
+    // "Pedimos una surtida para 8 personas, lo recomiendo" — Jonatan Quesada
+    // "Delicioso, la surtida es muy buena" — Leandro Lizano
+    // El precio y la composicion siguen siendo DEMO.
+    id: "la-surtida",
+    nombre: "La Surtida",
+    descripcion:
+      "La picada para compartir: carnes surtidas, papas gajo, chicharrón y salsas de la casa. Pensada para grupo.",
+    ingredientes: [
+      "Carnes surtidas a la parrilla",
+      "Papas gajo",
+      "Chicharrón",
+      "Salsas de la casa",
+    ],
+    precio: 24000,
+    categoria: "bocas",
     media: {
       tipo: "imagen",
       src: FOTO_PENDIENTE,
-      alt: "Alitas de pollo glaseadas en maracuyá en 5ta Avenida Grill, San Ramón",
+      alt: "La Surtida para compartir en 5ta Avenida Grill, San Ramón",
+    },
+    destacado: true,
+    disponible: true,
+  },
+  {
+    // PLATO REAL: "Me encanta las papas gajo y los nachos" — Melvin Otárola
+    id: "papas-gajo",
+    nombre: "Papas Gajo",
+    descripcion: "Papas en gajo doradas, con salsa de la casa.",
+    ingredientes: ["Papas en gajo", "Especias de la casa", "Salsa para acompañar"],
+    precio: 3200,
+    categoria: "bocas",
+    media: {
+      tipo: "imagen",
+      src: FOTO_PENDIENTE,
+      alt: "Papas gajo doradas en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
   },
@@ -119,6 +148,7 @@ export const menu: Plato[] = [
     disponible: true,
   },
   {
+    // PLATO REAL: "Me encanta las papas gajo y los nachos" — Melvin Otárola
     id: "nachos-parrilla",
     nombre: "Nachos de la Parrilla",
     descripcion: "Tortillas crujientes con carne a la parrilla, queso fundido y pico de gallo.",
@@ -130,7 +160,7 @@ export const menu: Plato[] = [
       src: FOTO_PENDIENTE,
       alt: "Nachos con carne a la parrilla en 5ta Avenida Grill, San Ramón",
     },
-    disponible: false,
+    disponible: true,
   },
   {
     id: "limonada-hierbabuena",
