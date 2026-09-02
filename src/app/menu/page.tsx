@@ -2,15 +2,24 @@ import type { Metadata } from "next";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { MenuView } from "@/features/menu/components/MenuView";
 import { negocio } from "@/shared/config/negocio";
+import { EtiquetaJsonLd, jsonLdMenu } from "@/shared/lib/jsonLd";
 
 export const metadata: Metadata = {
   title: "Menú",
   description: `Hamburguesas, costillas y alitas a la parrilla en ${negocio.ciudad}. Pedí en línea y coordinamos por WhatsApp ${negocio.whatsappVisible}.`,
+  alternates: { canonical: "/menu" },
+  openGraph: {
+    title: `Menú | ${negocio.nombre}`,
+    description: `La carta completa de ${negocio.nombre} en ${negocio.ciudad}. Pedí en línea.`,
+    url: "/menu",
+  },
 };
 
 export default function PaginaMenu() {
   return (
     <main className="flex-1 pt-16">
+      {/* El menu como structured data: Google puede mostrar platos y precios. */}
+      <EtiquetaJsonLd datos={jsonLdMenu()} />
       <Contenedor className="pb-2 pt-10">
         <div className="flex items-center gap-3">
           <span className="h-px w-10 bg-acento" aria-hidden="true" />

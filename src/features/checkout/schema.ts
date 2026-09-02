@@ -16,7 +16,13 @@ export const datosPedidoSchema = z
       .regex(/^\d{4}[\s-]?\d{4}$/, "Teléfono de 8 dígitos, ej. 8888-8888"),
     modalidad: z.enum(modalidades),
     direccion: z.string().trim().max(200).optional(),
-    hora: z.string().trim().max(20).optional(),
+    /**
+     * Coordenadas del punto de entrega, si el cliente uso el boton de
+     * ubicacion. Salen de `navigator.geolocation`, que es gratis y no pide
+     * llave. Viajan en el mensaje como enlace de Google Maps.
+     */
+    lat: z.number().optional(),
+    lng: z.number().optional(),
     notas: z.string().trim().max(200).optional(),
   })
   .refine(

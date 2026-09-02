@@ -1,16 +1,24 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { negocio } from "@/shared/config/negocio";
 import { IconoWhatsApp } from "@/shared/components/ui/Iconos";
+import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
 import { datosPedidoSchema, type DatosPedido } from "../schema";
 import {
   construirMensaje,
   enviarPorWhatsApp,
   LIMITE_SEGURO,
 } from "../lib/construirMensaje";
+import {
+  CLAVE_DIRECCIONES,
+  guardarDireccion,
+  leerDirecciones,
+  olvidarDireccion,
+} from "../lib/direccionesGuardadas";
+import { BotonUbicacion } from "./BotonUbicacion";
 
 type Errores = Partial<Record<keyof DatosPedido, string>>;
 
@@ -22,11 +30,20 @@ export function CheckoutDrawer({
   onCerrar: () => void;
 }) {
   const { lineas, total, vaciar } = useCarrito();
-  const panel = useRef<HTMLDivElement>(null);
 
   const [modalidad, setModalidad] = useState<"retiro" | "express">("retiro");
+  const [direccion, setDireccion] = useState("");
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [errores, setErrores] = useState<Errores>({});
   const [avisoLargo, setAvisoLargo] = useState<string | null>(null);
+
+  // Las direcciones guardadas se leen del almacen externo, igual que el carrito.
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_DIRECCIONES, f), []),
+    () => leerCrudo(CLAVE_DIRECCIONES),
+    () => null,
+  );
+  const guardadas = typeof window === "undefined" ? [] : leerDirecciones();
 
   useEffect(() => {
     if (!abierto) return;
@@ -52,9 +69,11 @@ export function CheckoutDrawer({
       nombre: String(form.get("nombre") ?? ""),
       telefono: String(form.get("telefono") ?? ""),
       modalidad,
-      direccion: String(form.get("direccion") ?? ""),
-      hora: String(form.get("hora") ?? ""),
+      direccion,
       notas: String(form.get("notas") ?? ""),
+      // La ubicacion solo viaja en express: en retiro no le sirve a nadie y es
+      // un dato personal que no hay razon de enviar.
+      ...(modalidad === "express" && coords ? coords : {}),
     };
 
     const validado = datosPedidoSchema.safeParse(crudo);
@@ -79,6 +98,14 @@ export function CheckoutDrawer({
       return;
     }
 
+    if (modalidad === "express" && direccion.trim()) {
+      guardarDireccion({
+        texto: direccion.trim(),
+        ...(coords ?? {}),
+        usadaEn: Date.now(),
+      });
+    }
+
     enviarPorWhatsApp(mensaje.texto);
     vaciar();
     onCerrar();
@@ -93,7 +120,6 @@ export function CheckoutDrawer({
       />
 
       <div
-        ref={panel}
         role="dialog"
         aria-modal="true"
         aria-labelledby="titulo-checkout"
@@ -116,8 +142,8 @@ export function CheckoutDrawer({
           </button>
         </header>
 
-        <form onSubmit={enviar} className="flex flex-1 flex-col overflow-y-auto">
-          <div className="flex-1 space-y-5 px-5 py-5">
+        <form onSubmit={enviar} className="flex flex-1 flex-col overflow-hidden">
+          <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
             <fieldset>
               <legend className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento">
                 ¿Cómo lo querés?
@@ -164,25 +190,80 @@ export function CheckoutDrawer({
             />
 
             {modalidad === "express" && (
-              <Campo
-                nombre="direccion"
-                etiqueta="Dirección"
-                marcador="Barrio, señas exactas"
-                error={errores.direccion}
-                required
-              />
+              <div>
+                <label
+                  htmlFor="direccion"
+                  className="block font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento"
+                >
+                  Dirección
+                </label>
+
+                {guardadas.length > 0 && (
+                  <ul className="mt-2 flex flex-wrap gap-2">
+                    {guardadas.map((d) => (
+                      <li key={d.texto}>
+                        <span className="inline-flex items-center gap-1 rounded-full border border-borde bg-superficie py-1 pl-3 pr-1 text-xs">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setDireccion(d.texto);
+                              if (d.lat && d.lng)
+                                setCoords({ lat: d.lat, lng: d.lng });
+                            }}
+                            className="max-w-40 truncate text-texto-suave transition-colors hover:text-acento"
+                          >
+                            {d.texto}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => olvidarDireccion(d.texto)}
+                            aria-label={`Olvidar la dirección ${d.texto}`}
+                            className="grid size-5 place-items-center rounded-full text-texto-suave transition-colors hover:text-acento"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <input
+                  id="direccion"
+                  name="direccion"
+                  type="text"
+                  value={direccion}
+                  onChange={(e) => setDireccion(e.target.value)}
+                  placeholder="Barrio, señas exactas"
+                  autoComplete="street-address"
+                  aria-invalid={errores.direccion ? true : undefined}
+                  aria-describedby={
+                    errores.direccion ? "direccion-error" : undefined
+                  }
+                  className={`mt-2 w-full rounded-xl border bg-base px-4 py-3 text-texto placeholder:text-texto-suave/50 focus:outline-none ${
+                    errores.direccion
+                      ? "border-acento"
+                      : "border-borde focus:border-acento/70"
+                  }`}
+                />
+                {errores.direccion && (
+                  <p id="direccion-error" className="mt-1.5 text-xs text-acento">
+                    {errores.direccion}
+                  </p>
+                )}
+
+                <BotonUbicacion
+                  tieneUbicacion={coords !== null}
+                  onUbicacion={(lat, lng) => setCoords({ lat, lng })}
+                  onLimpiar={() => setCoords(null)}
+                />
+              </div>
             )}
 
             <Campo
-              nombre="hora"
-              etiqueta="¿A qué hora lo querés?"
-              marcador="7:30 pm"
-              error={errores.hora}
-            />
-            <Campo
               nombre="notas"
               etiqueta="Alguna indicación (opcional)"
-              marcador="Tocar el timbre, casa portón negro…"
+              marcador="Para las 7:30 pm, tocar el timbre…"
               error={errores.notas}
             />
 
@@ -196,7 +277,7 @@ export function CheckoutDrawer({
             )}
           </div>
 
-          <footer className="border-t border-borde p-5">
+          <footer className="border-t border-borde p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
             <div className="flex items-baseline justify-between">
               <span className="font-display uppercase tracking-wide text-texto-suave">
                 Total
@@ -206,8 +287,9 @@ export function CheckoutDrawer({
               </span>
             </div>
             <p className="mt-1 text-xs leading-relaxed text-texto-suave">
-              Al enviar se abre WhatsApp con el pedido escrito. El pago y el
-              costo del express los coordinás ahí con el restaurante.
+              Al enviar se abre WhatsApp con el pedido escrito. El pago
+              ({negocio.metodosPago.join(", ")}) y el costo del express los
+              coordinás ahí con el restaurante.
             </p>
 
             <button

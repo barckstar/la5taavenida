@@ -42,3 +42,39 @@ next-env.d.ts
 
 # HTML crudo del sondeo de Facebook — scratch, no versionar
 research/*.html
+
+# ---- Agregados del proyecto ----
+
+# Sistema operativo
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*.swo
+
+# Herramientas de IA y sesiones locales
+.claude/settings.local.json
+.claude/interaction-log.md.bak
+graphify-out/
+.next-docs/
+
+# Salidas de prueba y cobertura
+/test-results/
+/playwright-report/
+*.lcov
+
+# Material de trabajo pesado que no pertenece al repo.
+# Las fotos originales sin optimizar viven aqui; al sitio solo suben las
+# versiones WebP ya recortadas de public/platos/.
+research/assets/*.png
+research/assets/*.jpeg
+!research/assets/logo_fb_profile.jpg
+
+# Temporales sueltos
+*.bak
+pagina_tmp.html

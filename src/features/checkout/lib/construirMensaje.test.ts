@@ -23,7 +23,6 @@ const retiro: DatosPedido = {
   nombre: "Ana",
   telefono: "8888-8888",
   modalidad: "retiro",
-  hora: "7:30 pm",
 };
 
 const express: DatosPedido = {
@@ -82,6 +81,33 @@ describe("construirMensaje", () => {
     );
     expect(largoCodificado).toBeGreaterThan(LIMITE_SEGURO);
     expect(excedeLimite).toBe(true);
+  });
+
+  it("incluye el enlace de Maps cuando hay coordenadas", () => {
+    const conUbicacion: DatosPedido = {
+      ...express,
+      lat: 10.0898297,
+      lng: -84.4743896,
+    };
+    const { texto } = construirMensaje([linea("a", 1)], conUbicacion, 8500);
+    expect(texto).toContain("maps.google.com/?q=10.089830,-84.474390");
+  });
+
+  it("no incluye enlace de ubicacion si no hay coordenadas", () => {
+    const { texto } = construirMensaje([linea("a", 1)], express, 8500);
+    expect(texto).not.toContain("maps.google.com");
+  });
+
+  it("no manda la ubicacion en un pedido de retiro", () => {
+    // En retiro el cliente pasa recogiendo: su ubicacion no le sirve a nadie
+    // y es un dato personal que no hay razon de enviar.
+    const retiroConCoords: DatosPedido = {
+      ...retiro,
+      lat: 10.08,
+      lng: -84.47,
+    };
+    const { texto } = construirMensaje([linea("a", 1)], retiroConCoords, 8500);
+    expect(texto).not.toContain("maps.google.com");
   });
 
   it("no marca excedeLimite en un pedido normal", () => {

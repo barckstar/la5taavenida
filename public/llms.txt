@@ -1,0 +1,37 @@
+# 5ta Avenida Grill
+
+> Restaurante y parrilla en San Ramón, Alajuela, Costa Rica.
+> "¡Una nueva experiencia gastronómica en San Ramón!"
+
+## Datos del negocio
+
+- Dirección: 350 metros oeste de Supermercados Molina, San Ramón de Alajuela
+- Coordenadas: 10.0898297, -84.4743896
+- WhatsApp y teléfono: 6490-1222
+- Calificación en Google: 4,6 sobre 5 (59 reseñas)
+- Rango de precios: ₡800 a ₡13.000
+- Métodos de pago: Sinpe Móvil, efectivo y tarjeta
+- Modalidades: consumo en el local, para llevar y entrega a domicilio
+
+## Horario
+
+- Lunes: 12:00 – 22:00
+- Martes: 15:00 – 22:00
+- Miércoles a domingo: 12:00 – 22:00
+
+## Páginas
+
+- [Inicio](/): información del negocio, ubicación y reseñas
+- [Menú](/menu): carta completa con pedido en línea
+
+## Cómo se ordena
+
+El pedido se arma en el sitio y se envía por WhatsApp al 6490-1222. El pago y el
+costo del servicio express se coordinan directamente con el restaurante. El
+sitio no procesa pagos.
+
+## Especialidades
+
+Hamburguesas en pan artesanal (Mar y Tierra con camarones, Angus, Pulled Pork),
+la Surtida 5ta Avenida para compartir, costillas de cerdo, alitas, tacos de
+birria, nachos, papas gajo y menú infantil.
