@@ -91,7 +91,9 @@ superficies del 30%, el texto va blanco, no naranja.
 - [x] Coordenadas exactas y CID de Google del negocio
 - [ ] Menú real: platos, precios y fotos (bloqueado por el cliente)
 - [ ] Place ID en formato ChIJ, para el enlace de reseña de un clic
-- [ ] Reseñas reales de Google (hoy hay marcadores, NO publicar así)
+- [x] Calificación real de Google: 4,6 con 59 reseñas
+- [ ] TEXTOS de 2 reseñas más (solo tenemos 1, y truncada)
+- [ ] ¿Places API para traerlas en vivo? Requiere llave y facturación en Google Cloud
 - [ ] Fotografía del local y platos
 - [x] Dominio: vercel.app para la muestra
 - [ ] ¿Bilingüe ES/EN?

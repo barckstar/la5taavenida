@@ -6,6 +6,7 @@ import { IconoCarrito } from "@/shared/components/ui/Iconos";
 import { CurvaInferior } from "@/shared/components/ui/CurvaInferior";
 import { Brasas } from "./Brasas";
 import { PruebaSocial } from "./PruebaSocial";
+import { Revelar } from "@/shared/components/ui/Revelar";
 
 /*
   Orden en el eje Z, de atras hacia adelante:
@@ -34,7 +35,7 @@ export function Hero() {
       */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 flex items-center justify-center opacity-30"
+        className="absolute inset-0 -z-10 flex items-center justify-center opacity-[0.17]"
         style={{
           // Caida larga y gradual. Con un corte tardio se veia el borde recto
           // del recorte justo donde termina la tabla de madera.
@@ -67,22 +68,29 @@ export function Hero() {
 
       <Contenedor className="relative z-10 py-16 sm:py-20">
         <div className="max-w-2xl">
+          <Revelar direccion="izquierda" unaVez>
           <div className="flex items-center gap-3">
             <span className="h-px w-10 bg-acento" aria-hidden="true" />
             <span className="font-display text-xs font-semibold uppercase tracking-[0.32em] text-acento">
               {negocio.ciudad} · {negocio.provincia}
             </span>
           </div>
+          </Revelar>
 
+          <Revelar retraso={0.1} unaVez>
           <h1 className="mt-6 font-display text-[3.25rem] font-bold uppercase italic leading-[0.86] tracking-[-0.02em] text-texto sm:text-7xl lg:text-8xl">
             5ta Avenida
             <span className="block text-acento">Grill</span>
           </h1>
+          </Revelar>
 
-          <p className="mt-7 max-w-md text-lg leading-relaxed text-texto-suave sm:text-xl">
-            {negocio.tagline}
-          </p>
+          <Revelar retraso={0.2} unaVez>
+            <p className="mt-7 max-w-md text-lg leading-relaxed text-texto-suave sm:text-xl">
+              {negocio.tagline}
+            </p>
+          </Revelar>
 
+          <Revelar retraso={0.3} unaVez>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <BotonEnlace href="/menu" tamano="lg">
               <IconoCarrito />
@@ -92,10 +100,11 @@ export function Hero() {
               Ver el menú
             </BotonEnlace>
           </div>
+          </Revelar>
 
-          <div className="mt-8">
+          <Revelar retraso={0.4} unaVez className="mt-8">
             <PruebaSocial />
-          </div>
+          </Revelar>
         </div>
       </Contenedor>
 

@@ -15,8 +15,9 @@ const desplazamientos: Record<Direccion, { x?: number; y?: number; scale?: numbe
 /**
  * Revela su contenido cuando entra en pantalla.
  *
- * `once: true` es deliberado: si la animacion se repite cada vez que el
- * elemento vuelve a entrar, el sitio se siente inquieto al subir y bajar.
+ * Por defecto anima al ENTRAR y al SALIR: el elemento vuelve a su estado
+ * inicial cuando abandona la pantalla, asi que reaparece al volver a subir.
+ * Con `unaVez` se puede fijar para que solo entre una vez.
  *
  * Solo anima transform y opacity. Con `prefers-reduced-motion` activo no
  * anima nada y el contenido aparece ya colocado — no basta con acortar la
@@ -26,12 +27,15 @@ export function Revelar({
   children,
   direccion = "abajo",
   retraso = 0,
+  unaVez = false,
   className,
 }: {
   children: ReactNode;
   direccion?: Direccion;
   /** Segundos. Util para escalonar elementos hermanos. */
   retraso?: number;
+  /** true = no vuelve a animar al salir de pantalla. */
+  unaVez?: boolean;
   className?: string;
 }) {
   const sinMovimiento = useReducedMotion();
@@ -43,7 +47,7 @@ export function Revelar({
       className={className}
       initial={{ opacity: 0, ...desplazamientos[direccion] }}
       whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: unaVez, amount: 0.2 }}
       transition={{
         duration: 0.6,
         delay: retraso,
@@ -63,10 +67,12 @@ export function RevelarCascada({
   children,
   className,
   escalon = 0.09,
+  unaVez = false,
 }: {
   children: ReactNode;
   className?: string;
   escalon?: number;
+  unaVez?: boolean;
 }) {
   const sinMovimiento = useReducedMotion();
 
@@ -77,8 +83,10 @@ export function RevelarCascada({
       className={className}
       initial="oculto"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: unaVez, amount: 0.15 }}
+      exit="oculto"
       variants={{
+        oculto: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
         visible: { transition: { staggerChildren: escalon } },
       }}
     >

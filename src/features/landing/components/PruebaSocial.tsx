@@ -7,69 +7,64 @@ function Estrellas({ calificacion }: { calificacion: number }) {
       role="img"
       aria-label={`${calificacion} de 5 estrellas en Google`}
     >
-      {[1, 2, 3, 4, 5].map((i) => (
-        <svg
-          key={i}
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          className={`size-4 ${
-            i <= Math.round(calificacion) ? "fill-acento-alt" : "fill-borde"
-          }`}
-        >
-          <path d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" />
-        </svg>
-      ))}
+      {[1, 2, 3, 4, 5].map((i) => {
+        const lleno = calificacion >= i;
+        const medio = !lleno && calificacion > i - 1;
+        return (
+          <svg key={i} viewBox="0 0 24 24" aria-hidden="true" className="size-4">
+            <defs>
+              <linearGradient id={`media-${i}`}>
+                <stop offset="50%" stopColor="var(--color-acento-alt)" />
+                <stop offset="50%" stopColor="var(--color-borde)" />
+              </linearGradient>
+            </defs>
+            <path
+              d="m12 2 2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z"
+              fill={
+                lleno
+                  ? "var(--color-acento-alt)"
+                  : medio
+                    ? `url(#media-${i})`
+                    : "var(--color-borde)"
+              }
+            />
+          </svg>
+        );
+      })}
     </div>
   );
 }
 
 /**
- * Prueba social bajo los botones del hero.
- *
- * Muestra la calificacion de Google SOLO si tenemos el dato real. Mientras
- * `calificacion` y `cantidadResenas` sigan en null, cae a los seguidores de
- * Facebook, que si estan verificados.
- *
- * No se inventan cifras: una calificacion o un conteo de clientes falso en el
- * sitio de un negocio real se desmiente abriendo Google Maps.
+ * Prueba social bajo los botones del hero: la calificacion real de Google.
+ * Los numeros salen de `negocio.google` — no se escriben aqui.
  */
 export function PruebaSocial() {
   const { calificacion, cantidadResenas, cid } = negocio.google;
-  const tieneDatoDeGoogle = calificacion !== null && cantidadResenas !== null;
-
-  if (tieneDatoDeGoogle) {
-    return (
-      <a
-        href={`https://www.google.com/maps?cid=${cid}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex flex-col gap-1 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acento"
-      >
-        <div className="flex items-center gap-2.5">
-          <Estrellas calificacion={calificacion} />
-          <span className="text-sm text-texto-suave">Google Reviews</span>
-        </div>
-        <p className="font-display text-lg font-semibold uppercase tracking-wide text-texto">
-          {calificacion.toFixed(1)} · {cantidadResenas} reseñas
-        </p>
-      </a>
-    );
-  }
+  if (calificacion === null || cantidadResenas === null) return null;
 
   return (
     <a
-      href={negocio.facebook}
+      href={`https://www.google.com/maps?cid=${cid}`}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex flex-col gap-1 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acento"
+      className="group inline-flex items-center gap-4 rounded-xl border border-borde/80 bg-base-alt/60 px-4 py-3 backdrop-blur-sm transition-colors hover:border-acento/50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acento"
     >
-      <span className="font-display text-xs uppercase tracking-[0.24em] text-acento">
-        Comunidad
+      <span className="font-display text-3xl font-bold leading-none text-acento">
+        {calificacion.toLocaleString("es-CR", { minimumFractionDigits: 1 })}
       </span>
-      <p className="font-display text-lg font-semibold uppercase tracking-wide text-texto">
-        {negocio.seguidoresFacebook.toLocaleString("es-CR")}
-        <span className="text-texto-suave"> seguidores en Facebook</span>
-      </p>
+
+      <span className="block h-8 w-px bg-borde" aria-hidden="true" />
+
+      <span className="block">
+        <Estrellas calificacion={calificacion} />
+        <span className="mt-1 block text-sm text-texto-suave">
+          {cantidadResenas} reseñas en{" "}
+          <span className="font-semibold text-texto group-hover:text-acento-alt">
+            Google
+          </span>
+        </span>
+      </span>
     </a>
   );
 }

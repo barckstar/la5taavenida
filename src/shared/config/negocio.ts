@@ -50,27 +50,26 @@ export const negocio = {
     kgId: "/g/11p5blxm46",
 
     /**
-     * PENDIENTE. Calificacion y cantidad de resenas de su ficha de Google.
-     *
-     * Se dejan en null a proposito: NO se inventan. Poner un numero falso de
-     * clientes o de estrellas en el sitio de un negocio real es un dato
-     * verificable que cualquiera puede desmentir abriendo Maps, y expone al
-     * cliente. En cuanto el usuario pase los reales, se llenan aca y la
-     * prueba social del hero cambia sola.
+     * Calificacion y resenas REALES de su ficha de Google (2026-09-01).
+     * Actualizar a mano cuando cambien, o automatizar con la Places API.
      */
-    calificacion: null as number | null,
-    cantidadResenas: null as number | null,
+    calificacion: 4.6 as number | null,
+    cantidadResenas: 59 as number | null,
   },
 
-  /**
-   * Seguidores en Facebook. Dato REAL, extraido de los meta tags de su pagina
-   * el 2026-09-01. Es la prueba social que se muestra mientras no tengamos la
-   * de Google.
-   */
+  /** Seguidores en Facebook, de los meta tags de su pagina (2026-09-01). */
   seguidoresFacebook: 4352,
 
   /** Rango de precios para el JSON-LD. DEMO: ajustar con el menu real. */
   rangoPrecios: "₡₡",
+  /** Rango real segun Google: consumo por persona. */
+  rangoPreciosTexto: "₡5.000 – ₡10.000 por persona",
+  /** Categoria con la que Google los clasifica. */
+  categoriaGoogle: "Restaurante de comida rápida",
+  /** Plus Code de Google, sirve como direccion exacta. */
+  plusCode: "3GQQ+W6 San Ramón, Provincia de Alajuela",
+  /** Modalidades confirmadas en su ficha de Google. */
+  servicios: ["Consumo en el lugar", "Para llevar", "Entrega a domicilio"],
 
   /**
    * Horarios REALES, tomados de la ficha de Google del negocio (2026-09-01).
