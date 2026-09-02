@@ -12,8 +12,9 @@ import type { Plato } from "../types";
  * arriba, nombre y precio, descripcion, nota para la cocina, y abajo un boton
  * fijo con la cantidad y el subtotal.
  *
- * Sube desde abajo en movil y aparece centrada en escritorio, que es el
- * comportamiento que el usuario ya conoce de Uber Eats.
+ * En MOVIL ocupa la pantalla completa: con una hoja a media altura la foto y
+ * el texto quedaban comprimidos y sobraba fondo oscuro sin usar. En escritorio
+ * se centra como dialogo, que es donde una hoja a pantalla completa si estorba.
  */
 export function DetallePlato({
   plato,
@@ -77,10 +78,10 @@ export function DetallePlato({
         role="dialog"
         aria-modal="true"
         aria-labelledby="titulo-plato"
-        className="absolute inset-x-0 bottom-0 flex max-h-[92dvh] flex-col overflow-hidden rounded-t-3xl border border-borde bg-base-alt sm:inset-x-auto sm:left-1/2 sm:top-1/2 sm:max-h-[88dvh] sm:w-full sm:max-w-lg sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-3xl"
+        className="absolute inset-0 flex flex-col overflow-hidden border-borde bg-base-alt sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:h-auto sm:max-h-[88dvh] sm:w-full sm:max-w-lg sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-3xl sm:border"
       >
         <div className="relative shrink-0">
-          <div className="relative aspect-16/10 bg-superficie">
+          <div className="relative h-[38dvh] bg-superficie sm:h-auto sm:aspect-16/10">
             <Image
               src={plato.media.src}
               alt={plato.media.alt}
@@ -99,7 +100,7 @@ export function DetallePlato({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-5 py-5">
+        <div className="flex-1 overflow-y-auto px-5 py-6">
           <div className="flex items-start justify-between gap-4">
             <h2
               id="titulo-plato"
@@ -152,7 +153,7 @@ export function DetallePlato({
           )}
         </div>
 
-        <footer className="shrink-0 border-t border-borde p-4">
+        <footer className="shrink-0 border-t border-borde p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <div className="flex items-center gap-3">
             <div className="inline-flex items-center gap-1 rounded-full border border-borde p-1">
               <button

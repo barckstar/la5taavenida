@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useCarrito } from "../lib/carritoStore";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { negocio } from "@/shared/config/negocio";
+import { SugerenciasCarrito } from "./SugerenciasCarrito";
+import type { Plato } from "@/features/menu/types";
 
 /**
  * Panel del carrito. Es un drawer, no una pagina: asi el sitio se mantiene en
@@ -13,7 +15,14 @@ import { negocio } from "@/shared/config/negocio";
  * Accesibilidad: atrapa el foco, cierra con Escape, bloquea el scroll del
  * fondo y se anuncia como dialogo.
  */
-export function CarritoDrawer({ onIrAlCheckout }: { onIrAlCheckout: () => void }) {
+export function CarritoDrawer({
+  onIrAlCheckout,
+  sugerencias = [],
+}: {
+  onIrAlCheckout: () => void;
+  /** Complementos a ofrecer. Llegan del layout para no acoplar features. */
+  sugerencias?: Plato[];
+}) {
   const { lineas, abierto, cerrar, cambiarCantidad, quitar, ponerNota, total, vaciar } =
     useCarrito();
   const panel = useRef<HTMLDivElement>(null);
@@ -178,6 +187,8 @@ export function CarritoDrawer({ onIrAlCheckout }: { onIrAlCheckout: () => void }
                 </li>
               ))}
             </ul>
+
+            <SugerenciasCarrito candidatos={sugerencias} />
 
             <footer className="border-t border-borde p-5">
               <div className="flex items-baseline justify-between">

@@ -53,7 +53,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <BarraSocial />
           {children}
           <Footer />
-          <CarritoUI />
+          <CarritoUI
+            sugerencias={menu.filter((p) => p.categoria === "adicionales")}
+          />
         </CarritoProvider>
       </body>
     </html>

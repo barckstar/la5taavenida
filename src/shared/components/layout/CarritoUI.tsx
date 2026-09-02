@@ -5,12 +5,13 @@ import { CarritoBoton } from "@/features/carrito/components/CarritoBoton";
 import { CarritoDrawer } from "@/features/carrito/components/CarritoDrawer";
 import { CheckoutDrawer } from "@/features/checkout/components/CheckoutDrawer";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
+import type { Plato } from "@/features/menu/types";
 
 /**
  * Une el boton flotante, el carrito y el checkout. Vive en el layout para que
  * el pedido sobreviva al navegar entre el inicio y el menu.
  */
-export function CarritoUI() {
+export function CarritoUI({ sugerencias = [] }: { sugerencias?: Plato[] }) {
   const { cerrar } = useCarrito();
   const [checkoutAbierto, setCheckoutAbierto] = useState(false);
 
@@ -18,6 +19,7 @@ export function CarritoUI() {
     <>
       <CarritoBoton />
       <CarritoDrawer
+        sugerencias={sugerencias}
         onIrAlCheckout={() => {
           cerrar();
           setCheckoutAbierto(true);

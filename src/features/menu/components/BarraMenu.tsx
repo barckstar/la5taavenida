@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { IconoVideo, IconoCuadros } from "@/shared/components/ui/Iconos";
 import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
@@ -12,8 +13,7 @@ type Vista = "lista" | "reels";
  *
  * Va a ANCHO COMPLETO, fuera del Contenedor, con fondo opaco y borde inferior.
  * Antes vivia dentro del Contenedor y su fondo solo cubria el ancho de la
- * columna: las tarjetas se veian pasar por los costados. El `backdrop-blur`
- * solo no alcanza — hace falta que el fondo llegue de borde a borde.
+ * columna: las tarjetas se veian pasar por los costados.
  *
  * SIGUE AL NAVBAR: cuando el navbar se esconde al bajar, esta barra sube a
  * ocupar su lugar (top-0). Si se quedara fija en top-16 quedaria una franja
@@ -33,6 +33,38 @@ export function BarraMenu({
   categorias: Categoria[];
 }) {
   const navbarOculto = useNavbarOculto();
+  const carril = useRef<HTMLDivElement>(null);
+
+  /*
+    Convierte la rueda vertical del mouse en desplazamiento horizontal.
+
+    El carril siempre fue desplazable — 560px de chips en 241 visibles — pero
+    con un mouse no habia forma de moverlo: la rueda vertical no desplaza
+    contenedores horizontales, y hace falta Shift o un trackpad. Se sentia
+    trabado. En movil el gesto tactil ya funcionaba solo.
+
+    El listener se registra a mano y NO como onWheel de React porque necesita
+    `passive: false` para poder llamar a preventDefault.
+  */
+  useEffect(() => {
+    const nodo = carril.current;
+    if (!nodo) return;
+
+    function alGirarRueda(e: WheelEvent) {
+      const n = carril.current;
+      if (!n) return;
+      // Si el gesto ya es horizontal (trackpad), se deja pasar tal cual.
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (n.scrollWidth <= n.clientWidth) return;
+      e.preventDefault();
+      // scroll-behavior smooth aqui rompia el desplazamiento por rueda: la
+      // asignacion se encolaba como animacion y nunca llegaba a aplicarse.
+      n.scrollLeft += e.deltaY;
+    }
+
+    nodo.addEventListener("wheel", alGirarRueda, { passive: false });
+    return () => nodo.removeEventListener("wheel", alGirarRueda);
+  }, []);
 
   return (
     <div
@@ -46,27 +78,39 @@ export function BarraMenu({
           <SwitchVista vista={vista} onCambiar={onCambiarVista} />
         </div>
 
-        <div
-          role="group"
-          aria-label="Filtrar por categoría"
-          // `-mb-2 pb-2` deja sitio a la barra de scroll sin que corte los chips
-          className="-mb-2 flex flex-1 gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          <Chip
-            activo={categoria === "todas"}
-            onClick={() => onCambiarCategoria("todas")}
+        <div className="relative min-w-0 flex-1">
+          <div
+            ref={carril}
+            role="group"
+            aria-label="Filtrar por categoría"
+            className="-mb-2 flex gap-2 overflow-x-auto pb-2 pr-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
-            Todo
-          </Chip>
-          {categorias.map((c) => (
             <Chip
-              key={c.id}
-              activo={categoria === c.id}
-              onClick={() => onCambiarCategoria(c.id)}
+              activo={categoria === "todas"}
+              onClick={() => onCambiarCategoria("todas")}
             >
-              {c.nombre}
+              Todo
             </Chip>
-          ))}
+            {categorias.map((c) => (
+              <Chip
+                key={c.id}
+                activo={categoria === c.id}
+                onClick={() => onCambiarCategoria(c.id)}
+              >
+                {c.nombre}
+              </Chip>
+            ))}
+          </div>
+
+          {/*
+            Degradado en el borde derecho: es el unico aviso de que hay mas
+            categorias. Sin el, los chips se ven simplemente cortados y nadie
+            adivina que el carril se desliza.
+          */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-base to-transparent"
+          />
         </div>
       </Contenedor>
     </div>
