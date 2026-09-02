@@ -32,29 +32,53 @@ export const negocio = {
 
   facebook: "https://www.facebook.com/5taavenidagrill/",
 
+  /**
+   * Coordenadas CONFIRMADAS del local, tomadas de la ficha de Google que
+   * compartio el cliente (2026-09-01). Ya no son una estimacion.
+   */
+  coordenadas: { lat: 10.0898297, lng: -84.4743896 },
+
+  /**
+   * Identificadores del negocio en Google, del enlace de su ficha.
+   * `cid` sirve para enlazar directo al lugar en Maps.
+   */
+  google: {
+    cid: "15405326590712899056",
+    /** ID del Knowledge Graph, por si hace falta la Places API. */
+    kgId: "/g/11p5blxm46",
+  },
+
   /** Rango de precios para el JSON-LD. DEMO: ajustar con el menu real. */
   rangoPrecios: "₡₡",
 
-  // DEMO: horarios inventados para la muestra. El cliente aun no los entrego.
+  /**
+   * Horarios REALES, tomados de la ficha de Google del negocio (2026-09-01).
+   * Abren los siete dias; martes arranca mas tarde. Ya no son DEMO.
+   */
   horarios: [
-    { dias: "Lunes", diasSchema: ["Monday"], apertura: null, cierre: null },
     {
-      dias: "Martes a jueves",
-      diasSchema: ["Tuesday", "Wednesday", "Thursday"],
-      apertura: "11:00",
+      dias: "Lunes",
+      diasSchema: ["Monday"],
+      apertura: "12:00",
       cierre: "22:00",
     },
     {
-      dias: "Viernes y sábado",
-      diasSchema: ["Friday", "Saturday"],
-      apertura: "11:00",
-      cierre: "24:00",
+      dias: "Martes",
+      diasSchema: ["Tuesday"],
+      apertura: "15:00",
+      cierre: "22:00",
     },
     {
-      dias: "Domingo",
-      diasSchema: ["Sunday"],
-      apertura: "11:00",
-      cierre: "21:00",
+      dias: "Miércoles a domingo",
+      diasSchema: [
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      apertura: "12:00",
+      cierre: "22:00",
     },
   ] satisfies Horario[],
 } as const;

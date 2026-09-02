@@ -87,7 +87,11 @@ superficies del 30%, el texto va blanco, no naranja.
 
 ## Pendiente de decidir
 
-- [ ] Dirección, teléfono, horarios y menú reales (bloqueado por el cliente)
+- [x] Dirección, teléfono y **horarios reales** confirmados
+- [x] Coordenadas exactas y CID de Google del negocio
+- [ ] Menú real: platos, precios y fotos (bloqueado por el cliente)
+- [ ] Place ID en formato ChIJ, para el enlace de reseña de un clic
+- [ ] Reseñas reales de Google (hoy hay marcadores, NO publicar así)
 - [ ] Fotografía del local y platos
 - [x] Dominio: vercel.app para la muestra
 - [ ] ¿Bilingüe ES/EN?

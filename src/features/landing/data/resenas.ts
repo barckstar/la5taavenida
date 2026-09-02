@@ -1,3 +1,5 @@
+import { negocio } from "@/shared/config/negocio";
+
 /**
  * ============================================================================
  * ATENCION — CONTENIDO DE EJEMPLO, NO PUBLICAR ASI
@@ -47,16 +49,25 @@ export const resenasEjemplo: Resena[] = [
   },
 ];
 
-/**
- * Enlace para dejar una resena. Lo ideal es
- * `https://search.google.com/local/writereview?placeid=<PLACE_ID>`, que abre el
- * formulario directo, pero requiere el Place ID del negocio. Mientras no lo
- * tengamos, se cae a la busqueda en Maps.
- */
-export const PLACE_ID: string | null = null; // PENDIENTE: pedirlo al cliente
 
-export function enlaceResena(consulta: string): string {
-  return PLACE_ID
-    ? `https://search.google.com/local/writereview?placeid=${PLACE_ID}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(consulta)}`;
+/**
+ * Enlace a la ficha del negocio en Google Maps, donde se deja la resena.
+ *
+ * Se usa el CID, que es el identificador real del lugar y viene del enlace que
+ * compartio el cliente. Es mucho mas confiable que buscar por nombre: una
+ * busqueda puede caer en otro negocio homonimo, y de "5ta Avenida" hay varios
+ * en Costa Rica.
+ *
+ * Para el formulario de resena de un solo clic
+ * (`search.google.com/local/writereview?placeid=ChIJ...`) hace falta el Place
+ * ID en formato ChIJ, que no viene en el enlace. Se puede sacar del buscador
+ * de Place ID de Google. Mientras tanto, este enlace abre la ficha y el
+ * usuario pulsa "Escribir una resena".
+ */
+export function enlaceResena(): string {
+  return `https://www.google.com/maps?cid=${negocio.google.cid}`;
+}
+
+export function enlaceFichaGoogle(): string {
+  return `https://www.google.com/maps?cid=${negocio.google.cid}`;
 }

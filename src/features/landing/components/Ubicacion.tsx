@@ -2,6 +2,7 @@ import { Seccion } from "@/shared/components/ui/Seccion";
 import { BotonEnlace } from "@/shared/components/ui/Boton";
 import { IconoWhatsApp } from "@/shared/components/ui/Iconos";
 import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
+import { MapaLocal } from "./MapaLocal";
 
 export function Ubicacion() {
   return (
@@ -52,15 +53,7 @@ export function Ubicacion() {
         </div>
 
         <div className="overflow-hidden rounded-2xl ring-1 ring-borde">
-          <iframe
-            title={`Mapa de ${negocio.nombre} en ${negocio.ciudad}`}
-            src={`https://www.google.com/maps?q=${encodeURIComponent(
-              `${negocio.direccion}, ${negocio.ciudad}, Costa Rica`,
-            )}&output=embed`}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="h-80 w-full border-0 lg:h-full lg:min-h-[26rem]"
-          />
+          <MapaLocal />
         </div>
       </div>
     </Seccion>

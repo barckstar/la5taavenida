@@ -1,34 +1,17 @@
-import Image from "next/image";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { IconoCheck } from "@/shared/components/ui/IconoCheck";
 import { sobreNosotros } from "../data/landing";
-import { negocio } from "@/shared/config/negocio";
+import { LogoEnBrasas } from "./LogoEnBrasas";
+import { Revelar, RevelarCascada, ItemCascada } from "@/shared/components/ui/Revelar";
 
 export function SobreNosotros() {
   return (
     <section id="nosotros" className="scroll-mt-20 bg-base-alt py-20 sm:py-28">
       <Contenedor>
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Marca dentro de un circulo, como el patron de la referencia. */}
-          <div className="relative mx-auto flex aspect-square w-full max-w-md items-center justify-center">
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full bg-acento/12 ring-1 ring-acento/25"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-[12%] rounded-full bg-acento/8"
-            />
-            <Image
-              src="/marca/logo.jpg"
-              alt={`Logo de ${negocio.nombre}, parrilla en ${negocio.ciudad}`}
-              width={340}
-              height={340}
-              className="relative w-[62%] rounded-full shadow-2xl"
-            />
-          </div>
+          <LogoEnBrasas />
 
-          <div>
+          <Revelar direccion="derecha">
             <span className="font-display text-xs font-semibold uppercase tracking-[0.28em] text-acento">
               {sobreNosotros.antetitulo}
             </span>
@@ -44,15 +27,17 @@ export function SobreNosotros() {
               {sobreNosotros.parrafo}
             </p>
 
-            <ul className="mt-8 grid gap-x-6 gap-y-4 sm:grid-cols-2">
+            <RevelarCascada className="mt-8 grid gap-x-6 gap-y-4 sm:grid-cols-2">
               {sobreNosotros.puntos.map((punto) => (
-                <li key={punto} className="flex items-start gap-3">
-                  <IconoCheck className="mt-0.5 size-5" />
-                  <span className="text-texto">{punto}</span>
-                </li>
+                <ItemCascada key={punto}>
+                  <div className="flex items-start gap-3">
+                    <IconoCheck className="mt-0.5 size-5" />
+                    <span className="text-texto">{punto}</span>
+                  </div>
+                </ItemCascada>
               ))}
-            </ul>
-          </div>
+            </RevelarCascada>
+          </Revelar>
         </div>
       </Contenedor>
     </section>

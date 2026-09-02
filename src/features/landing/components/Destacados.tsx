@@ -4,6 +4,7 @@ import { Seccion } from "@/shared/components/ui/Seccion";
 import { BotonEnlace } from "@/shared/components/ui/Boton";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { platosDestacados } from "@/features/menu/data/menu";
+import { RevelarCascada, ItemCascada } from "@/shared/components/ui/Revelar";
 
 export function Destacados() {
   return (
@@ -12,10 +13,10 @@ export function Destacados() {
       antetitulo="Lo más pedido"
       titulo="Los que no fallan"
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <RevelarCascada className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {platosDestacados.map((plato) => (
+          <ItemCascada key={plato.id} className="h-full">
           <Link
-            key={plato.id}
             href="/menu"
             className="group overflow-hidden rounded-2xl bg-superficie ring-1 ring-borde transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
           >
@@ -40,8 +41,9 @@ export function Destacados() {
               </p>
             </div>
           </Link>
+          </ItemCascada>
         ))}
-      </div>
+      </RevelarCascada>
 
       <div className="mt-10">
         <BotonEnlace href="/menu" variante="contorno" tamano="lg">

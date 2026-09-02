@@ -1,8 +1,8 @@
 import { Seccion } from "@/shared/components/ui/Seccion";
 import { Tarjeta } from "@/shared/components/ui/Tarjeta";
 import { BotonEnlace } from "@/shared/components/ui/Boton";
-import { negocio } from "@/shared/config/negocio";
-import { resenasEjemplo, enlaceResena } from "../data/resenas";
+import { resenasEjemplo, enlaceResena, enlaceFichaGoogle } from "../data/resenas";
+import { RevelarCascada, ItemCascada } from "@/shared/components/ui/Revelar";
 
 function Estrellas({ cantidad }: { cantidad: number }) {
   return (
@@ -26,17 +26,16 @@ function Estrellas({ cantidad }: { cantidad: number }) {
 }
 
 export function Resenas() {
-  const consulta = `${negocio.nombre} ${negocio.ciudad} ${negocio.provincia} Costa Rica`;
-
   return (
     <Seccion
       id="resenas"
       antetitulo="Reseñas de Google"
       titulo="Lo que dice la gente"
     >
-      <div className="grid gap-5 md:grid-cols-3">
+      <RevelarCascada className="grid gap-5 md:grid-cols-3">
         {resenasEjemplo.map((r, i) => (
-          <Tarjeta key={i} className="flex flex-col p-6">
+          <ItemCascada key={i}>
+            <Tarjeta className="flex h-full flex-col p-6">
             <Estrellas cantidad={r.estrellas} />
             <p className="mt-4 flex-1 leading-relaxed text-texto-suave">
               “{r.texto}”
@@ -47,16 +46,17 @@ export function Resenas() {
               </p>
               <p className="text-xs text-texto-suave">{r.fecha}</p>
             </div>
-          </Tarjeta>
+            </Tarjeta>
+          </ItemCascada>
         ))}
-      </div>
+      </RevelarCascada>
 
       <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <BotonEnlace href={enlaceResena(consulta)} tamano="lg">
+        <BotonEnlace href={enlaceResena()} tamano="lg">
           Dejar una reseña en Google
         </BotonEnlace>
         <BotonEnlace
-          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(consulta)}`}
+          href={enlaceFichaGoogle()}
           variante="contorno"
           tamano="lg"
         >
