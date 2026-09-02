@@ -18,7 +18,7 @@ export function Brasas() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
     >
       {BRASAS.map((b, i) => (
         <span
@@ -29,6 +29,8 @@ export function Brasas() {
             width: b.tam,
             height: b.tam,
             opacity: 0,
+            // El resplandor es lo que las hace leer como brasa y no como punto.
+            boxShadow: `0 0 ${b.tam * 2}px ${b.tam / 2}px rgba(232,119,31,0.75)`,
             animation: `brasa-subir ${b.duracion} ease-out ${b.retraso} infinite`,
             ["--deriva" as string]: b.deriva,
           }}
