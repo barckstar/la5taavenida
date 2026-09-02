@@ -2,17 +2,39 @@
  * Brasas del hero. CSS puro: sin JavaScript, sin librerias, sin costo de carga.
  * Solo anima transform y opacity, asi que corre en GPU. El bloque global de
  * prefers-reduced-motion en globals.css la detiene por completo.
+ *
+ * La gama va del amarillo incandescente al rojo profundo, que es como se
+ * enfria una chispa al subir. Con un solo color se veian puntos naranjas
+ * flotando; con la gama se leen como fuego.
  */
-const BRASAS = [
-  { izq: "8%", retraso: "0s", duracion: "7s", deriva: "18px", tam: 5 },
-  { izq: "21%", retraso: "1.6s", duracion: "9s", deriva: "-14px", tam: 3 },
-  { izq: "34%", retraso: "3.1s", duracion: "8s", deriva: "22px", tam: 4 },
-  { izq: "47%", retraso: "0.8s", duracion: "10s", deriva: "-20px", tam: 3 },
-  { izq: "59%", retraso: "4.2s", duracion: "7.5s", deriva: "16px", tam: 5 },
-  { izq: "71%", retraso: "2.4s", duracion: "9.5s", deriva: "-11px", tam: 4 },
-  { izq: "84%", retraso: "5.1s", duracion: "8.5s", deriva: "20px", tam: 3 },
-  { izq: "93%", retraso: "3.7s", duracion: "11s", deriva: "-17px", tam: 4 },
+
+/** Del nucleo mas caliente al rescoldo. */
+const GAMA = [
+  { color: "#FFD9A0", brillo: "rgba(255,217,160,0.85)" }, // amarillo incandescente
+  { color: "#F0A05D", brillo: "rgba(240,160,93,0.8)" }, // naranja claro
+  { color: "#E8771F", brillo: "rgba(232,119,31,0.75)" }, // ambar
+  { color: "#E35120", brillo: "rgba(227,81,32,0.7)" }, // naranja fuego
+  { color: "#C03018", brillo: "rgba(192,48,24,0.6)" }, // rojo brasa
+  { color: "#A01010", brillo: "rgba(160,16,16,0.5)" }, // rescoldo
 ];
+
+/**
+ * Posiciones generadas con una secuencia fija, no con Math.random: un valor
+ * aleatorio daria distinto en el servidor y en el cliente, y React marcaria
+ * desajuste de hidratacion.
+ */
+const BRASAS = Array.from({ length: 26 }, (_, i) => {
+  const g = GAMA[i % GAMA.length];
+  // Numeros primos distintos para que los ciclos no caigan en fase.
+  return {
+    izq: `${(i * 97) % 100}%`,
+    tam: 2 + ((i * 7) % 5),
+    retraso: `${((i * 13) % 90) / 10}s`,
+    duracion: `${7 + ((i * 11) % 60) / 10}s`,
+    deriva: `${((i * 17) % 60) - 30}px`,
+    ...g,
+  };
+});
 
 export function Brasas() {
   return (
@@ -23,14 +45,15 @@ export function Brasas() {
       {BRASAS.map((b, i) => (
         <span
           key={i}
-          className="absolute bottom-0 rounded-full bg-acento-claro"
+          className="absolute bottom-0 rounded-full"
           style={{
             left: b.izq,
             width: b.tam,
             height: b.tam,
+            backgroundColor: b.color,
             opacity: 0,
             // El resplandor es lo que las hace leer como brasa y no como punto.
-            boxShadow: `0 0 ${b.tam * 2}px ${b.tam / 2}px rgba(232,119,31,0.75)`,
+            boxShadow: `0 0 ${b.tam * 2.5}px ${b.tam / 2}px ${b.brillo}`,
             animation: `brasa-subir ${b.duracion} ease-out ${b.retraso} infinite`,
             ["--deriva" as string]: b.deriva,
           }}

@@ -18,13 +18,19 @@ import type { Plato } from "../types";
  *   - "Choripán": en la imagen se lee "Choripáti", que no es palabra.
  *   - "Empanada Arreglada": en la imagen se lee "Empada Arreglada".
  *
- * FOTOS: solo existe la de la hamburguesa de portada. El resto usa el marcador
- * de marca. Sustituir `FOTO_PENDIENTE` conforme lleguen.
+ * FOTOS: la de "mar-y-tierra" es REAL (portada de su Facebook). El resto son
+ * provisionales de Wikimedia Commons, todas CC0 o dominio publico — ver
+ * public/platos/fotos/LICENCIAS.json. NO son la comida del cliente:
+ * reemplazarlas por fotos del local antes de publicar.
  * ============================================================================
  */
 
-const FOTO_PENDIENTE = "/platos/placeholder.svg";
-const FOTO_BURGER = "/platos/hamburguesa-5ta.webp";
+/**
+ * Fotos PROVISIONALES de Wikimedia Commons, todas CC0 o dominio publico.
+ * Ver public/platos/fotos/LICENCIAS.json para el detalle de cada archivo.
+ * NO son la comida del cliente: reemplazar por fotos reales del local.
+ */
+const FOTOS = "/platos/fotos";
 
 export const menu: Plato[] = [
   // ---------------------------------------------------------------- burgers
@@ -37,9 +43,12 @@ export const menu: Plato[] = [
     precio: 4200,
     categoria: "hamburguesas",
     media: {
-      // Unica foto real: coincide con la portada de su Facebook.
+      // Unica foto REAL de comida. El recorte transparente (FOTO_BURGER) es
+      // para el fondo del hero; en una tarjeta 4:3 se recortaba mal y quedaba
+      // casi todo transparente. Esta version esta compuesta sobre fondo y
+      // encuadrada para miniatura.
       tipo: "imagen",
-      src: FOTO_BURGER,
+      src: `${FOTOS}/mar-y-tierra.webp`,
       alt: "Mar y Tierra Burger con camarones en 5ta Avenida Grill, San Ramón",
     },
     destacado: true,
@@ -54,7 +63,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/angus.webp`,
       alt: "Hamburguesa Angus en pan artesanal en 5ta Avenida Grill, San Ramón",
     },
     destacado: true,
@@ -69,7 +78,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/pulled-pork.webp`,
       alt: "Hamburguesa de cerdo mechado en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -83,7 +92,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/costilla-burger.webp`,
       alt: "Hamburguesa de costilla en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -97,7 +106,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/doble-torta.webp`,
       alt: "Hamburguesa doble torta en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -111,7 +120,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/cheeseburger.webp`,
       alt: "Cheeseburger en pan artesanal en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -125,7 +134,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/de-pollo.webp`,
       alt: "Hamburguesa de pollo en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -139,7 +148,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/tradicional.webp`,
       alt: "Hamburguesa tradicional en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -153,7 +162,7 @@ export const menu: Plato[] = [
     categoria: "hamburguesas",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/economica.webp`,
       alt: "Hamburguesa económica en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -170,7 +179,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/surtida-grande.webp`,
       alt: "Surtida 5ta Avenida grande para compartir en San Ramón",
     },
     destacado: true,
@@ -185,7 +194,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/surtida-pequena.webp`,
       alt: "Surtida 5ta Avenida pequeña en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -199,7 +208,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/taco-birria.webp`,
       alt: "Tacos de birria en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -213,7 +222,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/costilla-cerdo.webp`,
       alt: "Costilla de cerdo a la parrilla en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -227,7 +236,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-mixtas.webp`,
       alt: "Papas mixtas en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -241,7 +250,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nachos-mixtos.webp`,
       alt: "Nachos mixtos en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -255,7 +264,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nachos.webp`,
       alt: "Nachos en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -269,7 +278,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nuggets.webp`,
       alt: "Nuggets de pollo en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -283,7 +292,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/alitas.webp`,
       alt: "Alitas de pollo en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -297,7 +306,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-especiales.webp`,
       alt: "Papas especiales en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -311,7 +320,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/pinchos.webp`,
       alt: "Pinchos a la parrilla en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -325,7 +334,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/canasta-chicharron.webp`,
       alt: "Canasta de chicharrón en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -339,7 +348,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/cartucho.webp`,
       alt: "Cartucho en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -353,7 +362,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/salchipapas.webp`,
       alt: "Salchipapas en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -367,7 +376,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/taco-tico.webp`,
       alt: "Taco tico en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -382,7 +391,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/empanada-arreglada.webp`,
       alt: "Empanada arreglada en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -397,7 +406,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/choripan.webp`,
       alt: "Choripán en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -411,7 +420,7 @@ export const menu: Plato[] = [
     categoria: "grill",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/empanada.webp`,
       alt: "Empanada en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -427,7 +436,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-mixtas.webp`,
       alt: "Mini papas mixtas para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -441,7 +450,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nachos-mixtos.webp`,
       alt: "Mini nachos mixtos para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -455,7 +464,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/salchipapas.webp`,
       alt: "Mini salchipapas para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -469,7 +478,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nuggets.webp`,
       alt: "Mini nuggets con papas para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -483,7 +492,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-especiales.webp`,
       alt: "Mini papas especiales para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -497,7 +506,7 @@ export const menu: Plato[] = [
     categoria: "infantil",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/nachos.webp`,
       alt: "Mini nachos para niños en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -513,7 +522,7 @@ export const menu: Plato[] = [
     categoria: "adicionales",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-gajos.webp`,
       alt: "Orden de papas en gajos en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
@@ -527,7 +536,7 @@ export const menu: Plato[] = [
     categoria: "adicionales",
     media: {
       tipo: "imagen",
-      src: FOTO_PENDIENTE,
+      src: `${FOTOS}/papas-pequenas.webp`,
       alt: "Orden de papas pequeñas en 5ta Avenida Grill, San Ramón",
     },
     disponible: true,
