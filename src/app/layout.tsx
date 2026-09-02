@@ -72,10 +72,22 @@ export const metadata: Metadata = {
     description: `${negocio.tagline} Pida en línea y coordinamos por WhatsApp.`,
     images: ["/marca/og.jpg"],
   },
+  /*
+    El logo completo lleva "AVENIDA Grill" en letra chica, ilegible a 16px. Los
+    iconos usan un recorte al 72% central —la llama con el "5ta"— que es lo
+    unico que se reconoce a tamano de pestana, con mascara circular para que no
+    salga un cuadrado.
+  */
   icons: {
-    icon: "/marca/logo.jpg",
-    apple: "/marca/logo.jpg",
+    icon: [
+      { url: "/marca/icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/marca/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/marca/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: "/marca/apple-icon.png", sizes: "180x180" }],
   },
+  applicationName: negocio.nombre,
+  manifest: "/manifest.webmanifest",
   robots: { index: true, follow: true },
 };
 
