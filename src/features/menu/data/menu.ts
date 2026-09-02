@@ -38,7 +38,7 @@ export const menu: Plato[] = [
     id: "mar-y-tierra",
     nombre: "Mar y Tierra Burger",
     descripcion:
-      "Carne a la parrilla y camarones sobre pan artesanal. La de la foto.",
+      "Carne a la parrilla y camarones al ajillo sobre pan artesanal. Mar y tierra en un solo mordisco, y la que sale en todas las fotos.",
     ingredientes: [],
     precio: 4200,
     categoria: "hamburguesas",
@@ -57,7 +57,8 @@ export const menu: Plato[] = [
   {
     id: "angus",
     nombre: "Angus",
-    descripcion: "Carne Angus en pan artesanal.",
+    descripcion:
+      "Nuestra Angus: carne de res jugosa, sellada a la parrilla y servida en pan artesanal recién horneado. La más pedida de la casa.",
     ingredientes: [],
     precio: 5500,
     categoria: "hamburguesas",
@@ -72,7 +73,8 @@ export const menu: Plato[] = [
   {
     id: "pulled-pork",
     nombre: "Pulled Pork",
-    descripcion: "Cerdo mechado en pan artesanal.",
+    descripcion:
+      "Cerdo cocinado lento hasta deshacerse solo, en pan artesanal. Suave, ahumado y generoso.",
     ingredientes: [],
     precio: 4200,
     categoria: "hamburguesas",
@@ -86,7 +88,8 @@ export const menu: Plato[] = [
   {
     id: "costilla-burger",
     nombre: "Costilla Burger",
-    descripcion: "Costilla de cerdo en pan artesanal.",
+    descripcion:
+      "Costilla de cerdo tierna en pan artesanal. Para quien quiere sabor de parrilla sin soltar la hamburguesa.",
     ingredientes: [],
     precio: 3500,
     categoria: "hamburguesas",
@@ -100,7 +103,8 @@ export const menu: Plato[] = [
   {
     id: "doble-torta",
     nombre: "Doble Torta",
-    descripcion: "Doble carne en pan artesanal.",
+    descripcion:
+      "Doble carne a la parrilla en pan artesanal. Cuando una no alcanza.",
     ingredientes: [],
     precio: 3500,
     categoria: "hamburguesas",
@@ -114,7 +118,8 @@ export const menu: Plato[] = [
   {
     id: "cheeseburger",
     nombre: "Cheeseburger",
-    descripcion: "Con queso, en pan artesanal.",
+    descripcion:
+      "La clásica que nunca falla: carne a la parrilla y queso derretido en pan artesanal.",
     ingredientes: [],
     precio: 3500,
     categoria: "hamburguesas",
@@ -128,7 +133,8 @@ export const menu: Plato[] = [
   {
     id: "de-pollo",
     nombre: "D' Pollo",
-    descripcion: "De pollo, en pan artesanal.",
+    descripcion:
+      "Pollo dorado y jugoso en pan artesanal. Ligera de nombre, contundente de sabor.",
     ingredientes: [],
     precio: 2500,
     categoria: "hamburguesas",
@@ -142,7 +148,8 @@ export const menu: Plato[] = [
   {
     id: "tradicional",
     nombre: "Tradicional",
-    descripcion: "La de siempre, en pan artesanal.",
+    descripcion:
+      "La de toda la vida, en pan artesanal. Simple, honesta y bien servida.",
     ingredientes: [],
     precio: 2000,
     categoria: "hamburguesas",
@@ -156,7 +163,8 @@ export const menu: Plato[] = [
   {
     id: "economica",
     nombre: "Económica",
-    descripcion: "La opción más accesible del menú.",
+    descripcion:
+      "Nuestra opción más accesible, con el mismo sabor de la parrilla. Rinde y no falla.",
     ingredientes: [],
     precio: 1000,
     categoria: "hamburguesas",
@@ -173,7 +181,7 @@ export const menu: Plato[] = [
     id: "surtida-grande",
     nombre: "Surtida 5ta Avenida (Grande)",
     descripcion:
-      "La picada de la casa para compartir. Dos reseñas de Google la recomiendan para grupo.",
+      "La picada de la casa para compartir en grande: carnes surtidas directo de la parrilla con sus acompañamientos. Pensada para la mesa completa.",
     ingredientes: [],
     precio: 13000,
     categoria: "grill",
@@ -188,7 +196,8 @@ export const menu: Plato[] = [
   {
     id: "surtida-pequena",
     nombre: "Surtida 5ta Avenida (Pequeña)",
-    descripcion: "La misma picada de la casa, en porción pequeña.",
+    descripcion:
+      "La misma picada de la casa, en porción para dos. Todo el sabor, la mitad del compromiso.",
     ingredientes: [],
     precio: 7500,
     categoria: "grill",
@@ -202,7 +211,8 @@ export const menu: Plato[] = [
   {
     id: "taco-birria",
     nombre: "Taco de Birria (3 unidades)",
-    descripcion: "Tres tacos de birria.",
+    descripcion:
+      "Tres tacos de birria jugosos, con la carne deshebrada y bien sazonada. De los que se piden de a dos órdenes.",
     ingredientes: [],
     precio: 4900,
     categoria: "grill",
@@ -216,7 +226,8 @@ export const menu: Plato[] = [
   {
     id: "costilla-cerdo",
     nombre: "Costilla de cerdo",
-    descripcion: "Costilla de cerdo a la parrilla.",
+    descripcion:
+      "Costilla de cerdo a la parrilla, tierna hasta soltarse del hueso. Puro carbón y paciencia.",
     ingredientes: [],
     precio: 4200,
     categoria: "grill",
@@ -230,7 +241,8 @@ export const menu: Plato[] = [
   {
     id: "papas-mixtas",
     nombre: "Papas Mixtas",
-    descripcion: "Papas mixtas de la casa.",
+    descripcion:
+      "Nuestras papas mixtas, cargadas y listas para compartir. El acompañamiento que siempre se pide de más.",
     ingredientes: [],
     precio: 4000,
     categoria: "grill",
@@ -244,7 +256,8 @@ export const menu: Plato[] = [
   {
     id: "nachos-mixtos",
     nombre: "Nachos Mixtos",
-    descripcion: "Nachos mixtos. Los mencionan en las reseñas de Google.",
+    descripcion:
+      "Tortillas crujientes bien cargadas, mixtas y para compartir. De los favoritos en las reseñas.",
     ingredientes: [],
     precio: 4000,
     categoria: "grill",
@@ -258,7 +271,8 @@ export const menu: Plato[] = [
   {
     id: "nachos",
     nombre: "Nachos",
-    descripcion: "Nachos de la casa.",
+    descripcion:
+      "Tortillas crujientes con todo encima. El comienzo perfecto mientras llega lo demás.",
     ingredientes: [],
     precio: 3500,
     categoria: "grill",
@@ -272,7 +286,8 @@ export const menu: Plato[] = [
   {
     id: "nuggets",
     nombre: "Nuggets",
-    descripcion: "Nuggets de pollo.",
+    descripcion:
+      "Nuggets de pollo dorados por fuera y jugosos por dentro. Los que gustan a todos.",
     ingredientes: [],
     precio: 3500,
     categoria: "grill",
@@ -286,7 +301,8 @@ export const menu: Plato[] = [
   {
     id: "alitas",
     nombre: "Alitas (6 unidades)",
-    descripcion: "Seis alitas de pollo.",
+    descripcion:
+      "Seis alitas de pollo doradas al punto. Para arrancar la noche o para no compartir.",
     ingredientes: [],
     precio: 3500,
     categoria: "grill",
@@ -300,7 +316,8 @@ export const menu: Plato[] = [
   {
     id: "papas-especiales",
     nombre: "Papas Especiales",
-    descripcion: "Papas especiales de la casa.",
+    descripcion:
+      "Nuestras papas especiales, con la sazón de la casa. Doradas, crujientes y difíciles de dejar.",
     ingredientes: [],
     precio: 3500,
     categoria: "grill",
@@ -314,7 +331,8 @@ export const menu: Plato[] = [
   {
     id: "pinchos",
     nombre: "Pinchos (2 unidades)",
-    descripcion: "Dos pinchos a la parrilla.",
+    descripcion:
+      "Dos pinchos hechos a la parrilla, jugosos y bien sazonados. Directo del carbón al plato.",
     ingredientes: [],
     precio: 3000,
     categoria: "grill",
@@ -328,7 +346,8 @@ export const menu: Plato[] = [
   {
     id: "canasta-chicharron",
     nombre: "Canasta de chicharrón",
-    descripcion: "Canasta de chicharrón.",
+    descripcion:
+      "Canasta de chicharrón crujiente, servida bien caliente. Tradición tica en su mejor versión.",
     ingredientes: [],
     precio: 2800,
     categoria: "grill",
@@ -342,7 +361,8 @@ export const menu: Plato[] = [
   {
     id: "cartucho",
     nombre: "Cartucho",
-    descripcion: "Cartucho de la casa.",
+    descripcion:
+      "Nuestro cartucho de la casa: para llevar, para picar y para compartir.",
     ingredientes: [],
     precio: 2500,
     categoria: "grill",
@@ -356,7 +376,8 @@ export const menu: Plato[] = [
   {
     id: "salchipapas",
     nombre: "Salchipapas",
-    descripcion: "Salchichas con papas.",
+    descripcion:
+      "Salchichas y papas doradas juntas, como debe ser. Sencillo y siempre acertado.",
     ingredientes: [],
     precio: 2300,
     categoria: "grill",
@@ -370,7 +391,8 @@ export const menu: Plato[] = [
   {
     id: "taco-tico",
     nombre: "Taco Tico",
-    descripcion: "Taco tico de la casa.",
+    descripcion:
+      "Nuestro taco tico, crujiente y bien servido. El clásico de barrio hecho como se debe.",
     ingredientes: [],
     precio: 2000,
     categoria: "grill",
@@ -385,7 +407,8 @@ export const menu: Plato[] = [
     // Transcripcion dudosa: la imagen dice "Empada Arreglada".
     id: "empanada-arreglada",
     nombre: "Empanada Arreglada",
-    descripcion: "Empanada arreglada.",
+    descripcion:
+      "Empanada arreglada, servida bien caliente y con todo lo que lleva. Un antojo completo.",
     ingredientes: [],
     precio: 2000,
     categoria: "grill",
@@ -400,7 +423,8 @@ export const menu: Plato[] = [
     // Transcripcion dudosa: la imagen dice "Choripáti".
     id: "choripan",
     nombre: "Choripán",
-    descripcion: "Chorizo en pan.",
+    descripcion:
+      "Chorizo a la parrilla en pan. Directo, humeante y sin vueltas.",
     ingredientes: [],
     precio: 1500,
     categoria: "grill",
@@ -414,7 +438,8 @@ export const menu: Plato[] = [
   {
     id: "empanada",
     nombre: "Empanada",
-    descripcion: "Empanada de la casa.",
+    descripcion:
+      "Empanada recién hecha, dorada y caliente. El antojo rápido de siempre.",
     ingredientes: [],
     precio: 1000,
     categoria: "grill",
@@ -430,7 +455,8 @@ export const menu: Plato[] = [
   {
     id: "mini-papas-mixtas",
     nombre: "Mini papas mixtas",
-    descripcion: "Porción infantil de papas mixtas.",
+    descripcion:
+      "Porción infantil de nuestras papas mixtas. Del tamaño justo para los peques.",
     ingredientes: [],
     precio: 2500,
     categoria: "infantil",
@@ -444,7 +470,8 @@ export const menu: Plato[] = [
   {
     id: "mini-nachos-mixtos",
     nombre: "Mini Nachos Mixtos",
-    descripcion: "Porción infantil de nachos mixtos.",
+    descripcion:
+      "Nachos mixtos en porción pequeña, pensados para los más chicos de la mesa.",
     ingredientes: [],
     precio: 2000,
     categoria: "infantil",
@@ -458,7 +485,8 @@ export const menu: Plato[] = [
   {
     id: "mini-salchipapas",
     nombre: "Mini Salchipapas",
-    descripcion: "Porción infantil de salchipapas.",
+    descripcion:
+      "Salchipapas en tamaño infantil. Las favoritas de la casa, en versión pequeña.",
     ingredientes: [],
     precio: 2000,
     categoria: "infantil",
@@ -472,7 +500,8 @@ export const menu: Plato[] = [
   {
     id: "mini-nuggets",
     nombre: "Mini nuggets con papas",
-    descripcion: "Porción infantil de nuggets con papas.",
+    descripcion:
+      "Nuggets con papas en porción infantil. La combinación que nunca falla con los niños.",
     ingredientes: [],
     precio: 2000,
     categoria: "infantil",
@@ -486,7 +515,8 @@ export const menu: Plato[] = [
   {
     id: "mini-papas-especiales",
     nombre: "Mini papas especiales",
-    descripcion: "Porción infantil de papas especiales.",
+    descripcion:
+      "Nuestras papas especiales en porción infantil. Mismo sabor, tamaño para peques.",
     ingredientes: [],
     precio: 2000,
     categoria: "infantil",
@@ -500,7 +530,8 @@ export const menu: Plato[] = [
   {
     id: "mini-nachos",
     nombre: "Mini Nachos",
-    descripcion: "Porción infantil de nachos.",
+    descripcion:
+      "Nachos en porción infantil, crujientes y fáciles de compartir.",
     ingredientes: [],
     precio: 1500,
     categoria: "infantil",
@@ -516,7 +547,8 @@ export const menu: Plato[] = [
   {
     id: "papas-gajos",
     nombre: "Orden de papas en gajos",
-    descripcion: "Papas en gajo. Las mencionan en las reseñas de Google.",
+    descripcion:
+      "Papas en gajo, doradas por fuera y suaves por dentro. Las que mencionan en las reseñas.",
     ingredientes: [],
     precio: 1500,
     categoria: "adicionales",
@@ -530,7 +562,8 @@ export const menu: Plato[] = [
   {
     id: "papas-pequenas",
     nombre: "Orden de papas pequeñas",
-    descripcion: "Porción pequeña de papas.",
+    descripcion:
+      "Porción pequeña de papas doradas. El acompañamiento justo para cualquier plato.",
     ingredientes: [],
     precio: 800,
     categoria: "adicionales",

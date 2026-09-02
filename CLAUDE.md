@@ -40,10 +40,25 @@ Presupuesto de esfuerzo acotado: impacto visual alto, alcance controlado.
 - **`/` (Inicio)** — lleva TODA la informacion del negocio como secciones ancladas:
   hero, promocion semanal, nosotros, destacados, ubicacion, contacto. Se recorre con
   scroll suave entre anclas: se siente como una SPA, sin recargas.
-- **`/menu`** — la unica ruta aparte, porque es la que monta el menu virtual y el carrito.
-  Dos vistas disponibles en TODOS los tamanos: cuadricula y reels. En escritorio
-  los reels van en columna centrada, no a pantalla completa.
-  **La vista de reels es el diferenciador del proyecto y esta PENDIENTE de pulir.**
+- **`/menu`** — cuadricula del menu, con el carrito.
+- **`/menu/reels`** — el recorrido tipo Shorts, con su propio componente y a
+  pantalla completa. Son DOS FEATURES SEPARADAS a proposito: cada ruta carga solo
+  su JavaScript y los reels pueden tomarse el viewport sin pelear con la
+  cuadricula. El alternador vive en el navbar, no dentro del menu.
+
+## Rendimiento — pendiente conocido
+
+Lighthouse sobre el build de produccion: Accesibilidad 100, Practicas 100, SEO 100,
+**Rendimiento ~80**. El estandar es >95.
+
+CAUSA MEDIDA, no supuesta: el desglose del LCP da TTFB 464 ms, descarga de imagen
+334 ms y **4.401 ms de "render delay"**. No es peso de imagenes — es el JavaScript
+hidratando. El sospechoso es Framer Motion (`motion`) con los `Revelar` repartidos
+por todo el sitio.
+
+Se optimizo la imagen del hero de 382 KB a 16 KB y el CLS bajo a 0, pero eso no
+mueve el render delay. **El siguiente paso es reemplazar Framer Motion por
+IntersectionObserver + clases CSS**, que hace lo mismo sin costo de hidratacion.
 
 No se crean rutas para "nosotros", "contacto" ni "ubicacion". Son anclas de `/`.
 El carrito y el checkout son drawers, nunca paginas.

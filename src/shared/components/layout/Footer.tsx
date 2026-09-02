@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
+import { BotonCompartir, IconoCompartir } from "@/shared/components/ui/BotonCompartir";
 
 export function Footer() {
   return (
@@ -81,6 +82,10 @@ export function Footer() {
             >
               Facebook
             </a>
+            <BotonCompartir className="inline-flex items-center gap-1.5 transition-colors hover:text-acento-alt">
+              <IconoCompartir className="size-4" />
+              Compartir
+            </BotonCompartir>
             <Link href="/menu" className="hover:text-acento-alt">
               Menú
             </Link>

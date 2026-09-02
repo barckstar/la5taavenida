@@ -5,6 +5,7 @@ import {
   IconoMapa,
 } from "@/shared/components/ui/Iconos";
 import { negocio, enlaceWhatsApp } from "@/shared/config/negocio";
+import { BotonCompartir, IconoCompartir } from "@/shared/components/ui/BotonCompartir";
 
 /**
  * Barra lateral de redes, pegada al borde derecho.
@@ -63,6 +64,22 @@ export function BarraSocial() {
             </a>
           </li>
         ))}
+
+        {/* Compartir cierra la barra: no es una red, es una accion. */}
+        <li className="border-t border-acento/20 pt-4 sm:pt-5">
+          <BotonCompartir className="group/enlace relative block rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-acento">
+            <span className="icono-social block text-acento">
+              <IconoCompartir className="size-6 sm:size-7" />
+            </span>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-full top-1/2 mr-4 hidden -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-acento px-3 py-1 font-display text-xs font-semibold uppercase tracking-wide text-base opacity-0 shadow-lg transition-all duration-300 group-hover/enlace:translate-x-0 group-hover/enlace:opacity-100 md:block"
+            >
+              Compartir
+              <span className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-acento" />
+            </span>
+          </BotonCompartir>
+        </li>
       </ul>
     </div>
   );

@@ -211,11 +211,26 @@ export function CarritoDrawer({
                 Continuar el pedido
               </button>
 
+              {/* Antes era un texto gris de 12px que nadie encontraba.
+                  Ahora es un boton real, con borde y su icono. */}
               <button
                 type="button"
                 onClick={vaciar}
-                className="mt-3 w-full text-xs text-texto-suave transition-colors hover:text-acento"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-borde py-2.5 text-sm text-texto-suave transition-colors hover:border-acento/60 hover:text-acento"
               >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-4"
+                  aria-hidden="true"
+                >
+                  <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" />
+                  <path d="M10 11v6M14 11v6" />
+                </svg>
                 Vaciar el pedido
               </button>
 

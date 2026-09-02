@@ -46,14 +46,35 @@ export const metadata: Metadata = {
     locale: "es_CR",
     siteName: negocio.nombre,
     title: `${negocio.nombre} | Parrilla en ${negocio.ciudad}`,
-    description: negocio.tagline,
+    description: `${negocio.tagline} Hamburguesas, costillas y parrilla en ${negocio.ciudad}. Pida en línea y coordinamos por WhatsApp.`,
     url: "/",
-    images: [{ url: "/marca/logo.jpg", width: 720, height: 720, alt: `Logo de ${negocio.nombre}` }],
+    /*
+      1200x630 es el formato que piden Facebook, WhatsApp y X. El logo cuadrado
+      que habia antes se recortaba mal en la vista previa de todos ellos.
+
+      Instagram NO lee Open Graph: no genera vista previa de enlaces en
+      publicaciones ni en historias. Para IG la imagen sirve igual, pero como
+      material que se sube a mano.
+    */
+    images: [
+      {
+        url: "/marca/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${negocio.nombre}, parrilla en ${negocio.ciudad}`,
+        type: "image/jpeg",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${negocio.nombre} | Parrilla en ${negocio.ciudad}`,
-    description: negocio.tagline,
+    description: `${negocio.tagline} Pida en línea y coordinamos por WhatsApp.`,
+    images: ["/marca/og.jpg"],
+  },
+  icons: {
+    icon: "/marca/logo.jpg",
+    apple: "/marca/logo.jpg",
   },
   robots: { index: true, follow: true },
 };

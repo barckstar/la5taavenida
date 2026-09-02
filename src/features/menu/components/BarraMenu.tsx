@@ -1,12 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { IconoVideo, IconoCuadros } from "@/shared/components/ui/Iconos";
 import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
 import type { Categoria, CategoriaId } from "../types";
-
-type Vista = "lista" | "reels";
 
 /**
  * Barra fija del menu: alternador de vista y filtro de categorias.
@@ -20,14 +17,10 @@ type Vista = "lista" | "reels";
  * de 64px por la que se verian pasar las tarjetas.
  */
 export function BarraMenu({
-  vista,
-  onCambiarVista,
   categoria,
   onCambiarCategoria,
   categorias,
 }: {
-  vista: Vista;
-  onCambiarVista: (v: Vista) => void;
   categoria: CategoriaId | "todas";
   onCambiarCategoria: (c: CategoriaId | "todas") => void;
   categorias: Categoria[];
@@ -73,14 +66,6 @@ export function BarraMenu({
       }`}
     >
       <Contenedor className="flex items-center gap-3 py-3">
-        {/*
-          El alternador va en TODOS los tamanos. Antes era exclusivo de movil
-          por decision mia; el cliente lo corrigio y tiene razon: la vista de
-          reels es su diferenciador en el nicho, y esconderla justo en la
-          pantalla grande es esconder lo que distingue al sitio.
-        */}
-        <SwitchVista vista={vista} onCambiar={onCambiarVista} />
-
         <div className="relative min-w-0 flex-1">
           <div
             ref={carril}
@@ -116,63 +101,6 @@ export function BarraMenu({
           />
         </div>
       </Contenedor>
-    </div>
-  );
-}
-
-/**
- * Switch de dos posiciones: cuadros (lista) y video (reels).
- *
- * Es un `role="radiogroup"` con dos botones reales, no un div con onClick: se
- * navega con teclado y los lectores de pantalla anuncian cual esta activo.
- */
-function SwitchVista({
-  vista,
-  onCambiar,
-}: {
-  vista: Vista;
-  onCambiar: (v: Vista) => void;
-}) {
-  return (
-    <div
-      role="radiogroup"
-      aria-label="Forma de ver el menú"
-      className="relative inline-flex shrink-0 rounded-full border border-borde bg-superficie p-1"
-    >
-      {/* Pastilla que se desliza detras del icono activo. */}
-      <span
-        aria-hidden="true"
-        className={`absolute inset-y-1 w-9 rounded-full bg-acento transition-transform duration-300 ${
-          vista === "lista" ? "translate-x-0" : "translate-x-9"
-        }`}
-        style={{ left: "0.25rem" }}
-      />
-
-      <button
-        type="button"
-        role="radio"
-        aria-checked={vista === "lista"}
-        aria-label="Ver en cuadrícula"
-        onClick={() => onCambiar("lista")}
-        className={`relative z-10 grid size-9 place-items-center rounded-full transition-colors ${
-          vista === "lista" ? "text-base" : "text-texto-suave"
-        }`}
-      >
-        <IconoCuadros className="size-[18px]" />
-      </button>
-
-      <button
-        type="button"
-        role="radio"
-        aria-checked={vista === "reels"}
-        aria-label="Ver como reels"
-        onClick={() => onCambiar("reels")}
-        className={`relative z-10 grid size-9 place-items-center rounded-full transition-colors ${
-          vista === "reels" ? "text-base" : "text-texto-suave"
-        }`}
-      >
-        <IconoVideo className="size-[18px]" />
-      </button>
     </div>
   );
 }

@@ -9,6 +9,7 @@ import { BotonEnlace } from "@/shared/components/ui/Boton";
 import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
 import { negocio } from "@/shared/config/negocio";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
+import { SwitchVista } from "./SwitchVista";
 
 const enlaces = [
   { href: "/menu", texto: "Menú" },
@@ -48,6 +49,11 @@ export function Navbar() {
             </span>
           </Link>
 
+          {/* Alternador de vista: solo aparece dentro del menu. */}
+          <div className="ml-auto mr-2 md:ml-0 md:mr-0">
+            <SwitchVista />
+          </div>
+
           <div className="hidden items-center gap-7 md:flex">
             {enlaces.map((e) => {
               const activo = e.href === ruta;
@@ -56,7 +62,9 @@ export function Navbar() {
                   key={e.href}
                   href={e.href}
                   aria-current={activo ? "page" : undefined}
-                  className={`font-display text-sm font-medium uppercase tracking-wide transition-colors ${
+                  // py-2.5 no es decorativo: Lighthouse marcaba estos enlaces
+                  // por area tactil insuficiente. El texto se ve igual.
+                  className={`inline-flex items-center px-1 py-2.5 font-display text-sm font-medium uppercase tracking-wide transition-colors ${
                     activo
                       ? "text-acento-alt"
                       : "text-texto-suave hover:text-acento-alt"

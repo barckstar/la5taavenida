@@ -4,7 +4,7 @@ import { BotonEnlace } from "@/shared/components/ui/Boton";
 import { negocio } from "@/shared/config/negocio";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
 import { CurvaInferior } from "@/shared/components/ui/CurvaInferior";
-import { Brasas } from "./Brasas";
+import { Brasas } from "@/shared/components/ui/Brasas";
 import { PruebaSocial } from "./PruebaSocial";
 import { Revelar } from "@/shared/components/ui/Revelar";
 
@@ -35,7 +35,7 @@ export function Hero() {
       */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 flex items-center justify-center opacity-[0.17]"
+        className="absolute inset-0 -z-10 opacity-[0.17]"
         style={{
           // Caida larga y gradual. Con un corte tardio se veia el borde recto
           // del recorte justo donde termina la tabla de madera.
@@ -45,13 +45,42 @@ export function Hero() {
             "radial-gradient(ellipse 95% 62% at 50% 42%, #000 0%, rgba(0,0,0,0.9) 28%, rgba(0,0,0,0.45) 55%, transparent 80%)",
         }}
       >
+        {/*
+          Version LIVIANA a proposito. Esta imagen se muestra al 17% de opacidad
+          y bajo una mascara que le difumina los bordes: a esa opacidad el
+          detalle no se percibe, asi que servir el original de 1672px era
+          regalar bytes que nadie ve.
+
+          CON `priority`, y aqui hay una leccion.
+
+          Primero la puse en lazy esperando que el LCP pasara a ser el titulo.
+          No funciono: esta imagen cubre el viewport, asi que ES el elemento
+          mas grande pase lo que pase, y en lazy simplemente cargaba de ultima
+          — el LCP empeoro de 4,8 a 5,0 s.
+
+          Si un elemento va a ser el LCP igual, la unica salida es que llegue
+          rapido. Por eso: 400px, calidad 40 y desenfoque leve (16 KB en vez de
+          382), mas `priority` para que se precargue. A 17% de opacidad y bajo
+          la mascara, la diferencia visual con el original es nula.
+
+          `quality` explicito porque el optimizador de Next reprocesa la imagen:
+          sin esto volveria a subir la calidad y se perderia la ganancia.
+        */}
         <Image
-          src="/platos/hamburguesa-5ta.webp"
+          src="/platos/hero-fondo.webp"
           alt=""
-          width={1672}
-          height={941}
+          fill
           priority
-          className="h-auto w-[185%] max-w-none object-contain sm:w-full"
+          quality={40}
+          sizes="(max-width: 640px) 100vw, 800px"
+          /*
+            `fill` y no width/height: con alto automatico el navegador no sabe
+            cuanto espacio reservar hasta que la imagen carga, y al llegar
+            empujaba el contenido. Lighthouse lo marcaba como el unico layout
+            shift de la pagina (CLS 0,111). Con `fill` el hueco queda reservado
+            desde el primer pintado.
+          */
+          className="object-cover"
         />
       </div>
 

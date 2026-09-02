@@ -164,3 +164,79 @@ body {
 .icono-social:active {
   transform: scale(0.9);
 }
+
+/* ============================================================
+   Barra de desplazamiento con la marca.
+   Un detalle chico que separa un sitio hecho de uno generado.
+
+   Se declaran las DOS sintaxis: la estandar (`scrollbar-color`,
+   que entiende Firefox) y la de WebKit (Chrome, Edge, Safari).
+   Ninguna cubre a las dos familias por si sola.
+
+   Los carriles horizontales del menu esconden su barra aparte,
+   con utilidades de Tailwind — esto no los afecta.
+   ============================================================ */
+
+/* Firefox */
+html {
+  scrollbar-color: var(--color-acento) var(--color-base-alt);
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-base-alt);
+  border-left: 1px solid var(--color-borde);
+}
+
+::-webkit-scrollbar-thumb {
+  /* Brasa: del rescoldo abajo al ambar arriba. */
+  background: linear-gradient(
+    180deg,
+    var(--color-acento-claro) 0%,
+    var(--color-acento) 45%,
+    var(--color-brasa) 100%
+  );
+  border-radius: 9999px;
+  /* El borde del color del riel deja el pulgar flotando, no pegado. */
+  border: 2px solid var(--color-base-alt);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #ffd9a0 0%,
+    var(--color-acento-alt) 50%,
+    var(--color-acento) 100%
+  );
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--color-acento-alt);
+  background-clip: padding-box;
+}
+
+/* La esquina donde se cruzan las dos barras no debe quedar blanca. */
+::-webkit-scrollbar-corner {
+  background: var(--color-base-alt);
+}
+
+/* Los drawers llevan una barra mas discreta: no compiten con el contenido. */
+[role="dialog"] ::-webkit-scrollbar {
+  width: 7px;
+}
+[role="dialog"] ::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0;
+}
+[role="dialog"] ::-webkit-scrollbar-thumb {
+  border-width: 1px;
+  border-color: transparent;
+}

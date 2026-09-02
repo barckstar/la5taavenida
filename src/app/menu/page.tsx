@@ -10,8 +10,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/menu" },
   openGraph: {
     title: `Menú | ${negocio.nombre}`,
-    description: `La carta completa de ${negocio.nombre} en ${negocio.ciudad}. Pedí en línea.`,
+    description: `La carta completa de ${negocio.nombre} en ${negocio.ciudad}: hamburguesas, parrilla y menú infantil. Pida en línea.`,
     url: "/menu",
+    images: [
+      {
+        url: "/marca/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: `Menú de ${negocio.nombre}`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Menú | ${negocio.nombre}`,
+    images: ["/marca/og.jpg"],
   },
 };
 

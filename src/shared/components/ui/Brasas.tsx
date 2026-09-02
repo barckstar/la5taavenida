@@ -1,5 +1,8 @@
 /**
- * Brasas del hero. CSS puro: sin JavaScript, sin librerias, sin costo de carga.
+ * Brasas de fondo. CSS puro: sin JavaScript, sin librerias, sin costo de carga.
+ *
+ * Vive en `shared` y no en una feature porque la usan el hero y el menu, y una
+ * feature nunca importa de otra.
  * Solo anima transform y opacity, asi que corre en GPU. El bloque global de
  * prefers-reduced-motion en globals.css la detiene por completo.
  *
@@ -36,13 +39,23 @@ const BRASAS = Array.from({ length: 26 }, (_, i) => {
   };
 });
 
-export function Brasas() {
+export function Brasas({
+  densidad = 1,
+  className,
+}: {
+  /** Fraccion de particulas a dibujar. 0.5 = la mitad. */
+  densidad?: number;
+  className?: string;
+}) {
+  const cuantas = Math.max(1, Math.round(BRASAS.length * densidad));
+  const visibles = BRASAS.slice(0, cuantas);
+
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+      className={`pointer-events-none absolute inset-0 z-0 overflow-hidden ${className ?? ""}`}
     >
-      {BRASAS.map((b, i) => (
+      {visibles.map((b, i) => (
         <span
           key={i}
           className="absolute bottom-0 rounded-full"
