@@ -88,7 +88,7 @@ export function CarritoDrawer({
             id="titulo-carrito"
             className="font-display text-xl font-bold uppercase italic tracking-wide text-texto"
           >
-            Tu pedido
+            Su pedido
           </h2>
           <button
             type="button"
@@ -102,7 +102,7 @@ export function CarritoDrawer({
 
         {lineas.length === 0 ? (
           <div className="flex flex-1 flex-col items-center justify-center gap-3 p-8 text-center">
-            <p className="text-texto-suave">Todavía no hay nada en el pedido.</p>
+            <p className="text-texto-suave">Todavía no hay nada en su pedido.</p>
             <button
               type="button"
               onClick={cerrar}
@@ -177,7 +177,7 @@ export function CarritoDrawer({
                         type="text"
                         value={l.nota ?? ""}
                         onChange={(e) => ponerNota(l.plato.id, e.target.value)}
-                        placeholder="Nota: sin cebolla, término medio…"
+                        placeholder="Indicación: sin cebolla, término medio…"
                         maxLength={80}
                         aria-label={`Nota para ${l.plato.nombre}`}
                         className="mt-2 w-full rounded-lg border border-borde bg-base px-3 py-1.5 text-xs text-texto placeholder:text-texto-suave/60 focus:border-acento focus:outline-none"

@@ -134,7 +134,7 @@ export function DetallePlato({
             htmlFor="nota-plato"
             className="mt-6 block font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento"
           >
-            Alguna indicación
+            Indicaciones para la cocina
           </label>
           <input
             id="nota-plato"

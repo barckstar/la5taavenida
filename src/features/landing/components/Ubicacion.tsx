@@ -9,7 +9,7 @@ export function Ubicacion() {
     <Seccion
       id="ubicacion"
       antetitulo="Dónde estamos"
-      titulo="Pasá por el local o pedí a domicilio"
+      titulo="Visítenos en el local o pida a domicilio"
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.15fr]">
         <div className="space-y-8">
@@ -48,7 +48,7 @@ export function Ubicacion() {
 
           <BotonEnlace href={enlaceWhatsApp(`Hola ${negocio.nombre}, tengo una consulta.`)}>
             <IconoWhatsApp className="size-4" />
-            Escribir al {negocio.whatsappVisible}
+            Escribinos al {negocio.whatsappVisible}
           </BotonEnlace>
         </div>
 

@@ -39,9 +39,9 @@ export const porQue = {
         "Se sirve para quedar satisfecho, sin fotos que prometan más de lo que llega a la mesa.",
     },
     {
-      titulo: "Directo a tu puerta",
+      titulo: "Directo a su puerta",
       texto:
-        "Pedí por WhatsApp y te lo llevamos en San Ramón, o pasá recogiendo cuando esté listo.",
+        "Pida por WhatsApp y se lo llevamos en San Ramón, o pase recogiendo cuando esté listo.",
     },
   ],
 } as const;

@@ -6,7 +6,12 @@ import { formatoColones } from "@/shared/lib/formatoColones";
 import { negocio } from "@/shared/config/negocio";
 import { IconoWhatsApp } from "@/shared/components/ui/Iconos";
 import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
-import { datosPedidoSchema, type DatosPedido } from "../schema";
+import {
+  datosPedidoSchema,
+  etiquetaMetodoPago,
+  metodosPago,
+  type DatosPedido,
+} from "../schema";
 import {
   construirMensaje,
   enviarPorWhatsApp,
@@ -32,6 +37,8 @@ export function CheckoutDrawer({
   const { lineas, total, vaciar } = useCarrito();
 
   const [modalidad, setModalidad] = useState<"retiro" | "express">("retiro");
+  const [metodoPago, setMetodoPago] =
+    useState<(typeof metodosPago)[number]>("efectivo");
   const [direccion, setDireccion] = useState("");
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [errores, setErrores] = useState<Errores>({});
@@ -69,6 +76,7 @@ export function CheckoutDrawer({
       nombre: String(form.get("nombre") ?? ""),
       telefono: String(form.get("telefono") ?? ""),
       modalidad,
+      metodoPago,
       direccion,
       notas: String(form.get("notas") ?? ""),
       // La ubicacion solo viaja en express: en retiro no le sirve a nadie y es
@@ -93,7 +101,7 @@ export function CheckoutDrawer({
     // Guarda contra el truncado silencioso de WhatsApp.
     if (mensaje.excedeLimite) {
       setAvisoLargo(
-        `El pedido es muy largo para enviarlo en un solo mensaje (${mensaje.largoCodificado} de ${LIMITE_SEGURO} caracteres). Dividilo en dos pedidos o acortá las notas.`,
+        `El pedido es muy largo para enviarlo en un solo mensaje (${mensaje.largoCodificado} de ${LIMITE_SEGURO} caracteres). Divídalo en dos pedidos o acorte las indicaciones.`,
       );
       return;
     }
@@ -146,7 +154,7 @@ export function CheckoutDrawer({
           <div className="flex-1 space-y-5 overflow-y-auto px-5 py-5">
             <fieldset>
               <legend className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento">
-                ¿Cómo lo querés?
+                ¿Cómo desea recibir su pedido?
               </legend>
               <div className="mt-3 grid grid-cols-2 gap-2">
                 {(
@@ -155,26 +163,41 @@ export function CheckoutDrawer({
                     { valor: "express", texto: "Express a domicilio" },
                   ] as const
                 ).map((o) => (
-                  <button
+                  <Opcion
                     key={o.valor}
-                    type="button"
+                    activo={modalidad === o.valor}
                     onClick={() => setModalidad(o.valor)}
-                    aria-pressed={modalidad === o.valor}
-                    className={`rounded-xl border px-4 py-3 text-sm font-medium transition-colors ${
-                      modalidad === o.valor
-                        ? "border-acento bg-acento text-base"
-                        : "border-borde text-texto-suave hover:border-acento/50"
-                    }`}
                   >
                     {o.texto}
-                  </button>
+                  </Opcion>
                 ))}
               </div>
             </fieldset>
 
+            <fieldset>
+              <legend className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento">
+                ¿Cómo desea pagar?
+              </legend>
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {metodosPago.map((m) => (
+                  <Opcion
+                    key={m}
+                    activo={metodoPago === m}
+                    onClick={() => setMetodoPago(m)}
+                  >
+                    {etiquetaMetodoPago[m]}
+                  </Opcion>
+                ))}
+              </div>
+              <p className="mt-2 text-xs text-texto-suave">
+                El cobro lo realiza el restaurante al entregar. El sitio no
+                procesa pagos.
+              </p>
+            </fieldset>
+
             <Campo
               nombre="nombre"
-              etiqueta="Tu nombre"
+              etiqueta="Nombre"
               error={errores.nombre}
               autoComplete="name"
               required
@@ -262,8 +285,8 @@ export function CheckoutDrawer({
 
             <Campo
               nombre="notas"
-              etiqueta="Alguna indicación (opcional)"
-              marcador="Para las 7:30 pm, tocar el timbre…"
+              etiqueta="Indicaciones adicionales (opcional)"
+              marcador="Para las 7:30 p. m., timbre del portón negro…"
               error={errores.notas}
             />
 
@@ -287,9 +310,9 @@ export function CheckoutDrawer({
               </span>
             </div>
             <p className="mt-1 text-xs leading-relaxed text-texto-suave">
-              Al enviar se abre WhatsApp con el pedido escrito. El pago
-              ({negocio.metodosPago.join(", ")}) y el costo del express los
-              coordinás ahí con el restaurante.
+              Al enviar se abre WhatsApp con el pedido ya escrito. El
+              restaurante confirma la orden y el tiempo de entrega por ese
+              mismo medio.
             </p>
 
             <button
@@ -303,6 +326,31 @@ export function CheckoutDrawer({
         </form>
       </div>
     </div>
+  );
+}
+
+function Opcion({
+  activo,
+  onClick,
+  children,
+}: {
+  activo: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={activo}
+      className={`rounded-xl border px-3 py-3 text-sm font-medium transition-colors ${
+        activo
+          ? "border-acento bg-acento text-base"
+          : "border-borde text-texto-suave hover:border-acento/50"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 

@@ -32,7 +32,7 @@ export default function PaginaMenu() {
           <span className="block text-acento">la parrilla</span>
         </h1>
         <p className="mt-4 max-w-lg text-texto-suave">
-          Armá tu pedido y lo terminamos por WhatsApp. Precios finales, sin
+          Arme su pedido y lo finalizamos por WhatsApp. Precios finales, sin
           sorpresas.
         </p>
       </Contenedor>

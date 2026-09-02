@@ -23,6 +23,7 @@ const retiro: DatosPedido = {
   nombre: "Ana",
   telefono: "8888-8888",
   modalidad: "retiro",
+  metodoPago: "efectivo",
 };
 
 const express: DatosPedido = {
@@ -81,6 +82,12 @@ describe("construirMensaje", () => {
     );
     expect(largoCodificado).toBeGreaterThan(LIMITE_SEGURO);
     expect(excedeLimite).toBe(true);
+  });
+
+  it("incluye el metodo de pago elegido", () => {
+    const conSinpe: DatosPedido = { ...retiro, metodoPago: "sinpe" };
+    const { texto } = construirMensaje([linea("a", 1)], conSinpe, 8500);
+    expect(texto).toContain("Pago: Sinpe Móvil");
   });
 
   it("incluye el enlace de Maps cuando hay coordenadas", () => {

@@ -30,7 +30,7 @@ export function SugerenciasCarrito({ candidatos }: { candidatos: Plato[] }) {
   return (
     <section className="border-t border-borde px-5 py-4">
       <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-acento">
-        ¿Le agregás algo más?
+        ¿Desea agregar algo más?
       </h3>
 
       <ul className="-mx-1 mt-3 flex gap-3 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

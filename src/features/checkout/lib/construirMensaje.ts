@@ -1,6 +1,7 @@
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { negocio } from "@/shared/config/negocio";
 import type { LineaCarrito } from "@/features/carrito/types";
+import { etiquetaMetodoPago } from "../schema";
 import type { DatosPedido } from "../schema";
 import { enlaceUbicacion } from "./direccionesGuardadas";
 
@@ -51,9 +52,13 @@ export function construirMensaje(
     }
   }
 
+  partes.push(`Pago: ${etiquetaMetodoPago[datos.metodoPago]}`);
+
   if (datos.notas) partes.push(`Nota: ${datos.notas}`);
 
-  partes.push("Pago y envío: a coordinar");
+  if (datos.modalidad === "express") {
+    partes.push("El costo del envío se coordina con el restaurante.");
+  }
 
   const texto = partes.join("\n");
   const largoCodificado = encodeURIComponent(texto).length;

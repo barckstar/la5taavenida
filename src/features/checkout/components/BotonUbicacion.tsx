@@ -49,10 +49,10 @@ export function BotonUbicacion({
         // Cada motivo necesita una salida distinta para el usuario.
         setMensaje(
           err.code === err.PERMISSION_DENIED
-            ? "No diste permiso. Podés escribir las señas a mano."
+            ? "No se otorgó el permiso. Puede escribir las señas a mano."
             : err.code === err.TIMEOUT
-              ? "Se tardó demasiado. Probá de nuevo o escribí las señas."
-              : "No se pudo obtener la ubicación. Escribí las señas.",
+              ? "La búsqueda tardó demasiado. Intente de nuevo o escriba las señas."
+              : "No se pudo obtener la ubicación. Escriba las señas, por favor.",
         );
       },
       { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
