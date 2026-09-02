@@ -47,7 +47,16 @@ export function Revelar({
       className={className}
       initial={{ opacity: 0, ...desplazamientos[direccion] }}
       whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      viewport={{ once: unaVez, amount: 0.2 }}
+      /*
+        `amount: "some"` y NO una fraccion.
+
+        Con `amount: 0.2` se exige que el 20% del elemento este visible. En un
+        bloque mas alto que la pantalla —nueve ofertas apiladas en movil miden
+        mas de 4000px— ese 20% supera la altura del viewport y la condicion no
+        se cumple NUNCA: el contenido quedaba invisible para siempre.
+        "some" dispara en cuanto asoma cualquier parte.
+      */
+      viewport={{ once: unaVez, amount: "some" }}
       transition={{
         duration: 0.6,
         delay: retraso,
@@ -83,7 +92,9 @@ export function RevelarCascada({
       className={className}
       initial="oculto"
       whileInView="visible"
-      viewport={{ once: unaVez, amount: 0.15 }}
+      // Ver la nota de arriba: una fraccion deja oculto lo que es mas alto
+      // que la pantalla.
+      viewport={{ once: unaVez, amount: "some" }}
       exit="oculto"
       variants={{
         oculto: { transition: { staggerChildren: 0.04, staggerDirection: -1 } },
