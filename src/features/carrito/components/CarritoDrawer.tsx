@@ -200,7 +200,7 @@ export function CarritoDrawer({
                 </span>
               </div>
               <p className="mt-1 text-xs text-texto-suave">
-                Precios finales. El envío lo cobra el mensajero al llegar.
+                Precios finales. El costo del express lo cobra el mensajero al llegar.
               </p>
 
               <button

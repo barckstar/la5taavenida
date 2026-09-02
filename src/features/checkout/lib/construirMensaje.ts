@@ -57,7 +57,10 @@ export function construirMensaje(
   if (datos.notas) partes.push(`Nota: ${datos.notas}`);
 
   if (datos.modalidad === "express") {
-    partes.push("El costo del envío se coordina con el restaurante.");
+    // El costo del express lo cobra el mensajero al llegar, no el
+    // restaurante. Decirlo en el mensaje evita el malentendido de que el
+    // total del pedido ya lo incluye.
+    partes.push("El costo del express se coordina con el mensajero.");
   }
 
   const texto = partes.join("\n");

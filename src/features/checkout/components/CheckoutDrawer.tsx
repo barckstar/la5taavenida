@@ -190,8 +190,8 @@ export function CheckoutDrawer({
                 ))}
               </div>
               <p className="mt-2 text-xs text-texto-suave">
-                El cobro lo realiza el restaurante al entregar. El sitio no
-                procesa pagos.
+                El restaurante cobra el pedido; el costo del express lo cobra
+                el mensajero al llegar. El sitio no procesa pagos.
               </p>
             </fieldset>
 
