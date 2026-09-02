@@ -6,7 +6,7 @@ import { useCarrito } from "../lib/carritoStore";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { negocio } from "@/shared/config/negocio";
 import { SugerenciasCarrito } from "./SugerenciasCarrito";
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Panel del carrito. Es un drawer, no una pagina: asi el sitio se mantiene en

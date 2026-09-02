@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useSyncExternalStore } from "react";
 import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
-import { CLAVE_FAVORITOS, leerFavoritos } from "../lib/favoritos";
+import { CLAVE_FAVORITOS, leerFavoritos } from "@/shared/lib/favoritos";
 import { Brasas } from "@/shared/components/ui/Brasas";
 import { ReelPlato } from "./ReelPlato";
 import { FiltroCategorias, type FiltroReel } from "./FiltroCategorias";

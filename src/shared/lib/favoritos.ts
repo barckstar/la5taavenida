@@ -3,6 +3,10 @@ import { leerCrudo, escribirCrudo } from "@/shared/lib/almacenLocal";
 /**
  * Favoritos guardados en el propio dispositivo.
  *
+ * Viven en `shared` porque los usan el menu y los reels, y una feature no
+ * importa de otra. Nacieron dentro de reels, que fue donde se pidieron
+ * primero.
+ *
  * ============================================================================
  * POR QUE NO ES UN CONTADOR PUBLICO DE "ME GUSTA"
  * ============================================================================

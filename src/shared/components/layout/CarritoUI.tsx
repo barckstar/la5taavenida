@@ -5,7 +5,7 @@ import { CarritoBoton } from "@/features/carrito/components/CarritoBoton";
 import { CarritoDrawer } from "@/features/carrito/components/CarritoDrawer";
 import { CheckoutDrawer } from "@/features/checkout/components/CheckoutDrawer";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Une el boton flotante, el carrito y el checkout. Vive en el layout para que

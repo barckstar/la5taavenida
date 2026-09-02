@@ -118,10 +118,11 @@ src/
     checkout/   formulario, ubicación, direcciones guardadas, mensaje
 
   shared/
-    components/ui/       primitivas sin lógica de dominio
+    components/ui/       primitivas + la hoja de detalle del plato
     components/layout/   navbar, pie, barra social, switch de vista
     config/negocio.ts    fuente única de los datos del negocio
-    lib/                 formato de colones, almacén local, JSON-LD
+    types/menu.ts        Plato, Media, CategoriaId, FiltroCatalogo
+    lib/                 colones, almacén local, favoritos, detalle, JSON-LD
 ```
 
 ### Ejemplos concretos de la regla
@@ -133,6 +134,17 @@ src/
   importan**: llegan como prop.
 - Las brasas las usan el hero y los reels. Por eso viven en `shared/`, no en
   `landing/`.
+- Los **tipos del dominio** (`Plato`, `Media`, `CategoriaId`) vivían en
+  `features/menu/types`, y las otras cuatro features tenían que importarlos de
+  ahí para poder hablar de un plato: la regla estaba rota de fábrica. Subieron a
+  `shared/types/menu.ts`.
+- Los **favoritos** nacieron en `reels/`, que fue donde se pidieron primero.
+  Cuando el menú también los necesitó, subieron a `shared/lib/favoritos.ts` en
+  vez de que el menú importara de reels.
+- La **hoja de detalle del plato** se monta UNA vez en el layout, con
+  `DetallePlatoProvider`. Antes vivía dentro del menú con estado local, así que
+  solo abría ahí: en el inicio, tocar un destacado llevaba a `/menu` y el
+  cliente tenía que buscar el plato otra vez entre treinta y cinco.
 
 ### Por qué los reels son una feature aparte
 

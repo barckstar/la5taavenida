@@ -6,6 +6,7 @@ import { Footer } from "@/shared/components/layout/Footer";
 import { BarraSocial } from "@/shared/components/layout/BarraSocial";
 import { CarritoProvider } from "@/features/carrito/lib/carritoStore";
 import { CarritoUI } from "@/shared/components/layout/CarritoUI";
+import { DetallePlatoProvider } from "@/shared/lib/detallePlato";
 import { menu } from "@/features/menu/data/menu";
 import { ofertasVigentes, ofertaComoPlato } from "@/features/ofertas/data/ofertas";
 import { EtiquetaJsonLd, jsonLdRestaurante } from "@/shared/lib/jsonLd";
@@ -112,13 +113,20 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             ...ofertasVigentes().map((o) => ofertaComoPlato(o).id),
           ]}
         >
-          <Navbar />
-          <BarraSocial />
-          {children}
-          <Footer />
-          <CarritoUI
-            sugerencias={menu.filter((p) => p.categoria === "adicionales")}
-          />
+          {/*
+            La hoja de detalle se monta aqui, una sola vez, para que cualquier
+            tarjeta del sitio —el menu, los destacados del inicio y las
+            ofertas— abra la misma. Va por dentro del carrito porque la usa.
+          */}
+          <DetallePlatoProvider>
+            <Navbar />
+            <BarraSocial />
+            {children}
+            <Footer />
+            <CarritoUI
+              sugerencias={menu.filter((p) => p.categoria === "adicionales")}
+            />
+          </DetallePlatoProvider>
         </CarritoProvider>
       </body>
     </html>

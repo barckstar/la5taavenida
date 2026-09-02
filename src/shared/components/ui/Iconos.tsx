@@ -90,3 +90,27 @@ export function IconoCuadros({ className = "size-5" }: IconoProps) {
     </svg>
   );
 }
+
+/** Corazon de favoritos. Relleno cuando el plato ya esta guardado. */
+export function IconoCorazon({
+  lleno,
+  className = "size-5",
+}: {
+  lleno: boolean;
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill={lleno ? "currentColor" : "none"}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 1 0-7.4 7.4L12 21.5l8.8-8.5a5.2 5.2 0 0 0 0-7.4Z" />
+    </svg>
+  );
+}

@@ -1,4 +1,4 @@
-import type { Categoria } from "../types";
+import type { Categoria } from "@/shared/types/menu";
 
 /** Las cuatro secciones tal como las divide el menu impreso del local. */
 export const categorias: Categoria[] = [

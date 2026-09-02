@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import { useNavbarOculto } from "@/shared/lib/useNavbarOculto";
 import { Contenedor } from "@/shared/components/ui/Contenedor";
-import type { Categoria, CategoriaId } from "../types";
+import { IconoCorazon } from "@/shared/components/ui/Iconos";
+import type { Categoria, FiltroCatalogo } from "@/shared/types/menu";
 
 /**
  * Barra fija del menu: alternador de vista y filtro de categorias.
@@ -17,13 +18,15 @@ import type { Categoria, CategoriaId } from "../types";
  * de 64px por la que se verian pasar las tarjetas.
  */
 export function BarraMenu({
-  categoria,
-  onCambiarCategoria,
+  filtro,
+  onCambiarFiltro,
   categorias,
+  cantidadFavoritos,
 }: {
-  categoria: CategoriaId | "todas";
-  onCambiarCategoria: (c: CategoriaId | "todas") => void;
+  filtro: FiltroCatalogo;
+  onCambiarFiltro: (c: FiltroCatalogo) => void;
   categorias: Categoria[];
+  cantidadFavoritos: number;
 }) {
   const navbarOculto = useNavbarOculto();
   const carril = useRef<HTMLDivElement>(null);
@@ -74,16 +77,30 @@ export function BarraMenu({
             className="-mb-2 flex gap-2 overflow-x-auto pb-2 pr-8 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           >
             <Chip
-              activo={categoria === "todas"}
-              onClick={() => onCambiarCategoria("todas")}
+              activo={filtro === "todas"}
+              onClick={() => onCambiarFiltro("todas")}
             >
               Todo
             </Chip>
+
+            {/* Favoritos solo aparece cuando hay alguno: un filtro que siempre
+                devuelve vacio es una promesa rota. Va de segundo, antes que
+                las categorias, porque es el atajo de quien ya sabe que pide. */}
+            {cantidadFavoritos > 0 && (
+              <Chip
+                activo={filtro === "favoritos"}
+                onClick={() => onCambiarFiltro("favoritos")}
+              >
+                <IconoCorazon lleno className="size-4" />
+                Favoritos ({cantidadFavoritos})
+              </Chip>
+            )}
+
             {categorias.map((c) => (
               <Chip
                 key={c.id}
-                activo={categoria === c.id}
-                onClick={() => onCambiarCategoria(c.id)}
+                activo={filtro === c.id}
+                onClick={() => onCambiarFiltro(c.id)}
               >
                 {c.nombre}
               </Chip>
@@ -119,7 +136,7 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={activo}
-      className={`shrink-0 rounded-full border px-4 py-2 font-display text-sm font-medium uppercase tracking-wide transition-colors ${
+      className={`flex shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 font-display text-sm font-medium uppercase tracking-wide transition-colors ${
         activo
           ? "border-acento bg-acento text-base"
           : "border-borde text-texto-suave hover:border-acento/50 hover:text-acento-alt"

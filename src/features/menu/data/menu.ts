@@ -1,4 +1,4 @@
-import type { Plato } from "../types";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * ============================================================================

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { leerCrudo, escribirCrudo, suscribir } from "@/shared/lib/almacenLocal";
 import { useCarrito } from "../lib/carritoStore";
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 
 const CLAVE = "5ta-avenida-sugerencias-ocultas";
 

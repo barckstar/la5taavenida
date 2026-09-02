@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
-import { IconoCarrito } from "@/shared/components/ui/Iconos";
-import type { Plato } from "../types";
+import { IconoCarrito, IconoCorazon } from "./Iconos";
+import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
+import {
+  CLAVE_FAVORITOS,
+  alternarFavorito,
+  leerFavoritos,
+} from "@/shared/lib/favoritos";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Hoja de detalle del plato, al estilo de las apps de delivery: foto grande
@@ -25,6 +31,16 @@ export function DetallePlato({
 }) {
   const { agregar, cambiarCantidad, ponerNota, cantidadDe, abrir } = useCarrito();
   const panel = useRef<HTMLDivElement>(null);
+
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_FAVORITOS, f), []),
+    () => leerCrudo(CLAVE_FAVORITOS),
+    () => null,
+  );
+  const esFavorito =
+    typeof window !== "undefined" &&
+    plato !== null &&
+    leerFavoritos().includes(plato.id);
   const [cantidad, setCantidad] = useState(1);
   const [nota, setNota] = useState("");
 
@@ -65,16 +81,14 @@ export function DetallePlato({
     abrir();
   }
 
+  /*
+    `h-[100dvh]` ademas de `inset-0`: un elemento fijo se dimensiona contra el
+    viewport de MAQUETA, que en Android se queda corto cuando la barra de
+    direcciones se retrae. La hoja terminaba unos pixeles antes del borde y por
+    esa rendija asomaba lo que hubiera detras. `dvh` sigue el viewport real.
+  */
   return (
-    /*
-        `h-[100dvh]` ademas de `inset-0`: un elemento fijo se dimensiona contra
-        el viewport de MAQUETA, que en Android se queda corto cuando la barra
-        de direcciones se retrae. El drawer terminaba unos pixeles antes del
-        borde y por esa rendija asomaba lo que hubiera detras. `dvh` sigue el
-        viewport real. No se pudo reproducir en el navegador de escritorio: es
-        una correccion dirigida al comportamiento de Android.
-      */
-      <div className="fixed inset-0 h-[100dvh] z-[65]">
+    <div className="fixed inset-0 z-[65] h-[100dvh]">
       <div
         className="absolute inset-0 bg-base/85 backdrop-blur-sm"
         onClick={onCerrar}
@@ -105,6 +119,25 @@ export function DetallePlato({
             className="absolute left-3 top-3 grid size-9 place-items-center rounded-full bg-base/80 text-xl leading-none text-texto backdrop-blur-sm transition-colors hover:text-acento"
           >
             ×
+          </button>
+
+          {/* El corazon va aqui y no solo en la tarjeta: al inicio y en las
+              ofertas se llega al plato por esta hoja, sin pasar por la
+              cuadricula del menu. */}
+          <button
+            type="button"
+            onClick={() => alternarFavorito(plato.id)}
+            aria-pressed={esFavorito}
+            aria-label={
+              esFavorito
+                ? `Quitar ${plato.nombre} de favoritos`
+                : `Guardar ${plato.nombre} en favoritos`
+            }
+            className={`absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-base/90 backdrop-blur-sm transition-all duration-200 active:scale-90 ${
+              esFavorito ? "text-acento" : "text-texto hover:text-acento"
+            }`}
+          >
+            <IconoCorazon lleno={esFavorito} className="size-5" />
           </button>
         </div>
 

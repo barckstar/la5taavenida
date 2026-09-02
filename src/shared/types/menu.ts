@@ -1,3 +1,13 @@
+/**
+ * Tipos del dominio: lo que el local vende.
+ *
+ * Viven en `shared` y no dentro de `menu` porque los usan CINCO features
+ * —menu, ofertas, reels, carrito y checkout— y la regla del proyecto es que
+ * una feature nunca importa de otra. Mientras estuvieron en
+ * `features/menu/types`, las otras cuatro tenian que romper esa regla solo
+ * para poder hablar de un plato.
+ */
+
 export type CategoriaId = "grill" | "ofertas"
   | "hamburguesas" | "adicionales" | "infantil";
 
@@ -33,3 +43,10 @@ export type Categoria = {
    */
   corto?: string;
 };
+
+/**
+ * Lo que se puede tener seleccionado en un carril de filtros: una categoria,
+ * todo, o los favoritos del aparato. El menu y los reels filtran igual, asi
+ * que comparten el tipo en vez de declarar dos identicos.
+ */
+export type FiltroCatalogo = CategoriaId | "todas" | "favoritos";

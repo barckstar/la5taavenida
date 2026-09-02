@@ -1,4 +1,4 @@
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 
 export type LineaCarrito = {
   plato: Plato;

@@ -4,11 +4,11 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
-import { IconoCarrito } from "@/shared/components/ui/Iconos";
+import { IconoCarrito, IconoCorazon } from "@/shared/components/ui/Iconos";
 import { BotonCompartir, IconoCompartir } from "@/shared/components/ui/BotonCompartir";
 import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
-import { CLAVE_FAVORITOS, alternarFavorito, leerFavoritos } from "../lib/favoritos";
-import type { Plato } from "@/features/menu/types";
+import { CLAVE_FAVORITOS, alternarFavorito, leerFavoritos } from "@/shared/lib/favoritos";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Un plato en formato reel, con la estructura de YouTube Shorts: el medio en
@@ -195,28 +195,6 @@ export function ReelPlato({ plato }: { plato: Plato }) {
   );
 }
 
-function IconoCorazon({
-  lleno,
-  className = "size-5",
-}: {
-  lleno: boolean;
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill={lleno ? "currentColor" : "none"}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M20.8 5.6a5.2 5.2 0 0 0-7.4 0L12 7l-1.4-1.4a5.2 5.2 0 1 0-7.4 7.4L12 21.5l8.8-8.5a5.2 5.2 0 0 0 0-7.4Z" />
-    </svg>
-  );
-}
 
 function AccionRiel({
   etiqueta,

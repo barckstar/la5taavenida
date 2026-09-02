@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { categorias } from "@/features/menu/data/categorias";
-import type { CategoriaId, Plato } from "@/features/menu/types";
+import type { CategoriaId, Plato } from "@/shared/types/menu";
 
 /** Los filtros del recorrido: las categorias reales mas los favoritos. */
 export type FiltroReel = CategoriaId | "todas" | "favoritos";

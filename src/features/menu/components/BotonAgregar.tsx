@@ -2,7 +2,7 @@
 
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
 import { IconoCarrito } from "@/shared/components/ui/Iconos";
-import type { Plato } from "../types";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Boton de agregar que se convierte en control de cantidad una vez que el

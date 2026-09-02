@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
+import { useDetallePlato } from "@/shared/lib/detallePlato";
 import { ofertaComoPlato, type Oferta } from "../data/ofertas";
 
 /**
@@ -18,11 +19,12 @@ import { ofertaComoPlato, type Oferta } from "../data/ofertas";
  */
 export function TarjetaOferta({ oferta }: { oferta: Oferta }) {
   const { agregar, cambiarCantidad, cantidadDe } = useCarrito();
+  const { abrirDetalle } = useDetallePlato();
   const plato = ofertaComoPlato(oferta);
   const cantidad = cantidadDe(plato.id);
 
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-borde bg-superficie transition-colors duration-300 hover:border-acento/50">
+    <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-borde bg-superficie transition-colors duration-300 hover:border-acento/50">
       <div className="relative aspect-4/3 bg-base-alt">
         <Image
           src={oferta.foto}
@@ -43,14 +45,14 @@ export function TarjetaOferta({ oferta }: { oferta: Oferta }) {
             type="button"
             onClick={() => agregar(plato)}
             aria-label={`Agregar ${oferta.titulo} al pedido`}
-            className="absolute bottom-3 right-3 grid size-11 place-items-center rounded-full bg-acento text-2xl leading-none text-base shadow-lg transition-transform duration-200 active:scale-90"
+            className="absolute bottom-3 right-3 z-10 grid size-11 place-items-center rounded-full bg-acento text-2xl leading-none text-base shadow-lg transition-transform duration-200 active:scale-90"
           >
             <span aria-hidden="true" className="-mt-0.5">
               +
             </span>
           </button>
         ) : (
-          <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full bg-acento px-1.5 py-1 text-base shadow-lg">
+          <div className="absolute bottom-3 right-3 z-10 flex items-center gap-1 rounded-full bg-acento px-1.5 py-1 text-base shadow-lg">
             <button
               type="button"
               onClick={() => cambiarCantidad(plato.id, cantidad - 1)}
@@ -93,6 +95,19 @@ export function TarjetaOferta({ oferta }: { oferta: Oferta }) {
           </p>
         )}
       </div>
+
+      {/*
+        Tocar la tarjeta abre la hoja de detalle, igual que en el menu. El
+        boton va SUPERPUESTO y no envolviendo la tarjeta: un `<h3>` dentro de
+        un `<button>` es HTML invalido. El "+" queda por encima con `z-10`,
+        para que agregar directo siga funcionando.
+      */}
+      <button
+        type="button"
+        onClick={() => abrirDetalle(plato)}
+        aria-label={`Ver ${oferta.titulo}`}
+        className="absolute inset-0 rounded-2xl focus:outline-none"
+      />
     </article>
   );
 }

@@ -9,7 +9,7 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 import type { AccionCarrito, LineaCarrito } from "../types";
 import { leerCrudo, escribirCrudo, suscribir } from "@/shared/lib/almacenLocal";
 

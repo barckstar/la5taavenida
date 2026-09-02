@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { carritoReducer, total, conteo } from "./carritoStore";
-import type { Plato } from "@/features/menu/types";
+import type { Plato } from "@/shared/types/menu";
 
 function plato(id: string, precio = 8500): Plato {
   return {

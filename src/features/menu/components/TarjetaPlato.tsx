@@ -1,9 +1,14 @@
 "use client";
 
+import { useCallback, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { formatoColones } from "@/shared/lib/formatoColones";
 import { useCarrito } from "@/features/carrito/lib/carritoStore";
-import type { Plato } from "../types";
+import { useDetallePlato } from "@/shared/lib/detallePlato";
+import { IconoCorazon } from "@/shared/components/ui/Iconos";
+import { suscribir, leerCrudo } from "@/shared/lib/almacenLocal";
+import { CLAVE_FAVORITOS, alternarFavorito, leerFavoritos } from "@/shared/lib/favoritos";
+import type { Plato } from "@/shared/types/menu";
 
 /**
  * Tarjeta de plato al estilo de las apps de delivery: foto con esquinas
@@ -13,23 +18,29 @@ import type { Plato } from "../types";
  * El patron es deliberado: el usuario ya sabe usarlo por Uber Eats, asi que no
  * hay que ensenarle nada. Tocar la tarjeta abre el detalle; el "+" agrega
  * directo sin abrirlo, para el que ya sabe lo que quiere.
+ *
+ * Los tres botones —foto, "+" y corazon— son HERMANOS y no van anidados: un
+ * boton dentro de otro es HTML invalido y el navegador decide solo cual gana.
  */
-export function TarjetaPlato({
-  plato,
-  onAbrir,
-}: {
-  plato: Plato;
-  onAbrir: (plato: Plato) => void;
-}) {
+export function TarjetaPlato({ plato }: { plato: Plato }) {
   const { agregar, cantidadDe } = useCarrito();
+  const { abrirDetalle } = useDetallePlato();
   const cantidad = cantidadDe(plato.id);
+
+  useSyncExternalStore(
+    useCallback((f) => suscribir(CLAVE_FAVORITOS, f), []),
+    () => leerCrudo(CLAVE_FAVORITOS),
+    () => null,
+  );
+  const esFavorito =
+    typeof window !== "undefined" && leerFavoritos().includes(plato.id);
 
   return (
     <article className={plato.disponible ? "" : "opacity-55"}>
       <div className="relative">
         <button
           type="button"
-          onClick={() => onAbrir(plato)}
+          onClick={() => abrirDetalle(plato)}
           aria-label={`Ver ${plato.nombre}`}
           className="block w-full overflow-hidden rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
         >
@@ -44,6 +55,26 @@ export function TarjetaPlato({
           </span>
         </button>
 
+        {/*
+          El corazon va arriba a la derecha y el "+" abajo: separados, para que
+          nadie guarde un plato creyendo que lo estaba pidiendo.
+        */}
+        <button
+          type="button"
+          onClick={() => alternarFavorito(plato.id)}
+          aria-pressed={esFavorito}
+          aria-label={
+            esFavorito
+              ? `Quitar ${plato.nombre} de favoritos`
+              : `Guardar ${plato.nombre} en favoritos`
+          }
+          className={`absolute right-2 top-2 grid size-9 place-items-center rounded-full bg-base/90 shadow-lg backdrop-blur-sm transition-all duration-200 active:scale-90 ${
+            esFavorito ? "text-acento" : "text-texto hover:text-acento"
+          }`}
+        >
+          <IconoCorazon lleno={esFavorito} className="size-5" />
+        </button>
+
         {!plato.disponible ? (
           <span className="absolute left-2 top-2 rounded-full bg-base/85 px-2.5 py-1 font-display text-[10px] font-semibold uppercase tracking-wider text-texto-suave">
             Agotado
@@ -52,8 +83,8 @@ export function TarjetaPlato({
           // Ya en el carrito: el contador reemplaza al "+", como en Uber Eats.
           <button
             type="button"
-            onClick={() => onAbrir(plato)}
-            aria-label={`${plato.nombre}: ${cantidad} en el pedido. Tocá para ajustar`}
+            onClick={() => abrirDetalle(plato)}
+            aria-label={`${plato.nombre}: ${cantidad} en el pedido. Toque para ajustar`}
             className="absolute bottom-2 right-2 grid size-9 place-items-center rounded-full bg-acento font-display text-sm font-bold text-base shadow-lg transition-transform duration-200 active:scale-90"
           >
             {cantidad}
@@ -74,7 +105,7 @@ export function TarjetaPlato({
 
       <button
         type="button"
-        onClick={() => onAbrir(plato)}
+        onClick={() => abrirDetalle(plato)}
         className="mt-2.5 block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
       >
         <h3 className="font-display text-base font-semibold uppercase italic leading-tight tracking-wide text-texto">
