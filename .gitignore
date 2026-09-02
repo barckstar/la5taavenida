@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# HTML crudo del sondeo de Facebook — scratch, no versionar
+research/*.html
